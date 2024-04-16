@@ -19,16 +19,14 @@ cache:
 before_script:
   - python3 -V
   - pip install --upgrade pip
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
+  - pip install poetry
+  - poetry config virtualenvs.create false --local
+  - poetry install --no-root
 
 build-job:
   stage: build
   script:
-    - pip3 install build wheel
-    - python3 -m build . --wheel
-    - pip3 install .[test,lint]
+    - poetry install --no-root
 
 unit-test-job:
   stage: test

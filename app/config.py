@@ -48,7 +48,7 @@ class Settings(BaseSettings):
         Union[List[AnyUrl], str], BeforeValidator(parse_cors)
     ] = []
 
-    X_TOKEN: str = "fake-super-secret-token"
+    X_TOKEN: str = "wisenut"
 
 
 settings = Settings()  # type: ignore

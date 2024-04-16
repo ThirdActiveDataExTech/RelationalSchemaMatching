@@ -8,10 +8,10 @@
 
 > API 명세는 와이즈넛 [Restful API 디자인 가이드](https://docs.google.com/document/d/1tSniwfrVaTIaTT4MxhBRAmv-S_ECcoSFAXlYrsg4K0Y/edit#heading=h.60fu2rc04bck)를 따른다.
 
-Python FastAPI Template은 아래와 같은 특징을 갖고 있다.
+Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 1. Python 3.9: 높은 호환성
 2. MSA 구조에 적합한 FastAPI 템플릿
-3. setuptools를 사용한 의존성 (`pyproject.toml`으로 한 번에 관리)
+3. 의존성: Poetry (`pyproject.toml`으로 한 번에 관리)
 4. 내부망 환경 구성
 5. 도커 환경 구성 (개발 및 배포용 Dockerfile 구성)
 6. gitlab-ci로 _build, unit test (pytest), lint test (ruff, mypy, pyright), deploy_ 수행
@@ -30,22 +30,23 @@ Python FastAPI Template은 아래와 같은 특징을 갖고 있다.
 1. 로컬 개발 환경에 `git clone ...` 
 2. Pycharm 을 열고 `open project ...`
 3. Interpreter Setting
-   - **Virtualenv**
-     1. **Add New Interpreter** 선택
-     2. **Add Local Interpreter** 선택
-     3. **Virtualenv Environment** 선택 
-     4. 로컬에 설치된 Python 3.10 경로를 Base Interpreter로 설정
-     5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
-   - Poetry (보류)
+   - **Poetry**
      1. Poetry 설치 ([poetry docs](https://python-poetry.org/docs/#installation) 참고)
      2. **Add New Interpreter** 선택
      3. **Add Local Interpreter** 선택
      4. **Poetry Environment** 선택 
-     5. Python version에 맞게 환경 설정 (현재는 3.10 사용중)
+     5. Python version에 맞게 환경 설정 (현재는 3.9.13 사용중)
      6. **Install packages from pyproject.toml** 체크
         - `UnicodeError` 발생 할 경우, **Settings > Editor > Global Encoding, Project Encoding, Properties Files** 모두 'UTF-8' 로 설정 
         - 🐛 해결이 안 될 경우, 체크 표시 해제하고 poetry 가상환경 생성한 후 poetry venv 터미널에 `poetry install`로 직접 Installs the project dependencies
      7. **OK** 선택
+     > 추가 의존성이 필요할 경우, `poetry add ${package-name-to-add}`로 추가하면 자동으로 `pyproject.toml` 파일에 의존성이 추가 (자세한 사항은 Poetry 공식 docs 확인)
+   - _Virtualenv (deprecated)_
+     1. **Add New Interpreter** 선택
+     2. **Add Local Interpreter** 선택
+     3. **Virtualenv Environment** 선택 
+     4. 로컬에 설치된 Python 3.9 경로를 Base Interpreter 로 설정
+     5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
 
 
 ### 3. Extra Setting
