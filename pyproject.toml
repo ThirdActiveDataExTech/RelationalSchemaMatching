@@ -1,28 +1,28 @@
 [build-system]
 requires = [
-    "setuptools >= 61.0.0",
-    "wheel >= 0.37.1"
+    "pip >= 23.1",
+    "setuptools >= 67.6.1",
+    "wheel >= 0.40.0"
 ]
 build-backend = "setuptools.build_meta"
 
 
-[project]   # TODO: 프로젝트 메타데이터 작성 (되도록이면 main.py의 app과 동일한 name, version, description으로 작성하기)
+[tool.poetry]
 name = "python-fastapi-template"
 version = "v1"
 authors = [
-    { name = "Seoyeon Park", email = "sally9476@wisenut.co.kr" }
+    "Seoyeon Park <sally9476@wisenut.co.kr>"
 ]
 maintainers = [
-    { name = "Moonjong Kim", email = "penbell@wisenut.co.kr" },
-    { name = "Chanyeong Lee", email = "wisnt65@wisenut.co.kr" },
-    { name = "Seoyeon Park", email = "sally9476@wisenut.co.kr" },
-    { name = "Joongheon Jeong", email = "legagain@wisenut.co.kr" }
+    "Moonjong Kim <penbell@wisenut.co.kr>",
+    "Chanyeong Lee <wisnt65@wisenut.co.kr>",
+    "Seoyeon Park <sally9476@wisenut.co.kr>",
+    "Joongheon Jeong <legagain@wisenut.co.kr>"
 ]
 description = "AIP Team Python FastAPI Template"
-readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.9"
+readme = "README.md"
 keywords = ["python", "fastapi", "template"]
-license = { file = "LICENSE" }
+license = "LICENSE"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -34,37 +34,25 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Intended Audience :: Developers"
 ]
-dependencies = [
-    "annotated-types==0.6.0",
-    "anyio==4.3.0",
-    "click==8.1.7",
-    "colorama==0.4.6",
-    "exceptiongroup==1.2.0",
-    "fastapi==0.110.0",
-    "h11==0.14.0",
-    "idna==3.6",
-    "loguru==0.7.2",
-    "pydantic==2.6.4",
-    "pydantic_core==2.16.3",
-    "pydantic-settings==2.2.1",
-    "PyYAML==6.0.1",
-    "sniffio==1.3.1",
-    "starlette==0.36.3",
-    "typing_extensions==4.10.0",
-    "uvicorn==0.28.1",
-    "win32-setctime==1.1.0"
-]
 
-[project.optional-dependencies]
-test = [
-    "pytest >= 8.1.1",
-    "httpx >= 0.27.0"
-]
-lint = [
-    "mypy==1.9.0",
-    "ruff==0.3.3",
-    "pyright==1.1.354"
-]
+[tool.poetry.dependencies]
+python = ">=3.9"
+fastapi = "^0.110.1"
+loguru = "^0.7.2"
+pydantic = "^2.7.0"
+pyyaml = "^6.0.1"
+uvicorn = "^0.29.0"
+pydantic-settings = "^2.2.1"
+
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.3.7"
+mypy = "^1.9.0"
+pyright = "^1.1.358"
+
+[tool.poetry.group.test.dependencies]
+httpx = "^0.27.0"
+pytest = "^8.1.1"
 
 [tool.setuptools]
 py-modules = ["app"]

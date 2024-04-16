@@ -16,14 +16,15 @@ RUN apt-get update && \
 WORKDIR /home/wisenut/app
 
 # Copy necessary files and directory
-COPY pyproject.toml version_info.py .env ./
+COPY pyproject.toml poetry.lock version_info.py .env ./
 COPY ./app ./app/
 
 # Install Requirements
-RUN pip install --upgrade pip && pip install --no-cache-dir .
+RUN pip install poetry
+RUN poetry install --without lint,test --no-root
 
 # Expose the port
 EXPOSE 8000
 
 # Run the app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
