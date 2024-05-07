@@ -27,4 +27,4 @@ RUN poetry install --without lint,test --no-root
 EXPOSE 8000
 
 # Run the app
-CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
