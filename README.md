@@ -48,18 +48,26 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
      4. 로컬에 설치된 Python 3.9 경로를 Base Interpreter 로 설정
      5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
 
-
 ### 3. Extra Setting
 - ❗ 실행 전 `.env` 파일에 필요한 환경변수 주입 ❗ 
   - 환경변수 없이도 동작하지만 디폴트값으로 설정돼서 동작하기 때문에 환경변수 설정 권장
-  - `.env` 로그 관련 설정 작성
-    - > [loguru](https://github.com/Delgan/loguru) 사용하여 로그 세팅
+  - `PORT`: fastapi server port
+  - `SERVICE_NAME`: 서비스명
+  - `SERVICE_CODE`: 서비스코드
+  - `MAJOR_VERSION`: API 메이저 버전
+  - `STATUS`: API 상태 (개발용: `dev`, 배포용: `prod`)
+  - `LOG`: [loguru](https://github.com/Delgan/loguru) 사용하여 로그 세팅
+    - `LEVEL`: 로그 레벨 설정
     - `SAVE`: 로그 파일 저장 여부 (1 = 저장, 0 = 저장하지 않음)
     - `ROTATION`: 매일 `mm:ss`시에 새로운 로그 파일 생성
     - `RETENTION`: 설정한 시간 이후에 제거 (ex. "1 month 2 weeks", "10h")
     - `COMPRESSION`: 압축 형식 ("gz", "bz2", "xz", "lzma", "tar", "tar.gz", "tar.bz2", "tar.xz", "zip" 등의 형식 지원)
-    - `ROTATION`, `RETENTION`, `COMPRESSION` 모두 loguru에 있는 파라미터로 자세한 파라미터 정보는 [공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#file:~:text=See%20datetime.datetime-,The%20time%20formatting,-To%20use%20your) 확인
-    - `PATH`: 디렉토리명까지 설정, (default = `YYYY/MM/*.log` 디렉토리 생성)
+    - `LOG_SAVE_PATH`: 디렉토리명까지 설정, (default = `YYYY/MM/*.log` 디렉토리 생성)
+    - `LOGURU_FORMAT`: 로그 포맷팅 설정
+      - loguru 라이브러리를 사용해서 환경변수로 설정이 가능하다.
+      - 자세한 로그 포맷은 [loguru 공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#record)에서 확인 바람
+    > `ROTATION`, `RETENTION`, `COMPRESSION`, `LOGURU_FORMAT` 모두 loguru에 있는 파라미터로 자세한 파라미터 정보는 [공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#file:~:text=See%20datetime.datetime-,The%20time%20formatting,-To%20use%20your) 확인
+  - `X_TOKEN`: API 사용을 위한 토큰값 설정
 - ❗ 도커 빌드 및 실행할 경우, `version.py` 실행 사전 작업 필수 ❗
   (없을 경우에도 정상작동 되지만 필요한 정보를 볼 수 없음)
   👉 `version_info.py` 정보 생성 과정
@@ -137,6 +145,42 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   - `product.Dockerfile`: 최종 제품을 배포하기 위해 필요한 것들만 포함한 환경
 
 
+# Guide for each environment
+## Multi Process
+> **Gunicorn 사용**    
+
+### What is Gunicorn?
+> Gunicorn의 프로세스는 프로세스 기반의 처리 방식을 채택하고 있으며, 이는 내부적으로 크게 master process와 worker process로 나뉘어 집니다.
+> Gunicorn이 실행되면, 그 프로세스 자체가 master process이며, fork를 사용하여 설정에 부여된 worker 수대로 worker process가 생성 됩니다. 
+> master process는 worker process를 관리하는 역할을 하고, worker process는 웹어플리케이션을 임포트하며, 요청을 받아 웹어플리케이션 코드로 전달하여 처리하도록 하는 역할을 합니다.
+
+- Gunicorn 적용
+  - Before: FastAPI 단독 실행 (Uvicorn 서버로 실행) = 1 process 로 TA 모듈 서버 구동
+  - After: Gunicorn으로 FastAPI 다중 실행 (n*worker) = n+1 process (= 1*master + n*worker) 로 TA 모듈 서버 구동
+
+### How to use Gunicorn
+```shell
+# 의존성 설치
+(venv) pip install --extra-index-url https://download.pytorch.org/whl/cpu .[gunicorn]
+# 실행
+gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker app.main:app
+```
+- Gunicorn 설정 참고
+  - 기본 옵션 설명
+    - `-w ${num_of_worker}`: request 를 처리할 app 을 지정된 워커 수 만큼 생성 미지정시 1
+    - `--bind 0:8000`: `host:port` 형태로 바인딩할 소켓을 지정. 미지정시 `['127.0.0.1:8000']`
+    - `-k uvicorn.workers.UvicornWorker`: fastapi 구동을 위한 설정이므로 워커 클래스는 `uvicorn`으로 고정해서 사용
+    - `--max-requests 1000`: 각 워커에 해당 설정값 이상으로 요청이 몰릴 경우 다시 시작하여 메모리 누수 방지
+    - 자세한 설정 옵션은 [Gunicorn 공식 문서 Settings](https://docs.gunicorn.org/en/stable/settings.html) 참고
+  - 커맨드로 옵션을 설정할 수 있지만 편리성을 위해 Gunicorn 설정파일인 `gunicorn.conf.py`에서 진행한다.
+    - Configuration File은 `./gunicorn.conf.py`가 디폴트로 설정되어있고, 다른 경로를 설정하고 싶은 경우, `-c CONFIG` or `--config CONFIG`로 설정한다.
+    - 자세한 사용법은 하단 링크 참고
+      - https://github.com/benoitc/gunicorn/blob/master/examples/example_config.py
+      - https://zetawiki.com/wiki/Gunicorn.conf.py
+- 주의사항
+  - 요청이 올 수 있는 수준으로 최적값으로 설정하여 필요 이상으로 설정할 경우 OOM 발생
+  - 공식문서를 참고하여 사용 환경에 맞는 설정 필요
+
 ## MSA: 내부망
 ### 배포 가이드
 1. `pyproject.toml` 작성 (참고: [Declaring project metadata](https://packaging.python.org/en/latest/specifications/declaring-project-metadata/))
@@ -157,22 +201,10 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 3. `python app/main.py` 실행
 
 
-
-## 📚 참고 사항 📚   
+# 📚 참고 사항 📚   
 - 해당 템플릿은 크게 **msa**와 **monlith** 두 가지로 나뉜다. (@TODO: monolith)
 - Default는 **msa**(`$HOME/app`)로 해당 템플릿을 그대로 사용하면 된다.
-- 📌 **monolith**를 사용할 경우, msa (`$HOME/app`, `$HOME/tests`)는 삭제하고 최상위 디렉터리인 monolith를 삭제 후 사용한다.
-- 📌 DB를 사용하지 않을 경우, 관련된 코드는 모두 삭제한다. (`crud.py`, `database.py`, `schemas.py` 등)
-
-### Monolith @TODO
-> @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.
-> 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.
-- 출처: https://github.com/zhanymkanov/fastapi-best-practices
-
-
-## 🚀 TODO
-- [ ] DB 적용한 API 동작 테스트
-- [ ] Restful API 디자인 가이드: API token을 JWT token으로 설정
-- [ ] Restful API 디자인 가이드: filtering, sorting, searching 기능을 query string으로 적용하기
-- [ ] Restful API 디자인 가이드: 버전 관리 (버전별 URL 표기)
-- [ ] Restful API 디자인 가이드: 링크 처리시 HATEOS를 이용한 링크 처리
+- TODO
+    > @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.
+    > 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.
+  - 출처: https://github.com/zhanymkanov/fastapi-best-practices
