@@ -48,26 +48,29 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
      4. 로컬에 설치된 Python 3.9 경로를 Base Interpreter 로 설정
      5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
 
-### 3. Extra Setting
-- ❗ 실행 전 `.env` 파일에 필요한 환경변수 주입 ❗ 
-  - 환경변수 없이도 동작하지만 디폴트값으로 설정돼서 동작하기 때문에 환경변수 설정 권장
-  - `PORT`: fastapi server port
-  - `SERVICE_NAME`: 서비스명
-  - `SERVICE_CODE`: 서비스코드
-  - `MAJOR_VERSION`: API 메이저 버전
-  - `STATUS`: API 상태 (개발용: `dev`, 배포용: `prod`)
-  - `LOG`: [loguru](https://github.com/Delgan/loguru) 사용하여 로그 세팅
-    - `LEVEL`: 로그 레벨 설정
-    - `SAVE`: 로그 파일 저장 여부 (1 = 저장, 0 = 저장하지 않음)
-    - `ROTATION`: 매일 `mm:ss`시에 새로운 로그 파일 생성
-    - `RETENTION`: 설정한 시간 이후에 제거 (ex. "1 month 2 weeks", "10h")
-    - `COMPRESSION`: 압축 형식 ("gz", "bz2", "xz", "lzma", "tar", "tar.gz", "tar.bz2", "tar.xz", "zip" 등의 형식 지원)
-    - `LOG_SAVE_PATH`: 디렉토리명까지 설정, (default = `YYYY/MM/*.log` 디렉토리 생성)
-    - `LOGURU_FORMAT`: 로그 포맷팅 설정
-      - loguru 라이브러리를 사용해서 환경변수로 설정이 가능하다.
-      - 자세한 로그 포맷은 [loguru 공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#record)에서 확인 바람
+## 3. Extra Setting (Optional)
+### `.env`
+> 환경 변수로 앱 구동 및 관련 설정 진행
+- `PORT`: fastapi server port
+- `SERVICE_NAME`: 서비스명
+- `SERVICE_CODE`: 서비스코드
+- `MAJOR_VERSION`: API 메이저 버전
+- `STATUS`: API 상태 (개발용: `dev`, 배포용: `prod`)
+- 로그 관련 설정: [loguru](https://github.com/Delgan/loguru) 사용하여 로그 세팅
+  - `LEVEL`: 로그 레벨 설정 
+  - `JSON_LOG`: stdout 형식 JSON 출력 여부 결정 (로그 저장도 해당 형식으로 진행됨)
+  - `LOGURU_FORMAT`: 로그 포맷팅 설정
+    - loguru 라이브러리를 사용해서 환경변수로 설정이 가능하다.
+    - 자세한 로그 포맷은 [loguru 공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#record)에서 확인 바람
+  - `SAVE`: 로그 파일 저장 여부
+  - `LOG_SAVE_PATH`: 디렉토리명까지 설정, (default = `YYYY/MM/*.log` 디렉토리 생성)
+  - `ROTATION`: 매일 `mm:ss`시에 새로운 로그 파일 생성
+  - `RETENTION`: 설정한 시간 이후에 제거 (ex. "1 month 2 weeks", "10h")
+  - `COMPRESSION`: 압축 형식 ("gz", "bz2", "xz", "lzma", "tar", "tar.gz", "tar.bz2", "tar.xz", "zip" 등의 형식 지원)
     > `ROTATION`, `RETENTION`, `COMPRESSION`, `LOGURU_FORMAT` 모두 loguru에 있는 파라미터로 자세한 파라미터 정보는 [공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#file:~:text=See%20datetime.datetime-,The%20time%20formatting,-To%20use%20your) 확인
+- 서비스 관련 설정
   - `X_TOKEN`: API 사용을 위한 토큰값 설정
+### Docker run
 - ❗ 도커 빌드 및 실행할 경우, `version.py` 실행 사전 작업 필수 ❗
   (없을 경우에도 정상작동 되지만 필요한 정보를 볼 수 없음)
   👉 `version_info.py` 정보 생성 과정
@@ -77,7 +80,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   git_branch: str = '21-refectoring-intialize'
   git_revision: str = '6a6b8b01cffcb7519013317f052dd104e1c39e56'
   git_short_revision: str = '6a6b8b0'
-  build_date: str = '2024-03-20 09:16:40'
+  build_date: str = '2024-05-29 09:16:40'
   ```
 - `pyproject.toml` 작성 (참고: [Declaring project metadata](https://packaging.python.org/en/latest/specifications/declaring-project-metadata/))
    - project 메타데이터 작성 (_name_, _version_, ... etc)

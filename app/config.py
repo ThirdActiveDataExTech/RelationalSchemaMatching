@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     RETENTION: str = "10 days"
     COMPRESSION: str = "zip"
     LOG_SAVE_PATH: str = "./logs"
+    LOGURU_FORMAT: str = "<green>{time:YY-MM-DD HH:mm:ss.SSS}</green> | " \
+                         "<level>{level: <8}</level> | " \
+                         "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> -{process} {thread} <level>{message}</level>"
 
     @computed_field  # type: ignore[misc]
     @property
