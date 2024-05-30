@@ -1,7 +1,7 @@
 import logging
 from typing import Literal, List, Annotated, Any, Union
 
-from pydantic import AnyUrl, BeforeValidator, computed_field
+from pydantic import AnyUrl, BeforeValidator, computed_field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,17 +27,30 @@ class Settings(BaseSettings):
     MAJOR_VERSION: str = "v1"
     STATUS: str = "dev"
 
-    LEVEL: str = "DEBUG"
-    SYSTEM_LOG_LEVEL: int = logging.getLevelName(LEVEL)
-    JSON_LOG: int = 0
-    SAVE: int = 1
-    ROTATION: str = "00:00"
-    RETENTION: str = "10 days"
-    COMPRESSION: str = "zip"
-    LOG_SAVE_PATH: str = "./logs"
+    # LOG
+    LEVEL: str = "INFO"
+    JSON_LOG: bool = False
     LOGURU_FORMAT: str = "<green>{time:YY-MM-DD HH:mm:ss.SSS}</green> | " \
                          "<level>{level: <8}</level> | " \
                          "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> -{process} {thread} <level>{message}</level>"
+
+    # LOG SAVE CONFIG
+    SAVE: bool = True
+    LOG_SAVE_PATH: str = "./logs"
+    ROTATION: str = "00:00"
+    RETENTION: str = "10 days"
+    COMPRESSION: str = "zip"
+
+    @field_validator('LEVEL')
+    def validate_log_level(cls, v):
+        if v.upper() not in 'CRITICAL|ERROR|WARNING|INFO|DEBUG|NOTSET'.split('|'):
+            raise ValueError(f"로그레벨 `LEVEL` 은 'CRITICAL|ERROR|WARNING|INFO|DEBUG|NOTSET' 만 가능. LEVEL={v}")
+        return v
+
+    @computed_field  # type: ignore[misc]
+    @property
+    def log_level(self) -> Any:  # real return type: numeric value (int)
+        return logging.getLevelName(self.LEVEL)
 
     @computed_field  # type: ignore[misc]
     @property
@@ -47,10 +60,12 @@ class Settings(BaseSettings):
             return f"http://{self.DOMAIN}"
         return f"https://{self.DOMAIN}"
 
+    # Backend
     BACKEND_CORS_ORIGINS: Annotated[
         Union[List[AnyUrl], str], BeforeValidator(parse_cors)
     ] = []
 
+    # Service Config
     X_TOKEN: str = "wisenut"
 
 
