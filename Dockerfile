@@ -19,7 +19,7 @@ RUN apt-get update && \
 WORKDIR /home/wisenut/app
 
 # Copy necessary files and directory
-COPY pyproject.toml poetry.lock version_info.py .env ./
+COPY pyproject.toml poetry.lock version_info.py .env gunicorn.conf.py ./
 COPY ./app ./app/
 
 # Install Requirements
