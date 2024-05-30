@@ -8,6 +8,9 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
+from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html, get_redoc_html
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.cors import CORSMiddleware
@@ -42,24 +45,26 @@ async def lifespan(lifespan_app: FastAPI):
 
 app = FastAPI(
     lifespan=lifespan,
-    title=f"{settings.SERVICE_NAME} Service",
+    title=f"{settings.SERVICE_NAME}",
     summary="AI플랫폼팀 Python FastAPI Template 🚀",
     description=description,
     version=VERSION,
     license_info={
         "name": "Wisenut"
     },
-    dependencies=[Depends(get_token_header)]
+    docs_url=None, redoc_url=None  # Serve the static files
 )
+app.mount("/static", StaticFiles(directory="static"), name="static")
 app.logger = setup_logging()  # type: ignore
 
-app.include_router(users.router)
-app.include_router(items.router)
+app.include_router(users.router, dependencies=[Depends(get_token_header)])
+app.include_router(items.router, dependencies=[Depends(get_token_header)])
 app.include_router(
     admin.router,  # app/internal/admin.py 원본을 수정하지 않고 선언 가능
     prefix="/admin",
     tags=["admin"],
     responses={418: {"description": "I'm a teapot"}},
+    dependencies=[Depends(get_token_header)]
 )
 
 
@@ -78,7 +83,7 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     if exc.status_code == 404:
         return JSONResponse(
             status_code=200, content={
-                "code": status_code, "message": "Invalid URL. see api-doc `/docs` or `/openapi.json` ",
+                "code": status_code, "message": "Invalid URL. see api-doc `/docs` or `/openapi.json`",
                 "result": {"detail": exc.detail},
             }
         )
@@ -120,9 +125,34 @@ async def custom_exception_handler(request: Request, exc: SampleServiceError):
     )
 
 
-@app.get("/")
-async def root():
-    return {"title": app.title, "summary": app.summary, "version": app.version, "docs_url": app.docs_url}
+@app.get('/')
+def index():
+    return RedirectResponse('/docs')
+
+
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url=app.openapi_url,  # pyright: ignore
+        title=app.title + " - Swagger UI",
+        oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+        swagger_js_url="/static/swagger-ui-bundle.js",
+        swagger_css_url="/static/swagger-ui.css",
+    )
+
+
+@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # pyright: ignore
+async def swagger_ui_redirect():
+    return get_swagger_ui_oauth2_redirect_html()
+
+
+@app.get("/redoc", include_in_schema=False)
+async def redoc_html():
+    return get_redoc_html(
+        openapi_url=app.openapi_url,  # pyright: ignore
+        title=app.title + " - ReDoc",
+        redoc_js_url="/static/redoc.standalone.js",
+    )
 
 
 @app.get("/health")
