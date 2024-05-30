@@ -16,7 +16,7 @@ RUN apt-get update && \
 WORKDIR /home/wisenut/app
 
 # Copy necessary files and directory
-COPY pyproject.toml poetry.lock version_info.py .env ./
+COPY pyproject.toml poetry.lock version_info.py .env gunicorn.conf.py ./
 COPY ./app ./app/
 
 # Install Requirements
@@ -26,5 +26,5 @@ RUN poetry install --without lint,test --no-root
 # Expose the port
 EXPOSE 8000
 
-# Run the app
-CMD ["poetry", "run", "fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
+# Run the app: gunicorn (config: gunicorn.conf.py)
+CMD ["poetry", "run", "gunicorn", "app.main:app"]
