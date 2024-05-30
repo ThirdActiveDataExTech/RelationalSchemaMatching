@@ -157,4 +157,4 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 if __name__ == '__main__':
-    uvicorn.run(app="main:app", host="0.0.0.0", port=settings.PORT, log_level=settings.SYSTEM_LOG_LEVEL)
+    uvicorn.run(app="main:app", host="0.0.0.0", port=settings.PORT, log_level=settings.log_level)
