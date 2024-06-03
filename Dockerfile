@@ -20,6 +20,7 @@ WORKDIR /home/wisenut/app
 
 # Copy necessary files and directory
 COPY pyproject.toml poetry.lock version_info.py .env gunicorn.conf.py ./
+COPY ./static ./static/
 COPY ./app ./app/
 
 # Install Requirements
