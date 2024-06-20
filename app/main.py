@@ -4,15 +4,18 @@ import os
 import sys
 import time
 from contextlib import asynccontextmanager
+from uuid import uuid4
 
 import uvicorn
+from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
+from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html, get_redoc_html
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import ValidationError
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.exceptions import HTTPException as StarletteHTTPException, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
@@ -54,6 +57,14 @@ app = FastAPI(
     },
     docs_url=None, redoc_url=None  # Serve the static files
 )
+app.add_middleware(
+    CorrelationIdMiddleware,
+    header_name='X-Request-ID',
+    update_request_header=True,
+    generator=lambda: uuid4().hex,
+    validator=is_valid_uuid4,
+    transformer=lambda a: a,
+)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.logger = setup_logging()  # type: ignore
 
@@ -75,6 +86,17 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.time() - start_time
     response.headers["X-Process-Time"] = f"{process_time:.6f} sec"
     return response
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    return await http_exception_handler(
+        request,
+        HTTPException(
+            500,
+            'Internal server error',
+            headers={'X-Request-ID': correlation_id.get() or ""}
+        ))
 
 
 @app.exception_handler(StarletteHTTPException)
@@ -184,6 +206,7 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=['X-Request-ID']
     )
 
 if __name__ == '__main__':

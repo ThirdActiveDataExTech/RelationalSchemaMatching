@@ -42,6 +42,7 @@ def setup_logging():
     if settings.JSON_LOG:
         logger_config = dict(sink=sys.stdout, serialize=settings.JSON_LOG, format="{message}")
     else:
+        # logger_config = dict(sink=sys.stdout)
         logger_config = dict(sink=sys.stdout, format=settings.LOGURU_FORMAT)
     logger.configure(handlers=[logger_config])
     if settings.SAVE:
