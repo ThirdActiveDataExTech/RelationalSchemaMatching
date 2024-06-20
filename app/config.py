@@ -32,7 +32,8 @@ class Settings(BaseSettings):
     JSON_LOG: bool = False
     LOGURU_FORMAT: str = "<green>{time:YY-MM-DD HH:mm:ss.SSS}</green> | " \
                          "<level>{level: <8}</level> | " \
-                         "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> -{process} {thread} <level>{message}</level>"
+                         "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> " \
+                         "- {process} {thread} <level>{message}</level>"
 
     # LOG SAVE CONFIG
     SAVE: bool = True

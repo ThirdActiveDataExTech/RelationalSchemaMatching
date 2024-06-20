@@ -15,7 +15,7 @@ authors = [
 ]
 maintainers = [
     "Moonjong Kim <penbell@wisenut.co.kr>",
-    "Chanyeong Lee <wisnt65@wisenut.co.kr>",
+    "Chanhyeong Lee <wisnt65@wisenut.co.kr>",
     "Seoyeon Park <sally9476@wisenut.co.kr>",
     "Joongheon Jeong <legagain@wisenut.co.kr>"
 ]
@@ -36,13 +36,14 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = ">=3.9,<4.0"
 fastapi = "0.111.0"
 loguru = "^0.7.2"
 pydantic = "^2.7.0"
 pyyaml = "^6.0.1"
 uvicorn = "^0.29.0"
 pydantic-settings = "^2.2.1"
+asgi-correlation-id = "^4.3.1"
 
 
 [tool.poetry.group.lint.dependencies]
