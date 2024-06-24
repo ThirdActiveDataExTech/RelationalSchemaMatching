@@ -34,23 +34,6 @@ test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypo
 trio = ["trio (>=0.23)"]
 
 [[package]]
-name = "asgi-correlation-id"
-version = "4.3.1"
-description = "Middleware correlating project logs to individual requests"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "asgi_correlation_id-4.3.1-py3-none-any.whl", hash = "sha256:128509a822e87ac544662804b402761ee2d8fd9769f23339cff220d22d222546"},
-    {file = "asgi_correlation_id-4.3.1.tar.gz", hash = "sha256:3d7efa2c002fa909d6e1a452c1cf8088ff5ac186884b4d9aa5430ed00b036278"},
-]
-
-[package.dependencies]
-starlette = ">=0.18"
-
-[package.extras]
-celery = ["celery"]
-
-[[package]]
 name = "certifi"
 version = "2024.2.2"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -1441,4 +1424,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<4.0"
-content-hash = "93069faadbd7a7b2b4d1a3b0d49f3255596033890917755d5ac53ce2aa7731eb"
+content-hash = "01440d518325ca5139694ee221ddf46a063c1c6feb956993b68f66f36c21ea20"

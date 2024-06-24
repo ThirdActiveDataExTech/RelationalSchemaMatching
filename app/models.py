@@ -25,7 +25,7 @@ class CreateItemsRequestModel(BaseModel):
     def check_stock(cls, stock):
         if stock < 0:
             raise InvalidItemStock(stock)
-        return stock    # return 필수! 작성하지 않으면 null값 return
+        return stock  # return 필수! 작성하지 않으면 null값 return
 
 
 class ItemsResponseModel(BaseModel):
@@ -46,9 +46,15 @@ class UsersResponseModel(BaseModel):
 
 
 class APIResponseModel(BaseModel):
-    """기본 API 응답 포맷 by AIP Restful API 디자인 가이드"""
-    code: int = int(f"{settings.SERVICE_CODE}200")
-    message: str = f"API Response Success ({VERSION})" if Log.is_debug_enable() else "API Response Success"
+    """기본 API 응답 포맷 by AIP Restful API 디자인 가이드
+
+    AI플랫폼팀 API 정식 포맷으로 그대로 사용 권장
+    result에는 사용할 응답 포맷을 Typing으로 설정함
+    """
+    code: int = Field(default=int(f"{settings.SERVICE_CODE}200"))
+    message: str = Field(
+        default=f"API Response Success ({VERSION})" if Log.is_debug_enable() else "API Response Success")
     result: Union[
-        ItemsResponseModel, CreateItemResponseModel, UsersResponseModel, Dict[str, Union[str, Dict[str, str]]]] = {}
+        ItemsResponseModel, CreateItemResponseModel, UsersResponseModel, Dict[str, Union[str, Dict[str, str]]]] = Field(
+        default={})
     description: str = Field(default="API 응답 성공")

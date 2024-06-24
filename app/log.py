@@ -44,7 +44,7 @@ def setup_logging():
     else:
         # logger_config = dict(sink=sys.stdout)
         logger_config = dict(sink=sys.stdout, format=settings.LOGURU_FORMAT)
-    logger.configure(handlers=[logger_config])
+    logger.configure(handlers=[logger_config], extra={"request_id": ''})  # extra[request_id] 기본값 지정
     if settings.SAVE:
         log_save_path = Path(settings.LOG_SAVE_PATH) / "{time:YYYY}" / "{time:MM}" / "{time:YYYYMMDD}_info.log"
         logger.add(  # type: ignore

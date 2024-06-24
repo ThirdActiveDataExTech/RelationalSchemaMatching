@@ -7,15 +7,14 @@ from contextlib import asynccontextmanager
 from uuid import uuid4
 
 import uvicorn
-from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
-from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html, get_redoc_html
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from loguru import logger
 from pydantic import ValidationError
-from starlette.exceptions import HTTPException as StarletteHTTPException, HTTPException
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 
@@ -57,14 +56,6 @@ app = FastAPI(
     },
     docs_url=None, redoc_url=None  # Serve the static files
 )
-app.add_middleware(
-    CorrelationIdMiddleware,
-    header_name='X-Request-ID',
-    update_request_header=True,
-    generator=lambda: uuid4().hex,
-    validator=is_valid_uuid4,
-    transformer=lambda a: a,
-)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.logger = setup_logging()  # type: ignore
 
@@ -88,15 +79,31 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 
-@app.exception_handler(Exception)
-async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
-    return await http_exception_handler(
-        request,
-        HTTPException(
-            500,
-            'Internal server error',
-            headers={'X-Request-ID': correlation_id.get() or ""}
-        ))
+async def get_request_id(request: Request):
+    """요청 ID 생성
+
+    클라이언트가 헤더로 요청한 request id가 따로 있을 경우, 해당 값을 사용하고 없을 경우, uuid 생성
+    Args:
+        request:
+
+    Returns:
+
+    """
+    x_request_id = request.headers.get('X-Request-ID')
+    request_id = x_request_id if x_request_id else uuid4().hex
+    return request_id
+
+
+@app.middleware("http")
+async def add_request_id(request: Request, call_next):
+    request_id = await get_request_id(request)
+    with logger.contextualize(request_id=request_id):
+        # extra[request_id]가 uuid 로 부여됨
+        # logging.debug(f"Start Request")   # 요청 로직 시작: 필요할 경우 사용
+        response = await call_next(request)  # 응답까지 로그에 생성
+        response.headers['X-Request-ID'] = request_id  # response.header 에 추가 --> client 가 로그 추적 가능
+        # logging.debug(f"End Request") # 요청 로직 종료: 필요할 경우 사용
+    return response
 
 
 @app.exception_handler(StarletteHTTPException)
