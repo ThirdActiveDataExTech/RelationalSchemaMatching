@@ -10,21 +10,36 @@
 
 Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 1. Python 3.9: 높은 호환성
+   > 다른 파이썬 버전도 호환이 가능하나 완벽히 테스트되지 않은 상태
 2. MSA 구조에 적합한 FastAPI 템플릿
 3. 의존성: Poetry (`pyproject.toml`으로 한 번에 관리)
-4. 내부망 환경 구성
+4. 환경 변수를 통한 전체적인 프로젝트 변수를 간단하게 관리
 5. 도커 환경 구성 (개발 및 배포용 Dockerfile 구성)
-6. gitlab-ci로 _build, unit test (pytest), lint test (ruff, mypy, pyright), deploy_ 수행
+6. Gunicorn으로 multi process 환경 구성
+7. 내부망 환경 구성
+8. gitlab-ci로 _build, unit test (pytest), lint test (ruff, mypy, pyright), deploy_ 수행
 
 ## Getting started
 
 ### 1. Create Project
-1. GitLab **Create new project** 을 통해 새로운 프로젝트 생성
-2. **Create from template** 선택
-3. **Group** 선택
-4. **wisenut/DE/테스트베드:Python FastAPI Template** 에서 **Use template** 선택
-5. _Project name, Project description (optional)_ 등을 작성하고 **Create project** 선택
-6. 🔴 **gitlab-ci Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **Name: gitlab+deploy-token** 으로 토큰 생성하기 🔴
+> 총 3가지 방법이 존재함 (**Create from template** 방법의 경우, GitLab 프로젝트 이동으로 인해 사용불가)
+1. **Create blank project**
+   1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
+   2. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
+   3. Python FastAPI Template을 Download source code (zip, tar.gz, tar.bz2, tar)를 통해 받아서 Push
+2. **Create project using fork**
+   1. `Create new Fork` or `Fork`를 통해서 새로운 프로젝트 생성
+   2. _Project name, Project description (optional)_ 등을 작성하고 `Fork Project` 선택
+   3. 프로젝트 생성 후 Fork 해제    
+      Fork를 해제하지 않으면 새로 생성한 프로젝트의 MR이 Python FastAPI Template에 올라오거나 Issue를 통해 Create merge request 불가
+3. **_(Deprecated) Create from template_**
+   1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
+   2. `Create from template` 선택
+   3. `Group` 선택
+   4. Python FastAPI Template 에서 `Use template` 선택
+   5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
+
+> 🔴 **gitlab-ci Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab+deploy-token** 이름으로 토큰 생성하기
 
 ### 2. Development Environment Setting
 1. 로컬 개발 환경에 `git clone ...` 
