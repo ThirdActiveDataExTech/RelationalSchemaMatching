@@ -39,7 +39,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
    4. Python FastAPI Template 에서 `Use template` 선택
    5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
 
-> 🔴 **gitlab-ci Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab+deploy-token** 이름으로 토큰 생성하기
+> 🔴 **gitlab-ci Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 토큰 생성하기
 
 ### 2. Development Environment Setting
 1. 로컬 개발 환경에 `git clone ...` 
@@ -64,8 +64,9 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
      5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
 
 ## 3. Extra Setting (Optional)
-### `.env`
-> 환경 변수로 앱 구동 및 관련 설정 진행
+### `config.py` 및 `.env`
+> 환경 변수로 앱 구동 및 관련 설정 진행    
+> 환경 변수 우선순위: 환경변수 외부 주입 및 설정 > `.env`에 설정한 값 > `config.py` 디폴트값
 - `PORT`: fastapi server port
 - `SERVICE_NAME`: 서비스명
 - `SERVICE_CODE`: 서비스코드
@@ -85,6 +86,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
     > `ROTATION`, `RETENTION`, `COMPRESSION`, `LOGURU_FORMAT` 모두 loguru에 있는 파라미터로 자세한 파라미터 정보는 [공식 문서](https://loguru.readthedocs.io/en/stable/api/logger.html#file:~:text=See%20datetime.datetime-,The%20time%20formatting,-To%20use%20your) 확인
 - 서비스 관련 설정
   - `X_TOKEN`: API 사용을 위한 토큰값 설정
+- 추가로 환경변수로 설정해서 내부에서 사용할 변수가 있다면`config.py`에 추가하고, 환경변수(주입 or `.env`)로 설정하여 사용
 ### Docker run
 - ❗ 도커 빌드 및 실행할 경우, `version.py` 실행 사전 작업 필수 ❗
   (없을 경우에도 정상작동 되지만 필요한 정보를 볼 수 없음)
@@ -105,7 +107,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
 ### 4. Run
 - local run
-  - `$HOME/main.py`
+  - `$HOME/main.py` or `uvicorn app.main:app --host 0.0.0.0 --port <port number>`
     - `FileNotFoundError` or `ImportError` 발생시 _Working Directory_ (Working Directory = `$HOME`) 확인하기
   - _http :8000/openapi.json_ or _http://localhost:8000/docs_ 로 API 명세 확인 및 테스트
 - docker run    
