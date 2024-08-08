@@ -40,3 +40,12 @@ class InvalidItemStock(SampleServiceError):
         self.code = int(f"{settings.SERVICE_CODE}{status.HTTP_400_BAD_REQUEST}")
         self.message = "Invalid stock"
         self.result = {"current_stock": stock}
+
+
+class ItemNotFoundError(SampleServiceError):
+    """아이템을 찾을 수 없는 에러"""
+
+    def __init__(self, item_id):
+        self.code = int(f"{settings.SERVICE_CODE}{status.HTTP_404_NOT_FOUND}")
+        self.message = "Item not found"
+        self.result = {"current_item_id": item_id}
