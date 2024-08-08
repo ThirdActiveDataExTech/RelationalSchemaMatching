@@ -55,6 +55,7 @@ class APIResponseModel(BaseModel):
     message: str = Field(
         default=f"API Response Success ({VERSION})" if Log.is_debug_enable() else "API Response Success")
     result: Union[
-        ItemsResponseModel, CreateItemResponseModel, UsersResponseModel, Dict[str, Union[str, Dict[str, str]]]] = Field(
+        UserModel, ItemsResponseModel, CreateItemResponseModel, UsersResponseModel,
+        Dict[str, str], Dict[str, Dict[str, str]]] = Field(
         default={})
     description: str = Field(default="API 응답 성공")

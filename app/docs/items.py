@@ -1,3 +1,5 @@
+from app.models import CreateItemsRequestModel
+
 get_item_normal_example = {
     "summary": "아이템 가져오기 기본 예제",
     "description": "아이템 가져오기",
@@ -20,14 +22,9 @@ update_item_examples = {
 create_item_normal_example = {
     "summary": "아이템 생성 기본 예제",
     "description": "아이템 생성",
-    "value": {
-        "name": "apple",
-        "status": "in stock",
-        "stock": 10
-    }
+    "value": CreateItemsRequestModel(name="apple", status="in stock", stock=10)
 }
 
 create_item_examples = {
     "normal": create_item_normal_example
 }
-
