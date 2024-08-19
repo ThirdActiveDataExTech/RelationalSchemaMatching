@@ -1,3 +1,9 @@
+FROM python:3.9.13-slim as requirements-stage
+
+RUN pip install poetry
+COPY ./pyproject.toml ./poetry.lock /
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --without=test,lint --with=gunicorn
+
 FROM python:3.9.13-slim
 
 # Set environment variables
@@ -15,17 +21,21 @@ RUN apt-get update && \
 # Set the working directory
 WORKDIR /home/wisenut/app
 
+# Copy requirements.txt install libraries
+COPY --from=requirements-stage /requirements.txt ./requirements.txt
+RUN python3 -m pip install --no-cache-dir --upgrade -r requirements.txt
+
+# Make gunicorn worker process temp file directory
+RUN mkdir -p /tmp/shm && mkdir /.local
+
 # Copy necessary files and directory
-COPY pyproject.toml poetry.lock version_info.py .env gunicorn.conf.py ./
+COPY pyproject.toml version_info.py .env gunicorn.conf.py ./
 COPY ./static ./static/
 COPY ./app ./app/
 
-# Install Requirements
-RUN pip install poetry
-RUN poetry install --without lint,test --no-root
 
 # Expose the port
 EXPOSE 8000
 
 # Run the app: gunicorn (config: gunicorn.conf.py)
-CMD ["poetry", "run", "gunicorn", "app.main:app"]
+ENTRYPOINT ["gunicorn", "app.main:app"]
