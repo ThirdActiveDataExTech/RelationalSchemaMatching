@@ -33,7 +33,6 @@ COPY pyproject.toml version_info.py .env gunicorn.conf.py ./
 COPY ./static ./static/
 COPY ./app ./app/
 
-
 # Expose the port
 EXPOSE 8000
 
