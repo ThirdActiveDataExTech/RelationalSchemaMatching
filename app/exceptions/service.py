@@ -1,30 +1,14 @@
 """
 서비스 자체 로직에 관한 커스텀 예외처리 작성
 """
-import json
 
 from starlette import status
 
 from app.config import settings
+from app.exceptions.base import ApplicationError
 
 
-class SampleServiceError(Exception):
-
-    def __init__(self, code: int, message: str, result):
-        self.code = code
-        self.message = message
-        self.result = result
-
-    def __str__(self):
-        exception_data = {
-            "code": self.code,
-            "message": self.message,
-            "result": self.result
-        }
-        return json.dumps(exception_data, indent=4, ensure_ascii=False)
-
-
-class TokenValidationError(SampleServiceError):
+class TokenValidationError(ApplicationError):
     """유효하지 않은 토큰 설정"""
 
     def __init__(self, x_token):
@@ -33,7 +17,7 @@ class TokenValidationError(SampleServiceError):
         self.result = {"current_x_token": x_token}
 
 
-class InvalidItemStock(SampleServiceError):
+class InvalidItemStock(ApplicationError):
     """유효하지 않은 아이템 재고값 설정"""
 
     def __init__(self, stock):
@@ -42,7 +26,7 @@ class InvalidItemStock(SampleServiceError):
         self.result = {"current_stock": stock}
 
 
-class ItemNotFoundError(SampleServiceError):
+class ItemNotFoundError(ApplicationError):
     """아이템을 찾을 수 없는 에러"""
 
     def __init__(self, item_id):

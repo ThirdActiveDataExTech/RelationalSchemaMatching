@@ -1,4 +1,4 @@
-from app.models import CreateItemsRequestModel
+from app.schemas.items import CreateItemsRequestModel
 
 get_item_normal_example = {
     "summary": "아이템 가져오기 기본 예제",

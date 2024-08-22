@@ -14,10 +14,8 @@ authors = [
     "Seoyeon Park <sally9476@wisenut.co.kr>"
 ]
 maintainers = [
-    "Moonjong Kim <penbell@wisenut.co.kr>",
     "Chanhyeong Lee <wisnt65@wisenut.co.kr>",
     "Seoyeon Park <sally9476@wisenut.co.kr>",
-    "Joongheon Jeong <legagain@wisenut.co.kr>"
 ]
 description = "AIP Team Python FastAPI Template"
 readme = "README.md"
@@ -43,6 +41,9 @@ pydantic = "^2.7.0"
 pyyaml = "^6.0.1"
 uvicorn = "^0.29.0"
 pydantic-settings = "^2.2.1"
+
+[tool.poetry.group.db.dependencies]
+sqlalchemy = "^2.0.32"
 
 
 [tool.poetry.group.lint.dependencies]
@@ -144,5 +145,6 @@ exclude = [
 defineConstant = { DEBUG = true }
 reportMissingImports = true
 reportMissingTypeStubs = false
+reportArgumentType = false
 typeCheckingMode = "basic"
 pythonVersion = "3.9"

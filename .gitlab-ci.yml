@@ -49,12 +49,12 @@ unit-test-job:
         coverage_format: cobertura
         path: coverage.xml
 
-lint-test-job:
+ruff-lint-test-job:
   stage: test
   script:
     - ruff check .
 
-type-checker-lint-test-job:
+mypy-lint-test-job:
   stage: test
   script:
     - mypy .

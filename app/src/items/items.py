@@ -3,7 +3,8 @@ from typing import Dict
 from starlette import status
 
 from app.config import settings
-from app.src.exception.service import SampleServiceError, ItemNotFoundError
+from app.exceptions.base import ApplicationError
+from app.exceptions.service import ItemNotFoundError
 
 
 def load_mock_items() -> Dict[str, Dict[str, str]]:
@@ -21,7 +22,7 @@ def read_item_from_db(item_id):
 
 def update_item_to_db(item_id):
     if item_id != "plumbus":
-        raise SampleServiceError(
+        raise ApplicationError(
             code=int(str(settings.SERVICE_CODE) + str(status.HTTP_403_FORBIDDEN)),
             message="You can only update the item: plumbus", result={}
         )
