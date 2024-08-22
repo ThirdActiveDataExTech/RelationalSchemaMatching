@@ -9,8 +9,9 @@ from fastapi import APIRouter, Depends, Path, Body
 from fastapi.responses import JSONResponse
 
 from app.dependencies import get_token_header
-from app.docs.items import create_item_examples, update_item_examples, get_item_examples
-from app.models import APIResponseModel, CreateItemsRequestModel, ItemsResponseModel, CreateItemResponseModel
+from app.api.examples.items import create_item_examples, update_item_examples, get_item_examples
+from app.schemas.response import APIResponseModel
+from app.schemas.items import CreateItemsRequestModel, ItemsResponseModel, CreateItemResponseModel
 from app.src.items.items import load_mock_items, read_item_from_db, update_item_to_db
 from app.version import VERSION
 

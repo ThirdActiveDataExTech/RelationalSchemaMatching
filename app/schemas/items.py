@@ -6,14 +6,9 @@ pydantic BaseModel을 기본적으로 활용한다.
     - @model_validator(...)를 사용하여 모델 적용 전과 후에 확인할 로직을 작성한다.
     > 자세한 사항은 pydantic 공식 문서 확인
 """
-from typing import Union, Dict, List
-
 from pydantic import BaseModel, Field, field_validator
 
-from app.config import settings
-from app.log import Log
-from app.src.exception.service import InvalidItemStock
-from app.version import VERSION
+from app.exceptions.service import InvalidItemStock
 
 
 class CreateItemsRequestModel(BaseModel):
@@ -35,27 +30,3 @@ class ItemsResponseModel(BaseModel):
 
 class CreateItemResponseModel(BaseModel):
     item: CreateItemsRequestModel
-
-
-class UserModel(BaseModel):
-    username: str
-
-
-class UsersResponseModel(BaseModel):
-    users: List[UserModel]
-
-
-class APIResponseModel(BaseModel):
-    """기본 API 응답 포맷 by AIP Restful API 디자인 가이드
-
-    AI플랫폼팀 API 정식 포맷으로 그대로 사용 권장
-    result에는 사용할 응답 포맷을 Typing으로 설정함
-    """
-    code: int = Field(default=int(f"{settings.SERVICE_CODE}200"))
-    message: str = Field(
-        default=f"API Response Success ({VERSION})" if Log.is_debug_enable() else "API Response Success")
-    result: Union[
-        UserModel, ItemsResponseModel, CreateItemResponseModel, UsersResponseModel,
-        Dict[str, str], Dict[str, Dict[str, str]]] = Field(
-        default={})
-    description: str = Field(default="API 응답 성공")

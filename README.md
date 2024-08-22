@@ -1,7 +1,7 @@
 # Python FastAPI Template
 
 [![PythonVersion](https://img.shields.io/badge/python-3.9.13-blue)](https://www.python.org/downloads/release/python-3913/)
-[![FastAPIVersion](https://img.shields.io/badge/fastapi-0.110.0-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
+[![FastAPIVersion](https://img.shields.io/badge/fastapi-0.111.0-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
 [![loguru](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
 
 ## AI플랫폼팀 전용 FastAPI 개발 템플릿 
@@ -92,12 +92,12 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   (없을 경우에도 정상작동 되지만 필요한 정보를 볼 수 없음)
   👉 `version_info.py` 정보 생성 과정
   ```python
-  service: str = 'FastAPI Sample'
-  version: str = 'v1.6a6b8b0'
-  git_branch: str = '21-refectoring-intialize'
-  git_revision: str = '6a6b8b01cffcb7519013317f052dd104e1c39e56'
-  git_short_revision: str = '6a6b8b0'
-  build_date: str = '2024-05-29 09:16:40'
+  service: str = 'Python FastAPI Template'
+  version: str = 'v1.2408.08-dev-733a810'
+  git_branch: str = 'main'
+  git_revision: str = '733a810bff5c29e4f7ffa6f27d2d57991491f895'
+  git_short_revision: str = '733a810'
+  build_date: str = '2024-08-08 11:25:03'
   ```
 - `pyproject.toml` 작성 (참고: [Declaring project metadata](https://packaging.python.org/en/latest/specifications/declaring-project-metadata/))
    - project 메타데이터 작성 (_name_, _version_, ... etc)
@@ -114,9 +114,9 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   `docker build ...` && `docker run -d -p ...` 로 컨테이너 빌드 & 구동
   ```shell
   # 도커 이미지 빌드
-  docker build -t python-fastapi-template:0.1.5-dev -f Dockerfile .
+  docker build -t python-fastapi-template:latest -f Dockerfile .
   # 컨테이너 구동
-  docker run -d --name python-fastapi-template -p 8000:8000 -e DEFAULT_X_TOKEN=fake-super-secret-token -e DEFAULT_TOKEN=default-token python-fastapi-template:0.1.5-dev
+  docker run -d --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:0.1.5-dev
   ```
 
 ## 📚 MSA
@@ -125,44 +125,58 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 ```
 .
 ├── app                  # "app" is a Python package
-│   ├── __init__.py      # 
-│   ├── main.py          # 
-│   ├── dependencies.py  # 
-│   ├── exceptions.py  # custom exception
-│   ├── models.py  # 
-│   ├── schemas.py  # 데이터베이스를 사용할 경우
-│   ├── database.py  # 데이터베이스를 사용할 경우
-│   ├── crud.py  # 데이터베이스를 사용할 경우
-│   └── routers          # (API Endpoints) "routers" is a "Python subpackage" 
-│   │   ├── __init__.py  # 
-│   │   ├── items.py     # 
-│   │   └── users.py     # 
-│   └── internal         # 
-│       ├── __init__.py  # 
-│       └── admin.py     # 
+│   └── api          # (API Endpoints) "routers" is a "Python subpackage" 
+│   │   ├── examples    # 라우터에 사용할 예제들 정의
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   └── users.py
+│   └── exceptions
+│   │   ├── __init__.py
+│   │   ├── base.py     # 앱에서 발생하는 내부 에러 기본 포맷
+│   │   └── service.py     # base.py를 활용하여 앱에서 발생하는 내부 에러들 정의
+│   └── schemas          # Pydantic model 설정
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   └── users.py
 │   └── src         # (Main Functions) "src" is a "Python subpackage"
-│       ├── __init__.py  # 
-├── tests                  # app directory architecture 에 맞게 unit test 구성
-│   ├── __init__.py      # 
-│   └── routers          # 
-│   │   ├── __init__.py  # 
-│   │   ├── test_items.py     # 
-│   │   └── test_users.py     # 
-│   └── internal         # 
-│       ├── __init__.py  # 
-│       └── test_admin.py     # 
-│   └── src         # 
-│       ├── __init__.py  #
+│   │   ├── items   # items 관련 로직 소스 코드
+│   │   ├── users   # users 관련 로직 소스 코드
+│   │   └── __init__.py 
+│   └── utils         # 외부 도구 모음
+│   │   ├── __init__.py   # users 관련 로직 소스 코드
+│   │   └── authenticaiton.py   # 권한 관련 설정
+│   ├── __init__.py
+│   ├── config.py   # 앱 내부에서 사용할 변수들 설정 (환경변수를 통해서 값을 받아올 수 있음)
+│   ├── constants.py   # 상수 설정
+│   ├── dependencies.py     # 라우터 관련 의존성 설정
+│   ├── handlers.py  # fastapi handlers 정의 (정의 후 main.py에 추가해야함)
+│   ├── log.py  # 로그 관련 설정
+│   ├── main.py     # main
+│   ├── version.py  # 버전 관련 정보 생성 및 전달 파일 (앱 실행 전에 해당 파일 수행해서 version_info.py 생성해야함)
+├── static  # cdn.jsdelivr.net 의존성 없애기 위한 docs 관련 static files
+├── tests   # app directory architecture 에 맞게 unit test 구성
+│   └── api
+│   │   ├── __init__.py
+│   │   ├── test_items.py     # items 관련 API Call 단위테스트
+│   │   └── test_users.py     # users 관련 API Call 단위테스트
+│   └── src
+│       ├── __init__.py
+│       ├── items   # items 관련 로직 단위테스트
+│       └── users  # users 관련 로직 단위테스트
+│   ├── __init__.py
+│   ├── check_common_conditions.py      # router unit test 공통 확인 사항, 필요할 경우 추가 공통 테스트 추가해도 됨
+│   ├── conftest.py     # pytest conf file
+│   └── test_main.py
 ```
 
-- **routers**: API Endpoint. 작성한 API들은 `$HOME/app/main.py`에 router를 추가한다. (ex. `app.include_router(users.router)`)
+- **api**: API Endpoint. 작성한 API들은 `$HOME/app/main.py`에 router를 추가한다. (ex. `app.include_router(users.router)`)
 - **src**: 모듈 메인 기능
 - unit test
   - 👉 유닛 테스트는 기본적으로 `$HOME/app`의 디렉토리 구조에 맞게 구성한다.
   - 유닛 테스트 종류로는 기능 테스트, API 엔드포인트 테스트, Pydantic 모델 유효성 테스트, 보안 테스트가 있다.
 - **Dockerfile**
-  - `Dockerfile`(=Dockerfile.dev 역할): 개발을 위해 필요한 도구 및 라이브러리와 같은 추가적인 종속성을 설치하기 위한 라이브러리들이 설치된 환경
-  - `product.Dockerfile`: 최종 제품을 배포하기 위해 필요한 것들만 포함한 환경
+  - `dev.Dockerfile`: 개발을 위해 필요한 도구 및 라이브러리와 같은 추가적인 종속성을 설치하기 위한 라이브러리들이 설치된 환경
+  - `Dockerfile`, `guinicorn.Dockerfile`: 최종 제품을 배포하기 위해 필요한 것들만 포함한 환경
 
 
 # Guide for each environment
@@ -202,7 +216,7 @@ gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker a
   - 공식문서를 참고하여 사용 환경에 맞는 설정 필요
 
 ## MSA: 내부망
-### 배포 가이드
+### Deployment Guide
 1. `pyproject.toml` 작성 (참고: [Declaring project metadata](https://packaging.python.org/en/latest/specifications/declaring-project-metadata/))
    - project 메타데이터 작성 (_name_, _version_, ... etc)
    - 의존성 작성: _dependencies_
@@ -212,7 +226,7 @@ gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker a
        - (ex) `pip download . --dest .\pypi\package\`
    2. 파이썬 모듈 내부에 아래와 같은 구조로 준비 완료
 
-### 실행가이드
+### Run Guide
 1. 가상 환경 구성 및 진입
    1. 가상 환경 구성: `python -m venv venv`
    2. 가상 환경 진입: `.\venv\Scripts\activate` or `source .venv/bin/activate`
@@ -221,10 +235,7 @@ gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker a
 3. `python app/main.py` 실행
 
 
-# 📚 참고 사항 📚   
-- 해당 템플릿은 크게 **msa**와 **monlith** 두 가지로 나뉜다. (@TODO: monolith)
-- Default는 **msa**(`$HOME/app`)로 해당 템플릿을 그대로 사용하면 된다.
-- TODO
-    > @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.
-    > 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.
-  - 출처: https://github.com/zhanymkanov/fastapi-best-practices
+# 📚 참고 사항 📚
+> @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.    
+> 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.    
+> 출처: https://github.com/zhanymkanov/fastapi-best-practices
