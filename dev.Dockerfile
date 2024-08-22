@@ -1,14 +1,17 @@
 FROM python:3.9.13-slim
 
+# Setting home directory and user name
+ENV APP_HOME=/home/wisenut/app
+
+# Set the working directory
+WORKDIR $APP_HOME
+
 # Set environment variables
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf-8
-ENV PYTHONPATH=/home/wisenut/app:${PYTHONPATH}
-
-# Set the working directory
-WORKDIR /home/wisenut/app
+ENV PYTHONPATH=$APP_HOME:${PYTHONPATH}
 
 # Install libraries
 RUN apt-get update && \
