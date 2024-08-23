@@ -16,3 +16,10 @@ class ApplicationError(Exception):
             "result": self.result
         }
         return json.dumps(exception_data, indent=4, ensure_ascii=False)
+
+    def to_dict(self):
+        return {
+            "code": self.code,
+            "message": self.message,
+            "result": self.result
+        }
