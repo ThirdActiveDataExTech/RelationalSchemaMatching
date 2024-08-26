@@ -13,6 +13,9 @@ variables:
   PIPELINE_SEQUENCE: $CI_PIPELINE_IID
   TZ: "Asia/Seoul"
   FF_TIMESTAMPS: true
+  IMAGE_TAG_LATEST: "$CI_REGISTRY_IMAGE:latest"
+  IMAGE_TAG_DEV: "$CI_REGISTRY_IMAGE:dev"
+  IMAGE_TAG_PROD: "$CI_REGISTRY_IMAGE:prod"
   # for secret-detection
   SECURE_ANALYZERS_PREFIX: "$CI_TEMPLATE_REGISTRY_HOST/security-products"
   SECRET_DETECTION_IMAGE_SUFFIX: ""
@@ -38,9 +41,6 @@ before_script:
       VERSION=${MAJOR_VERSION}.$(date +'%y%m.%d')-${STATUS}-$CI_COMMIT_SHORT_SHA
       set +o allexport
       IMAGE_TAG=$CI_REGISTRY_IMAGE:$VERSION
-      IMAGE_TAG_LATEST=$CI_REGISTRY_IMAGE:latest
-      IMAGE_TAG_DEV=$CI_REGISTRY_IMAGE:dev
-      IMAGE_TAG_PROD=$CI_REGISTRY_IMAGE:prod
       BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')
       echo "TAGs: version($IMAGE_TAG), latest($IMAGE_TAG_LATEST), prod($IMAGE_TAG_PROD), dev($IMAGE_TAG_DEV)"
       echo "version: str = '$VERSION'" > version_info.py
@@ -180,9 +180,9 @@ test-prod-image:
   before_script:
     - echo "No before_script to run"
   script:
-    - apt install -y jq httpie
-    - http http://fastapi-app:8000/info | jq .. # 버전 정보가 의도한대로 출력되는지 가볍게 체크
-    - http http://fastapi-app:8000/openapi.json | jq .. # OAS 체크...
+    - apt-get update && apt-get install -y --no-install-recommends jq httpie
+    - http GET http://fastapi-app:8000/info "x-token:wisenut" | jq .. # 버전 정보가 의도한대로 출력되는지 가볍게 체크
+    - http GET http://fastapi-app:8000/openapi.json "x-token:wisenut" | jq .. # OAS 체크
   only:
     - main
 
