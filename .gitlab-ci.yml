@@ -4,12 +4,15 @@ stages:
   - validate
   - check_error
   - test
+  - container_build_test_push
+  - check_app_runnable
   - deploy
 
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   PIPELINE_SEQUENCE: $CI_PIPELINE_IID
   TZ: "Asia/Seoul"
+  FF_TIMESTAMPS: true
   # for secret-detection
   SECURE_ANALYZERS_PREFIX: "$CI_TEMPLATE_REGISTRY_HOST/security-products"
   SECRET_DETECTION_IMAGE_SUFFIX: ""
@@ -24,10 +27,27 @@ cache:
 
 before_script:
   - |
-    if [[ "$CI_JOB_NAME" == ".secret-analyzer-job" || \
-          "$CI_JOB_NAME" == "secret_detection" || \
-          "$CI_JOB_NAME" == "check_error" ]]; then 
-      echo "Skipping before_script";
+    if [[ "$CI_JOB_NAME" == "dev-docker-image-test-job" || \
+          "$CI_JOB_NAME" == "prod-docker-image-test-job" || \
+          "$CI_JOB_NAME" == "deploy-gitlab-job" ]]; then 
+      echo "Running before_script tasks for $CI_JOB_NAME";
+      apk add --no-cache tzdata
+      export TZ=Asia/Seoul
+      set -o allexport
+      source .env
+      VERSION=${MAJOR_VERSION}.$(date +'%y%m.%d')-${STATUS}-$CI_COMMIT_SHORT_SHA
+      set +o allexport
+      IMAGE_TAG=$CI_REGISTRY_IMAGE:$VERSION
+      IMAGE_TAG_LATEST=$CI_REGISTRY_IMAGE:latest
+      IMAGE_TAG_DEV=$CI_REGISTRY_IMAGE:dev
+      IMAGE_TAG_PROD=$CI_REGISTRY_IMAGE:prod
+      BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')
+      echo "TAGs: version($IMAGE_TAG), latest($IMAGE_TAG_LATEST), prod($IMAGE_TAG_PROD), dev($IMAGE_TAG_DEV)"
+      echo "version: str = '$VERSION'" > version_info.py
+      echo "git_branch: str = '$CI_COMMIT_BRANCH'" >> version_info.py
+      echo "git_revision: str = '$CI_COMMIT_SHA'" >> version_info.py
+      echo "git_short_revision: str = '$CI_COMMIT_SHORT_SHA'" >> version_info.py
+      echo "build_date: str = '$BUILD_DATE'" >> version_info.py
     else 
       echo "Running before_script tasks for $CI_JOB_NAME";
       python3 -V
@@ -37,10 +57,13 @@ before_script:
       poetry install --no-root
     fi
 
+
 .secret-analyzer:
   stage: validate
   image: "$SECURE_ANALYZERS_PREFIX/secrets:$SECRETS_ANALYZER_VERSION$SECRET_DETECTION_IMAGE_SUFFIX"
-  services: []
+  before_script:
+    - echo "No before_script to run"
+  services: [ ]
   allow_failure: true
   variables:
     GIT_DEPTH: "50"
@@ -56,11 +79,15 @@ secret_detection:
     - if: $SECRET_DETECTION_DISABLED == 'true' || $SECRET_DETECTION_DISABLED == '1'
       when: never
     - if: $CI_COMMIT_BRANCH
+  before_script:
+    - echo "No before_script to run"
   script:
     - /analyzer run
 
 check_error:
   stage: check_error
+  before_script:
+    - echo "No before_script to run"
   script:
     - apt-get update
     - apt-get install -y jq
@@ -72,6 +99,21 @@ check_error:
       fi
   dependencies:
     - secret_detection
+
+ruff-lint-test-job:
+  stage: test
+  script:
+    - ruff check .
+
+mypy-lint-test-job:
+  stage: test
+  script:
+    - mypy .
+
+pyright-lint-test-job:
+  stage: test
+  script:
+    - pyright ./
 
 unit-test-job:
   stage: test
@@ -93,20 +135,56 @@ unit-test-job:
         coverage_format: cobertura
         path: coverage.xml
 
-ruff-lint-test-job:
-  stage: test
+dev-docker-image-test-job:
+  image: docker:24.0.5
+  stage: container_build_test_push
+  services:
+    - docker:24.0.5-dind
+  variables:
+    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
   script:
-    - ruff check .
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker pull $IMAGE_TAG_DEV || true
+    - docker build -f dev.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_DEV -t $IMAGE_TAG_DEV .
+    - docker run --rm $IMAGE_TAG_DEV /bin/sh -c "poetry run pytest -v"
+    - docker push $IMAGE_TAG_DEV
+  only:
+    - main
 
-mypy-lint-test-job:
-  stage: test
+prod-docker-image-test-job:
+  image: docker:24.0.5
+  stage: container_build_test_push
+  services:
+    - docker:24.0.5-dind
+  variables:
+    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
   script:
-    - mypy .
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker pull $IMAGE_TAG_PROD || true
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_PROD -t $IMAGE_TAG_PROD .
+    - docker run --rm $IMAGE_TAG_PROD /bin/sh -c "echo 'Container is running!'"
+    - docker push $IMAGE_TAG_PROD
+  only:
+    - main
 
-pyright-lint-test-job:
-  stage: test
+test-prod-image:
+  stage: check_app_runnable
+  services:
+    - name: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CI_PROJECT_NAME:prod
+      alias: fastapi-app
+  image: python:3.9.13 # 중요치 않으나, 테스트용 툴이 설치된 이미지가 미리 준비돼있으면 여러모로 좋음
+  before_script:
+    - echo "No before_script to run"
   script:
-    - pyright ./
+    - apt install -y jq httpie
+    - http http://fastapi-app:8000/info | jq .. # 버전 정보가 의도한대로 출력되는지 가볍게 체크
+    - http http://fastapi-app:8000/openapi.json | jq .. # OAS 체크...
+  only:
+    - main
 
 deploy-gitlab-job:
   image: docker:24.0.5
@@ -117,27 +195,10 @@ deploy-gitlab-job:
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
     DOCKER_TLS_CERTDIR: "/certs"
-  before_script:
-    - apk add --no-cache tzdata
-    - export TZ=Asia/Seoul  # TODO: 아직까지도 UTC Timezone으로 설정됨
-    - |
-      set -o allexport
-      source .env
-      VERSION=${MAJOR_VERSION}.$(date +'%y%m.%d')-${STATUS}-$CI_COMMIT_SHORT_SHA
-      set +o allexport
-    - IMAGE_TAG=$CI_REGISTRY_IMAGE:$VERSION
-    - IMAGE_TAG_LATEST=$CI_REGISTRY_IMAGE:latest
-    - BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')
-    - |
-      echo "version: str = '$VERSION'" > version_info.py
-      echo "git_branch: str = '$CI_COMMIT_BRANCH'" >> version_info.py
-      echo "git_revision: str = '$CI_COMMIT_SHA'" >> version_info.py
-      echo "git_short_revision: str = '$CI_COMMIT_SHORT_SHA'" >> version_info.py
-      echo "build_date: str = '$BUILD_DATE'" >> version_info.py
-  script:
+  script: # docker image cache를 사용하여 이미지 빌드, 컨테이너 레지스트리 푸시 진행
     - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:latest || true # 마지막 이미지 가져오기
-    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $CI_REGISTRY_IMAGE:latest -t $IMAGE_TAG -t $IMAGE_TAG_LATEST . # 마지막 이미지를 캐시로 사용
+    - docker pull $IMAGE_TAG_LATEST || true # 마지막 이미지 가져오기
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_LATEST -t $IMAGE_TAG -t $IMAGE_TAG_LATEST . # 마지막 이미지를 캐시로 사용
     - docker push $IMAGE_TAG
     - docker push $IMAGE_TAG_LATEST
   only:
