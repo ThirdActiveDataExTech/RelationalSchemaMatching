@@ -1,4 +1,6 @@
-FROM python:3.9.13-slim
+ARG PYTHON_VERSION=3.9.13
+
+FROM python:${PYTHON_VERSION}-slim
 
 # Setting home directory and user name
 ENV APP_HOME=/home/wisenut/app

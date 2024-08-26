@@ -3,6 +3,7 @@
 [![PythonVersion](https://img.shields.io/badge/python-3.9.13-blue)](https://www.python.org/downloads/release/python-3913/)
 [![FastAPIVersion](https://img.shields.io/badge/fastapi-0.111.0-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
 [![loguru](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
+![coverage](https://gitlab.example.com/<namespace>/<project>/badges/<branch>/coverage.svg?job=coverage)
 
 ## AI플랫폼팀 전용 FastAPI 개발 템플릿 
 
