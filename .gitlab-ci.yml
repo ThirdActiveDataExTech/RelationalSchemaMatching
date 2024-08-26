@@ -1,7 +1,8 @@
 image: python:3.9.13-slim
 
 stages:
-  - build
+  - validate
+  - check_error
   - test
   - deploy
 
@@ -9,25 +10,68 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   PIPELINE_SEQUENCE: $CI_PIPELINE_IID
   TZ: "Asia/Seoul"
-
+  # for secret-detection
+  SECURE_ANALYZERS_PREFIX: "$CI_TEMPLATE_REGISTRY_HOST/security-products"
+  SECRET_DETECTION_IMAGE_SUFFIX: ""
+  SECRETS_ANALYZER_VERSION: "5"
+  SECRET_DETECTION_EXCLUDED_PATHS: ""
 
 cache:
   paths:
     - .cache/pip
-    - venv/
+    - venv
     - .mypy_cache/
 
 before_script:
-  - python3 -V
-  - pip install --upgrade pip
-  - pip install poetry
-  - poetry config virtualenvs.create false --local
-  - poetry install --no-root
+  - |
+    if [[ "$CI_JOB_NAME" == ".secret-analyzer-job" || \
+          "$CI_JOB_NAME" == "secret_detection" || \
+          "$CI_JOB_NAME" == "check_error" ]]; then 
+      echo "Skipping before_script";
+    else 
+      echo "Running before_script tasks for $CI_JOB_NAME";
+      python3 -V
+      pip install --upgrade pip
+      pip install poetry
+      poetry config virtualenvs.create false --local
+      poetry install --no-root
+    fi
 
-build-job:
-  stage: build
+.secret-analyzer:
+  stage: validate
+  image: "$SECURE_ANALYZERS_PREFIX/secrets:$SECRETS_ANALYZER_VERSION$SECRET_DETECTION_IMAGE_SUFFIX"
+  services: []
+  allow_failure: true
+  variables:
+    GIT_DEPTH: "50"
+  # `rules` must be overridden explicitly by each child job
+  # see https://gitlab.com/gitlab-org/gitlab/-/issues/218444
+  artifacts:
+    paths:
+      - gl-secret-detection-report.json
+
+secret_detection:
+  extends: .secret-analyzer
+  rules:
+    - if: $SECRET_DETECTION_DISABLED == 'true' || $SECRET_DETECTION_DISABLED == '1'
+      when: never
+    - if: $CI_COMMIT_BRANCH
   script:
-    - poetry install --no-root
+    - /analyzer run
+
+check_error:
+  stage: check_error
+  script:
+    - apt-get update
+    - apt-get install -y jq
+    - cat gl-secret-detection-report.json
+    - |
+      if jq -e '.vulnerabilities | length > 0' gl-secret-detection-report.json >/dev/null; then
+        echo "Error: Secret leak detected!"
+        exit 1
+      fi
+  dependencies:
+    - secret_detection
 
 unit-test-job:
   stage: test
