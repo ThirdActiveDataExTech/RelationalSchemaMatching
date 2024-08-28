@@ -1,0 +1,65 @@
+.container-test:
+  image: docker:24.0.5
+  services:
+    - docker:24.0.5-dind
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIPELINE_SEQUENCE: $CI_PIPELINE_IID
+    TZ: "Asia/Seoul"
+    FF_TIMESTAMPS: true
+    IMAGE_TAG_DEV: "$CI_REGISTRY_IMAGE:dev"
+    IMAGE_TAG_PROD: "$CI_REGISTRY_IMAGE:prod"
+    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - apk add --no-cache tzdata
+    - export TZ=Asia/Seoul  # TODO: 아직까지도 UTC Timezone으로 설정됨
+    - |
+      set -o allexport
+      source .env
+      VERSION=${MAJOR_VERSION}.$(date +'%y%m.%d')-${STATUS}-$CI_COMMIT_SHORT_SHA
+      set +o allexport
+    - IMAGE_TAG=$CI_REGISTRY_IMAGE:$VERSION
+    - X_TOKEN=${X_TOKEN}
+    - BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S')
+    - |
+      echo "version: str = '$VERSION'" > version_info.py
+      echo "git_branch: str = '$CI_COMMIT_BRANCH'" >> version_info.py
+      echo "git_revision: str = '$CI_COMMIT_SHA'" >> version_info.py
+      echo "git_short_revision: str = '$CI_COMMIT_SHORT_SHA'" >> version_info.py
+      echo "build_date: str = '$BUILD_DATE'" >> version_info.py
+    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+  only:
+    - main
+
+dev-docker-image-test-job:
+  extends: .container-test
+  stage: container_build_test_push
+  script:
+    - docker pull $IMAGE_TAG_DEV || true
+    - docker build -f dev.Dockerfile --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_DEV -t $IMAGE_TAG_DEV .
+    - docker run --rm $IMAGE_TAG_DEV /bin/sh -c "poetry run pytest -v"
+    - docker push $IMAGE_TAG_DEV
+
+prod-docker-image-test-job:
+  extends: .container-test
+  stage: container_build_test_push
+  script:
+    - docker pull $IMAGE_TAG_PROD || true
+    - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_PROD -t $IMAGE_TAG_PROD .
+    - docker run --rm $IMAGE_TAG_PROD /bin/sh -c "echo 'Container is running!'"
+    - docker push $IMAGE_TAG_PROD
+
+test-prod-image:
+  extends: .container-test
+  stage: check_app_runnable
+  services:
+    - name: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:prod
+      alias: fastapi-app
+  image: python:3.9.13-slim
+  before_script:
+    - apt-get update && apt-get install -y --no-install-recommends jq httpie
+  script:
+    - http GET http://fastapi-app:8000/info "x-token:$X_TOKEN" | jq .. # 버전 정보가 의도한대로 출력되는지 가볍게 체크
+    - http GET http://fastapi-app:8000/openapi.json "x-token:$X_TOKEN" | jq .. # OAS 체크
