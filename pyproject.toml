@@ -2,9 +2,10 @@
 requires = [
     "pip >= 23.1",
     "setuptools >= 67.6.1",
-    "wheel >= 0.40.0"
+    "wheel >= 0.40.0",
+    "poetry-core>=1.0.0"
 ]
-build-backend = "setuptools.build_meta"
+build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
@@ -32,6 +33,7 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP",
     "Intended Audience :: Developers"
 ]
+exclude = [".gitlab-ci.yml"]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4.0"
