@@ -8,7 +8,7 @@ import pytest
 
 """각 단위테스트 수행시간 측정
 해당 함수의 대체재로 간단하게 `pytest --durations=0` 으로 단위테스트 수행 시간을 측정할 수 있지만 정확한 수행 시간 파악 불가
-사용할 경우, 주석 제거하여 사용
+사용하지 않을 경우, 삭제 가능
 
 [예시]
 Test durations:
@@ -29,37 +29,50 @@ Test durations:
 
 """
 
+from time import time
+from tabulate import tabulate
 
-# from time import time
-# from tabulate import tabulate
-#
-# test_durations = []
-#
-#
-# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-# def pytest_runtest_setup(item):
-#     item.start_time = time()
-#     yield
-#
-#
-# @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-# def pytest_runtest_teardown(item, nextitem):
-#     outcome = yield
-#     duration = time() - item.start_time
-#     test_durations.append((item.name, duration))
-#
-#
-# @pytest.hookimpl(tryfirst=True)
-# def pytest_terminal_summary(terminalreporter, exitstatus, config):
-#     if test_durations:
-#         headers = ["Test", "Duration (seconds)"]
-#         table = tabulate(test_durations, headers, tablefmt="pretty")
-#         terminalreporter.write("\nTest durations:\n")
-#         terminalreporter.write(table)
-#         terminalreporter.write("\n")
+test_durations = []
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_setup(item):
+    item.start_time = time()
+    yield
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_teardown(item, nextitem):
+    outcome = yield
+    duration = time() - item.start_time
+    test_durations.append((item.name, duration))
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    if test_durations:
+        headers = ["Test", "Duration (seconds)"]
+        table = tabulate(test_durations, headers, tablefmt="pretty")
+        terminalreporter.write("\nTest durations:\n")
+        terminalreporter.write(table)
+        terminalreporter.write("\n")
 
 
 @pytest.fixture(scope="session")
 def common_variable():
     """단위테스트 세션 전체에서 사용할 변수 설정"""
     return {"key": "value"}
+
+
+@pytest.fixture(scope="session")
+def create_item_example():
+    return {"name": "apple", "status": "in stock", "stock": 10}
+
+
+@pytest.fixture(scope="session")
+def create_item_lower_than_zero_exception_item_example():
+    return {
+        "name": "apple",
+        "status": "in stock",
+        "stock": -1
+    }

@@ -1,12 +1,13 @@
 stages:
   - secret_detection
+  - lint
   - test
-  - container_build_test_push
   - check_app_runnable
   - deploy
 
 include:
   - local: /.gitlab/ci/secret-detection.gitlab-ci.yml
+  - local: /.gitlab/ci/lint.gitlab-ci.yml
   - local: /.gitlab/ci/test.gitlab-ci.yml
   - local: /.gitlab/ci/container-test.gitlab-ci.yml
   - local: /.gitlab/ci/deploy.gitlab-ci.yml

@@ -34,18 +34,13 @@ def test_update_item():
     assert response_json['result']['item_id'] == item_id
 
 
-def test_create_item():
-    item = {
-        "name": "apple",
-        "status": "in stock",
-        "stock": 10
-    }
-    response = client.post(url="/items", headers={"x-token": settings.X_TOKEN}, json=item)
+def test_create_item(create_item_example):
+    response = client.post(url="/items", headers={"x-token": settings.X_TOKEN}, json=create_item_example)
     check_success_common_conditions(response)
     response_json = response.json()
-    assert response_json["result"]["item"]["name"] == item["name"]
-    assert response_json["result"]["item"]["status"] == item["status"]
-    assert response_json["result"]["item"]["stock"] == item["stock"]
+    assert response_json["result"]["item"]["name"] == create_item_example["name"]
+    assert response_json["result"]["item"]["status"] == create_item_example["status"]
+    assert response_json["result"]["item"]["stock"] == create_item_example["stock"]
 
 
 def test_read_item_not_found_exception():
@@ -54,11 +49,7 @@ def test_read_item_not_found_exception():
     check_failed_common_conditions(response, ItemNotFoundError(item_id))
 
 
-def test_create_item_lower_than_zero_exception():
-    item = {
-        "name": "apple",
-        "status": "in stock",
-        "stock": -1
-    }
-    response = client.post(url="/items", headers={"x-token": settings.X_TOKEN}, json=item)
-    check_failed_common_conditions(response, InvalidItemStock(item["stock"]))
+def test_create_item_lower_than_zero_exception(create_item_lower_than_zero_exception_item_example):
+    response = client.post(
+        url="/items", headers={"x-token": settings.X_TOKEN}, json=create_item_lower_than_zero_exception_item_example)
+    check_failed_common_conditions(response, InvalidItemStock(create_item_lower_than_zero_exception_item_example["stock"]))
