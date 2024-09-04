@@ -1,0 +1,44 @@
+# 한 job을 버전별로 테스트 할 수 있는 방법은 2가지가 있음
+# (현재 템플릿에서는 파이썬 버전 호환 테스트를 위한 방법으로 사용)
+# 1. lint.gitlab-ci.yml 파일의 ruff-lint-test-job의 parallel.matrix.${env}
+# 2. test.gitlab-ci.yml 파일에서 extends를 통해 image만 변경
+# 이 두 가지 방식으로 진행할 수 있으니 편한 방식을 채택해서 사용하길 바람
+
+.lint:
+  stage: lint
+  image: python:3.9.13-slim
+  variables:
+    POETRY_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pypoetry"
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIPELINE_SEQUENCE: $CI_PIPELINE_IID
+    TZ: "Asia/Seoul"
+    FF_TIMESTAMPS: true
+  cache:
+    paths:
+      - .cache/pip
+      - venv
+      - .cache/pypoetry
+      - .mypy_cache/
+  before_script:
+    - echo "Running before_script tasks for $CI_JOB_NAME";
+    - python3 -V
+    - pip install --upgrade pip
+    - pip install poetry
+    - poetry config virtualenvs.create false --local
+    - poetry install --no-root
+
+ruff-lint-test-job:
+  extends: .lint
+  script:
+    - ruff check --target-version $PYTHON_VERSION .
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "py39", "py310", "py311", "py312" ]
+
+pyright-lint-test-job:
+  extends: .lint
+  script:
+    - pyright --pythonversion $PYTHON_VERSION ./
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "3.9", "3.10", "3.11", "3.12" ]

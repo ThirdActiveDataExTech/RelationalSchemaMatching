@@ -1,24 +1,28 @@
 # Python FastAPI Template
 
-[![PythonVersion](https://img.shields.io/badge/python-3.9.13-blue)](https://www.python.org/downloads/release/python-3913/)
-[![FastAPIVersion](https://img.shields.io/badge/fastapi-0.111.0-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
-[![loguru](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
-![coverage](https://gitlab.example.com/<namespace>/<project>/badges/<branch>/coverage.svg?job=coverage)
+[![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
+[![FastAPI Version](https://img.shields.io/badge/fastapi-0.112.2-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
+[![Loguru Version](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
+[![Gunicorn Version](https://img.shields.io/badge/gunicorn-23.0.0-red)](https://gunicorn.readthedocs.io/en/stable/project/changelog.html)
+[![Coverage](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/coverage.svg?job=coverage)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/-/graphs/main/charts)
+[![Pipeline Status](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/pipeline.svg)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/commits/main)
+
 
 ## AI플랫폼팀 전용 FastAPI 개발 템플릿 
 
 > API 명세는 와이즈넛 [Restful API 디자인 가이드](https://docs.google.com/document/d/1tSniwfrVaTIaTT4MxhBRAmv-S_ECcoSFAXlYrsg4K0Y/edit#heading=h.60fu2rc04bck)를 따른다.
 
 Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
-1. Python 3.9: 높은 호환성
-   > 다른 파이썬 버전도 호환이 가능하나 완벽히 테스트되지 않은 상태
-2. MSA 구조에 적합한 FastAPI 템플릿
-3. 의존성: Poetry (`pyproject.toml`으로 한 번에 관리)
-4. 환경 변수를 통한 전체적인 프로젝트 변수를 간단하게 관리
-5. 도커 환경 구성 (개발 및 배포용 Dockerfile 구성)
-6. Gunicorn으로 multi process 환경 구성
-7. 내부망 환경 구성
-8. gitlab-ci로 _build, unit test (pytest), lint test (ruff, mypy, pyright), deploy_ 수행
+1. **Python 3.9, 3.10, 3.11, 3.12**: 높은 호환성
+2. **MSA 구조에 적합한 FastAPI 프로젝트 구조**
+3. **Log Management**: 로그 포맷 및 저장 커스텀 가능
+4. **최신 의존성 관리 툴 Poetry**: `pyproject.toml`으로 한 번에 관리
+5. **변수 통합 관리**: 환경 변수를 통한 전체적인 프로젝트 변수를 간단하게 관리
+6. **Docker Environment Configuration**: 개발 및 배포용 Dockerfile 구성
+7. **Gunicorn**: multi process 환경 구성
+8. **내부망 환경 구성**
+9. **Gitlab CI/CD**: secret detection, lint test(ruff, pyright), unit test(pytest), container test, deploy 수행
+
 
 ## Getting started
 
@@ -54,9 +58,8 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
      5. Python version에 맞게 환경 설정 (현재는 3.9.13 사용중)
      6. **Install packages from pyproject.toml** 체크
         - `UnicodeError` 발생 할 경우, **Settings > Editor > Global Encoding, Project Encoding, Properties Files** 모두 'UTF-8' 로 설정 
-        - 🐛 해결이 안 될 경우, 체크 표시 해제하고 poetry 가상환경 생성한 후 poetry venv 터미널에 `poetry install`로 직접 Installs the project dependencies
+        - 🐛 해결이 안 될 경우, `Install packages from pyproject.toml` 체크 표시 해제하고 poetry 가상환경 생성한 후 poetry venv 터미널에 `poetry install`로 직접 의존성 설치
      7. **OK** 선택
-     > 추가 의존성이 필요할 경우, `poetry add ${package-name-to-add}`로 추가하면 자동으로 `pyproject.toml` 파일에 의존성이 추가 (자세한 사항은 Poetry 공식 docs 확인)
    - _Virtualenv (deprecated)_
      1. **Add New Interpreter** 선택
      2. **Add Local Interpreter** 선택
@@ -102,9 +105,9 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   ```
 - `pyproject.toml` 작성 (참고: [Declaring project metadata](https://packaging.python.org/en/latest/specifications/declaring-project-metadata/))
    - project 메타데이터 작성 (_name_, _version_, ... etc)
-   - 의존성 작성: _dependencies_
-   - 개발 의존성 작성: _project.optional-dependencies_
-
+   - 의존성 작성: `tool.poetry.dependencies`
+     - `poetry add ${package-name-to-add}`로 추가하면 자동으로 `pyproject.toml` 파일에 의존성이 추가됨
+     - 자세한 사항은 [Poetry 공식 문서](https://python-poetry.org/docs/#installation) 참고
 
 ### 4. Run
 - local run
