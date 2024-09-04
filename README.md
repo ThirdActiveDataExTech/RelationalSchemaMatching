@@ -44,7 +44,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
    4. Python FastAPI Template 에서 `Use template` 선택
    5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
 
-> 🔴 **gitlab-ci Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 토큰 생성하기
+> 🔴 **GitLab CI/CD Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 `read_registry, write_registry` Scope 선택해서 토큰 생성하기
 
 ### 2. Development Environment Setting
 1. 로컬 개발 환경에 `git clone ...` 

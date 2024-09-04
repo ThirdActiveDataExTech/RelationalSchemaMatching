@@ -19,6 +19,7 @@
       - venv
       - .cache/pypoetry
       - .mypy_cache/
+      - .cache/pytest_cache
   before_script:
     - echo "Running before_script tasks for $CI_JOB_NAME";
     - python3 -V
