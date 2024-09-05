@@ -9,6 +9,8 @@ pydantic BaseModel을 기본적으로 활용한다.
 from pydantic import BaseModel, Field, field_validator
 
 from app.exceptions.service import InvalidItemStock
+from app.schemas.response import APIResponseModel
+from app.version import VERSION
 
 
 class CreateItemsRequestModel(BaseModel):
@@ -23,10 +25,14 @@ class CreateItemsRequestModel(BaseModel):
         return stock  # return 필수! 작성하지 않으면 null값 return
 
 
-class ItemsResponseModel(BaseModel):
+class Items(BaseModel):
     item_id: str
     name: str
 
 
-class CreateItemResponseModel(BaseModel):
+class CreateItemResponse(BaseModel):
     item: CreateItemsRequestModel
+
+
+class ItemResponseModel(APIResponseModel):
+    message: str = Field(default=f"아이템 응답 성공 ({VERSION})")
