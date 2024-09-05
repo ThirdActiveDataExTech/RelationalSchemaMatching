@@ -53,6 +53,8 @@ app = FastAPI(
     description=DESCRIPTION,
     version=VERSION,
     license_info=LICENSE_INFO,
+    servers=settings.servers,
+    root_path_in_servers=settings.root_path_in_servers,
     docs_url=None, redoc_url=None  # Serve the static files
 )
 app.mount("/static", StaticFiles(directory="static"), name="static")

@@ -39,7 +39,7 @@ build-and-push-prod-image:
   script:
     - docker pull $IMAGE_TAG_PROD || true
     - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_PROD -t $IMAGE_TAG_PROD .
-    - docker run --rm $IMAGE_TAG_PROD /bin/sh -c "echo 'Container is running!'"
+    - docker run --rm $IMAGE_TAG_PROD /bin/sh -c "echo 'Image Build Success!'"
     - docker push $IMAGE_TAG_PROD
 
 test-prod-image-runnable:
