@@ -7,7 +7,6 @@
 [![Coverage](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/coverage.svg?job=coverage)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/-/graphs/main/charts)
 [![Pipeline Status](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/pipeline.svg)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/commits/main)
 
-
 ## AI플랫폼팀 전용 FastAPI 개발 템플릿 
 
 > API 명세는 와이즈넛 [Restful API 디자인 가이드](https://docs.google.com/document/d/1tSniwfrVaTIaTT4MxhBRAmv-S_ECcoSFAXlYrsg4K0Y/edit#heading=h.60fu2rc04bck)를 따른다.
@@ -23,6 +22,44 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 8. **내부망 환경 구성**
 9. **Gitlab CI/CD**: secret detection, lint test(ruff, pyright), unit test(pytest), container test, deploy 수행
 
+
+## Quick start
+### Requirements
+- 로컬 실행
+  - `Python >=3.9,<4.0`
+  - `Poetry`
+- 컨테이너 실행
+  - `Docker` 
+
+### How to run
+- 로컬 실행
+  ```shell
+  # 의존성 설치
+  poetry install --no-root
+  ```
+  - 아래 명령어 중 택1하여 실행
+  1. 가상환경 자동 진입
+     ```shell
+     poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>
+     ```
+  2. 가상환경 직접 진입
+     ```shell
+     poetry shell
+     uvicorn app.main:app --host 0.0.0.0 --port <port number>
+     ```
+- 컨테이너 실행
+  ```shell
+  # 도커 이미지 빌드
+  docker build -t python-fastapi-template:dev -f dev.Dockerfile .
+  # 컨테이너 구동
+  docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:dev
+  ```
+
+
+## Description
+<details>
+<summary> 프로젝트 정보 </summary>
+<div>
 
 ## Getting started
 
@@ -114,7 +151,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
 ### 4. Run
 - local run
-  - poetry 가상환경에 진입하지 않았을 경우
+  - poetry 가상환경에 진입하지 않았을 경우, 아래 명령어들 중 하나 실행
     - `poetry run python $HOME/app/main.py`
     - `poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>`
   - poetry 가상환경에 진입할 경우
@@ -251,3 +288,5 @@ gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker a
 > @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.    
 > 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.    
 > 출처: https://github.com/zhanymkanov/fastapi-best-practices
+</div>
+</details>
