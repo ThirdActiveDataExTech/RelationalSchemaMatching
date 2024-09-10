@@ -51,20 +51,23 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 2. Pycharm 을 열고 `open project ...`
 3. Interpreter Setting
    - **Poetry**
-     1. Poetry 설치 ([poetry docs](https://python-poetry.org/docs/#installation) 참고)
-     2. **Add New Interpreter** 선택
-     3. **Add Local Interpreter** 선택
-     4. **Poetry Environment** 선택 
-     5. Python version에 맞게 환경 설정 (현재는 3.9.13 사용중)
-     6. **Install packages from pyproject.toml** 체크
-        - `UnicodeError` 발생 할 경우, **Settings > Editor > Global Encoding, Project Encoding, Properties Files** 모두 'UTF-8' 로 설정 
-        - 🐛 해결이 안 될 경우, `Install packages from pyproject.toml` 체크 표시 해제하고 poetry 가상환경 생성한 후 poetry venv 터미널에 `poetry install`로 직접 의존성 설치
-     7. **OK** 선택
+     > requirements: Poetry 설치 ([Poetry docs](https://python-poetry.org/docs/#installation) 참고)    
+     - **`poetry install --no-root`**
+     - PyCharm으로 진행할 경우
+       1. **Add New Interpreter** 선택
+       2. **Add Local Interpreter** 선택
+       3. **Poetry Environment** 선택 
+       4. Python version에 맞게 환경 설정 (현재는 3.9.13 사용중)
+       5. **Install packages from pyproject.toml** 체크
+          - `UnicodeError` 발생 할 경우, **Settings > Editor > Global Encoding, Project Encoding, Properties Files** 모두 'UTF-8' 로 설정 
+          - 🐛 해결이 안 될 경우, `Install packages from pyproject.toml` 체크 표시 해제하고 poetry 가상환경 생성한 후 poetry venv 터미널에 `poetry install --no-root`로 직접 의존성 설치
+       6. **OK** 선택
+     - `poetry show`로 의존성이 제대로 설치됐는지 확인
    - _Virtualenv (deprecated)_
      1. **Add New Interpreter** 선택
      2. **Add Local Interpreter** 선택
      3. **Virtualenv Environment** 선택 
-     4. 로컬에 설치된 Python 3.9 경로를 Base Interpreter 로 설정
+     4. 로컬에 설치된 Python 경로를 Base Interpreter 로 설정
      5. `pip install .` (`pyproject.toml`에 작성한 의존성 설치, 아래 **3. Extra Setting** 참고)
 
 ## 3. Extra Setting (Optional)
@@ -111,16 +114,21 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
 ### 4. Run
 - local run
-  - `$HOME/main.py` or `uvicorn app.main:app --host 0.0.0.0 --port <port number>`
-    - `FileNotFoundError` or `ImportError` 발생시 _Working Directory_ (Working Directory = `$HOME`) 확인하기
-  - _http :8000/openapi.json_ or _http://localhost:8000/docs_ 로 API 명세 확인 및 테스트
-- docker run    
+  - poetry 가상환경에 진입하지 않았을 경우
+    - `poetry run python $HOME/app/main.py`
+    - `poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>`
+  - poetry 가상환경에 진입할 경우
+    1. 가상환경 진입: `poetry shell`
+    2. 위 명령어에서 `poetry run` 제외하고 그대로 실행 (ex. `uvicorn app.main:app --host 0.0.0.0 --port <port number>`)
+  - `FileNotFoundError` or `ImportError` 발생시 _Working Directory_ (Working Directory = `$HOME`) 확인하기
+  - _http://localhost:8000/openapi.json_ or _http://localhost:8000/docs_ 로 API 명세 확인 및 테스트
+- docker run (dev)    
   `docker build ...` && `docker run -d -p ...` 로 컨테이너 빌드 & 구동
   ```shell
   # 도커 이미지 빌드
-  docker build -t python-fastapi-template:latest -f Dockerfile .
+  docker build -t python-fastapi-template:dev -f dev.Dockerfile .
   # 컨테이너 구동
-  docker run -d --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:0.1.5-dev
+  docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:dev
   ```
 
 ## 📚 MSA
