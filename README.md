@@ -20,8 +20,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 6. **Docker Environment Configuration**: 개발 및 배포용 Dockerfile 구성
 7. **Gunicorn**: multi process 환경 구성
 8. **내부망 환경 구성**
-9. **Gitlab CI/CD**: secret detection, lint test(ruff, pyright), unit test(pytest), container test, deploy 수행
-
+9. **구조화된 Gitlab CI/CD**: secret detection, lint test(ruff, pyright), unit test(pytest), container test, deploy 수행
 
 ## Quick start
 ### Requirements
@@ -32,6 +31,10 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   - `Docker` 
 
 ### How to run
+<p>
+<img src="./static/guide/quick-start-guide.gif">
+</p>
+
 - 로컬 실행
   ```shell
   # 의존성 설치
@@ -56,9 +59,11 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   ```
 
 
-## Description
+## Project Description
+> 프로젝트 생성, 환경 세팅, 실행방법, 앱 구조, GitLab CI/CD 파이프라인, Gunicorn 및 내부망 환경에 대해 더 자세히 알고싶으면 아래 토글을 열어서 확인하세요.
+
 <details>
-<summary> 프로젝트 정보 </summary>
+<summary> Click here for more details </summary>
 <div>
 
 ## Getting started
@@ -227,6 +232,42 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
   - `dev.Dockerfile`: 개발을 위해 필요한 도구 및 라이브러리와 같은 추가적인 종속성을 설치하기 위한 라이브러리들이 설치된 환경
   - `Dockerfile`, `guinicorn.Dockerfile`: 최종 제품을 배포하기 위해 필요한 것들만 포함한 환경
 
+## GitLab CI/CD Pipeline
+```mermaid
+---
+title: GitLab CI/CD Pipeline Step and Jobs
+---
+flowchart TD
+    subgraph stage:secret_detection
+    secret_detection
+    end
+    
+    subgraph stage:lint
+    pyright-lint-test-job["pyright-lint-test-job: [3.9], [3.10], [3.11], [3.12]"]
+    ruff-lint-test-job["ruff-lint-test-job: [py39], [py310], [py311], [py312]"]
+    end
+	  
+    subgraph stage:test
+    pytest-39-job
+    pytest-310-job
+    pytest-311-job
+    pytest-312-job
+    end
+    
+    subgraph stage:check_app_runnable
+    build-and-push-prod-image --> test-prod-image-runnable
+    end
+    
+    subgraph stage:deploy
+    deploy-gitlab-job
+    end
+    
+    stage:secret_detection--> stage:lint
+    stage:lint--> stage:test
+    stage:test -- "if only main branch" --> stage:check_app_runnable
+    stage:check_app_runnable --> stage:deploy
+    stage:test --> stage:deploy
+```
 
 # Guide for each environment
 ## Multi Process
