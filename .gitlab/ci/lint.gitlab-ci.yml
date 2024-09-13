@@ -18,13 +18,12 @@
       - .cache/pip
       - venv
       - .cache/pypoetry
-      - .mypy_cache/
+      - .ruff_cache/
       - .cache/pytest_cache
   before_script:
     - echo "Running before_script tasks for $CI_JOB_NAME";
     - python3 -V
-    - pip install --upgrade pip
-    - pip install poetry
+    - pip install --upgrade pip && pip install poetry
     - poetry config virtualenvs.create false --local
     - poetry install --no-root
 
