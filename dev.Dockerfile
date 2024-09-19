@@ -33,7 +33,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy installed Python packages from the build stage
-RUN pip install poetry
+RUN pip install --no-cache-dir poetry
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-root
 
