@@ -26,15 +26,15 @@
         coverage_format: cobertura
         path: coverage.xml
 
-pytest-39-job:
+pytest-39:
   extends: .unit-test
   image: python:3.9-slim
-pytest-310-job:
+pytest-310:
   extends: .unit-test
   image: python:3.10-slim
-pytest-311-job:
+pytest-311:
   extends: .unit-test
   image: python:3.11-slim
-pytest-312-job:
+pytest-312:
   extends: .unit-test
   image: python:3.12-slim
