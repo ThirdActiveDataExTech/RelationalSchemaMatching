@@ -1,6 +1,3 @@
-include:
-  - template: Jobs/Container-Scanning.gitlab-ci.yml
-
 container_scanning:
   stage: container_test
   variables:
