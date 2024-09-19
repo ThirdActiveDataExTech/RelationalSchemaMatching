@@ -38,3 +38,6 @@ pytest-311:
 pytest-312:
   extends: .unit-test
   image: python:3.12-slim
+
+sast:
+  stage: test

@@ -22,7 +22,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
     - (Non-Cloud environment) 분산 처리를 위한 Gunicorn 프리셋 구성을 위한 `gunicorn.Dockerfile`
     - 로컬에서 빠른 개발 환경 구동을 위한 `dev.Dockerfile`
 7. **Gunicorn**: multi process 환경 구성
-8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright), unit test(pytest), deploy
+8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning
 
 ### Requirements
 
@@ -208,6 +208,12 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
 
 ```
 .
+├── .gitlab
+│   ├── ci      # GitLab CI Jobs 모음집
+│   ├── issue_templates     # 이슈 템플릿으로 이슈 생성시 용도별로 선택해서 사용 가능 
+│   ├── merge_request_templates     # MR 템플릿 (현재는 branch 기준 MR 생성해서 사용하므로 템플릿을 사용하진 않아서 파일이 없음)
+│   ├── CODEOWNERS      # 코드 소유자 명시 (파일별로 MR에서 그룹 및 사용자를 자동으로 Reviewer로 설정 가능)
+│   └── secret-detection-rulset.toml        # GitLab CI의 첫 단계에서 진행하는 Secret Detection에 추가로 설정할 Rule Set
 ├── app                  # "app" is a Python package
 │   └── api          # (API Endpoints) "routers" is a "Python subpackage" 
 │   │   ├── examples    # 라우터에 사용할 예제들 정의
@@ -236,7 +242,7 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
 │   ├── handlers.py  # fastapi handlers 정의 (정의 후 main.py에 추가해야함)
 │   ├── log.py  # 로그 관련 설정
 │   ├── main.py     # main
-│   ├── version.py  # 버전 관련 정보 생성 및 전달 파일 (앱 실행 전에 해당 파일 수행해서 version_info.py 생성해야함)
+│   └── version.py  # 버전 관련 정보 생성 및 전달 파일 (앱 실행 전에 해당 파일 수행해서 version_info.py 생성해야함)
 ├── static  # static files
 │   └── guide   # README.md에 가이드 작성을 위한 static 파일들 모음
 ├── tests   # app directory architecture 에 맞게 unit test 구성
@@ -245,9 +251,9 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
 │   │   ├── test_items.py     # items 관련 API Call 단위테스트
 │   │   └── test_users.py     # users 관련 API Call 단위테스트
 │   └── src
-│       ├── __init__.py
-│       ├── items   # items 관련 로직 단위테스트
-│       └── users  # users 관련 로직 단위테스트
+│   │   ├── __init__.py
+│   │   ├── items   # items 관련 로직 단위테스트
+│   │   └── users  # users 관련 로직 단위테스트
 │   ├── __init__.py
 │   ├── check_common_conditions.py      # router unit test 공통 확인 사항, 필요할 경우 추가 공통 테스트 추가해도 됨
 │   ├── conftest.py     # pytest conf file
@@ -275,8 +281,8 @@ flowchart TD
     end
     
     subgraph stage:lint
-    pyright-lint-test-job["pyright-lint-test-job: [3.9], [3.10], [3.11], [3.12]"]
-    ruff-lint-test-job["ruff-lint-test-job: [py39], [py310], [py311], [py312]"]
+    pyright-lint["pyright-lint-test-job: [3.9], [3.10], [3.11], [3.12]"]
+    ruff-lint["ruff-lint-test-job: [py39], [py310], [py311], [py312]"]
     end
    
     subgraph stage:test
@@ -284,21 +290,21 @@ flowchart TD
     pytest-310-job
     pytest-311-job
     pytest-312-job
+    semgrep-sast
     end
     
-    subgraph stage:check_app_runnable
-    build-and-push-prod-image --> test-prod-image-runnable
+    subgraph stage:container_test
+    container_scanning
     end
     
     subgraph stage:deploy
-    deploy-gitlab-job
+    deploy
     end
     
     stage:secret_detection--> stage:lint
     stage:lint--> stage:test
-    stage:test -- "if only main branch" --> stage:check_app_runnable
-    stage:check_app_runnable --> stage:deploy
-    stage:test --> stage:deploy
+    stage:test -- "if main branch" --> stage:deploy
+    stage:deploy --> stage:container_test
 ```
 
 # Guide for each environment
