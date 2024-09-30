@@ -12,6 +12,9 @@ stages:
   - test
   - deploy
   - container_test
+  - danger-review
+  - triage-dry-run
+  - triage-run
 
 include:
   - component: $CI_SERVER_FQDN/components/secret-detection/secret-detection@1.1.2
@@ -24,3 +27,30 @@ include:
   - local: "/.gitlab/ci/deploy.gitlab-ci.yml"
   - template: Jobs/Container-Scanning.gitlab-ci.yml
   - local: "/.gitlab/ci/container-test.gitlab-ci.yml"
+  - component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
+    inputs:
+      job_stage: danger-review
+      dangerfile: .gitlab/Dangerfile
+    rules:
+      - if: '$CI_SERVER_HOST == "gitlab.com"'
+  - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+    inputs:
+      stage: triage-dry-run
+      when: manual
+      # $API_TOKEN bot 실행을 위한 access token 이름
+      api_token: $API_TOKEN
+      debug: true
+      dry_run: true
+      helpers_file: ./.gitlab/helpers.rb
+      job_suffix: ':dry-run'
+    rules:
+      - if: $CI_PIPELINE_SOURCE != "schedule"
+  - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+    inputs:
+      stage: triage-run
+      api_token: $API_TOKEN
+      debug: true
+      helpers_file: ./.gitlab/helpers.rb
+      job_suffix: ':schedule'
+    rules:
+      - if: $CI_PIPELINE_SOURCE == "schedule"
