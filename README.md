@@ -353,5 +353,43 @@ gunicorn --bind 0:8000 --max-requests 20 -w 4 -k uvicorn.workers.UvicornWorker a
 > @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.
 > 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.
 > 출처: <https://github.com/zhanymkanov/fastapi-best-practices>
+
+# Automation Bot
+
+> Automation bot은 각종 이슈, 에픽, MR 등을 분류하고 관리합니다. 미리 설정한 규칙에 따라 행동하며 사용자의 휴먼 에러를 포착하고, 그에 대한 피드백을 제공합니다.
+기본적으로 CI를 통해 활성화하고, 특정 이벤트의 발생이나 미리 설정된 스케줄에 따라 동작합니다.
+
+<br>
+
+- Gitlab triage
+  > Gitlab의 Epics, Issues, MR, Branch 등을 사용자 정의 규칙을 설정을 통해 분류하여, 그룹이나 프로젝트 단위에서 Issue나 MR의 분류를 자동화하는 것을 목표로 합니다.
+- Danger review
+  > MR이 생성되거나 변경사항이 발생하는 경우, 미리 설정한 규칙을 지키지 않은 경우, 이를 comment로 경고합니다. comment는 danger-bot이 동작할 때마다 comment를 추가하지 않고, 수정합니다.
+
+
+## Requirements - Gitlab triage
+
+**API** Scope의 최소 **Reporter** 권한을 가진 Access Token을 생성 후, **API_TOKEN** 이름으로 CI/CD 변수를 생성합니다.
+> Access Token의 이름은 생성된 bot의 이름이 됩니다.
+```
+- component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+    inputs:
+      ...
+      # $API_TOKEN bot 실행을 위한 access token 이름
+      api_token: $API_TOKEN
+```
+
+## Requirements - Danger review
+**API** Scope의 최소 **Maintainer** 권한을 가진 Access Token을 생성 후, **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성합니다.
+> Access Token의 이름은 생성된 bot의 이름이 됩니다.
+
+Danger review 1.4.1 기준, 해당 변수는 적용되지 않으므로 **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성하세요.
+
+```
+- component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
+    inputs:
+      gitlab_api_token_variable_name: $DANGER_GITLAB_API_TOKEN
+```
+
 </div>
 </details>
