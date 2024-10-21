@@ -1,7 +1,7 @@
 # Python FastAPI Template
 
 [![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
-[![FastAPI Version](https://img.shields.io/badge/fastapi-0.112.2-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
+[![FastAPI Version](https://img.shields.io/badge/fastapi-0.114.1-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
 [![Loguru Version](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
 [![Gunicorn Version](https://img.shields.io/badge/gunicorn-23.0.0-red)](https://gunicorn.readthedocs.io/en/stable/project/changelog.html)
 [![Coverage](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/coverage.svg?job=coverage)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/-/graphs/main/charts)
@@ -32,7 +32,23 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
 ## Quick start
 
-![quick start guide gif](static/guide/quick-start-guide.gif "quic start guide gif")
+![quick start guide gif](static/guide/quick-start-guide.gif "quick start guide gif")
+
+### 0. Create Project from template
+
+> 빠른 프로젝트 생성을 위한 GitLab Template 사용법
+> 
+
+   1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
+   2. `Create from template` 선택    
+      <img src="static/guide/create-from-template.png" alt="create from template png" width="800" />
+   3. `Group` 선택
+   4. **FastAPI**에서 `Use template` 선택    
+      <img src="static/guide/fastapi-use-template.png" alt="fastapi use template png" width="800" />
+   5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
+
+> 🔴 **GitLab CI/CD Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 `read_registry, write_registry` Scope 선택해서 토큰 생성하기
+> 
 
 ### 1. Install Requirements
 
@@ -85,7 +101,7 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
 
 ### 1. Create Project
 >
-> 총 3가지 방법이 존재함 (**Create from template** 방법의 경우, GitLab 프로젝트 이동으로 인해 사용불가)
+> 총 3가지 방법이 존재함 (제일 사용하기 편한 방법은 Quick Start 방식 확인)
 
 1. **Create blank project**
    1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
@@ -96,14 +112,6 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
    2. _Project name, Project description (optional)_ 등을 작성하고 `Fork Project` 선택
    3. 프로젝트 생성 후 Fork 해제
       Fork를 해제하지 않으면 새로 생성한 프로젝트의 MR이 Python FastAPI Template에 올라오거나 Issue를 통해 Create merge request 불가
-3. **Create from template_**
-   1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
-   2. `Create from template` 선택
-   3. `Group` 선택
-   4. **FastAPI**에서 `Use template` 선택
-   5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
-
-> 🔴 **GitLab CI/CD Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 `read_registry, write_registry` Scope 선택해서 토큰 생성하기
 
 ### 2. Development Environment Setting
 
