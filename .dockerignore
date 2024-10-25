@@ -1,5 +1,4 @@
 venv
-docs/
 logs/
 .gitlab
 .idea
@@ -22,7 +21,6 @@ nosetests.xml
 coverage.xml
 *,cover
 **/*.log
-.git
 .mypy_cache
 .pytest_cache
 .ruff_cache
