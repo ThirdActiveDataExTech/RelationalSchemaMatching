@@ -12,9 +12,17 @@ stages:
   - test
   - deploy
   - container_test
-  - danger-review
   - triage-dry-run
+  - get_spec
+  - test_artifact
+  - render_html
+  - deploy_api
+  - test_mkdocs
+  - deploy_mkdocs
+  - build_mkdocs
+  - danger-review
   - triage-run
+
 
 include:
   - component: $CI_SERVER_FQDN/components/secret-detection/secret-detection@1.1.2
@@ -27,6 +35,12 @@ include:
   - local: "/.gitlab/ci/deploy.gitlab-ci.yml"
   - template: Jobs/Container-Scanning.gitlab-ci.yml
   - local: "/.gitlab/ci/container-test.gitlab-ci.yml"
+  - project: wisenut-research/starter/gitlab-ci-template
+    ref: main
+    file: 
+      - templates/Mkdocs/common/Deploy.gitlab-ci.yml
+      - templates/Mkdocs/api/FastApi.gitlab-ci.yml
+  - local: "/.gitlab/ci/mkdocs.gitlab-ci.yml"
   - component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
     inputs:
       job_stage: danger-review
@@ -36,7 +50,6 @@ include:
   - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
     inputs:
       stage: triage-dry-run
-      when: manual
       # $API_TOKEN bot 실행을 위한 access token 이름
       api_token: $API_TOKEN
       debug: true
@@ -54,3 +67,4 @@ include:
       job_suffix: ':schedule'
     rules:
       - if: $CI_PIPELINE_SOURCE == "schedule"
+
