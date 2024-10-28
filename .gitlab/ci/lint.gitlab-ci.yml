@@ -26,6 +26,10 @@
     - pip install --upgrade pip && pip install poetry
     - poetry config virtualenvs.create false --local
     - poetry install --no-root
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID == null'
+      changes:
+        - app/**/*
 
 ruff-lint:
   extends: .lint
@@ -55,3 +59,7 @@ docker-lint:
       codequality:
         - docker-lint.json
   interruptible: true
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID == null'
+      changes:
+        - app/**/*

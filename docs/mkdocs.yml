@@ -1,4 +1,4 @@
-site_name: Wise Docs
+site_name: Python FastAPI Template Docs
 site_dir: public
 theme:
   name: material
@@ -36,15 +36,15 @@ extra:
     provider: mike
 nav:
   - HOME: './index.md'
-  - Quick start: './start/quickstart.md'
+  - Quick Start: './start/quick-start.md'
   - Getting Started: './start/getting-started.md'
   - Guide:
-    - MSA: './guide/msa.md'
+    - Project Structure: './guide/project-structure.md'
     - GitLab CI/CD pipeline: './guide/ci-cd.md'
     - Gunicorn: './guide/gunicorn.md'
-    - Automation-bot: './guide/automation-bot.md'
+    - Automation Bot: './guide/automation-bot.md'
     - Mkdocs: './guide/mkdocs.md'
-  - API: './api/docs.html'
+  - API Docs: './api/docs.html'
 
 plugins:
   - mike:

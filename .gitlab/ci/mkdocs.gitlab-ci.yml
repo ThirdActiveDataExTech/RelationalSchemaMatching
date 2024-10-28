@@ -16,5 +16,5 @@ test_mkdocs:
 pages:
   extends: .lint
 
-build_mkdocs:
+build_and_push_mkdocs:
   extends: .lint

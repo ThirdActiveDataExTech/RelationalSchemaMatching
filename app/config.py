@@ -54,8 +54,8 @@ class Settings(BaseSettings):
 
     @field_validator('SERVER_URL')
     def valid_server_url(cls, v):
-        pattern = re.compile(
-            r'^https?:\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\/[a-zA-Z0-9-._~:/?#[\]@!$&\'()*+,;=]*)?$')
+        server_url_regex = r'^https?:\/\/(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\/[a-zA-Z0-9-._~:/?#[\]@!$&\'()*+,;=]*)?$'
+        pattern = re.compile(server_url_regex)
         if v:
             if bool(pattern.match(v)):
                 return v
@@ -73,9 +73,7 @@ class Settings(BaseSettings):
     @property
     def servers(self) -> Union[List[Dict[str, str]], None]:
         if self.SERVER_URL:
-            return [
-                {"url": f"{self.SERVER_URL}", "description": f"{self.ENVIRONMENT.capitalize()} Server"}
-            ]
+            return [{"url": f"{self.SERVER_URL}", "description": f"{self.ENVIRONMENT.capitalize()} Server"}]
         else:
             return None
 

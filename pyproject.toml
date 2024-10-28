@@ -67,7 +67,6 @@ line-length = 125
 exclude = [
     '.git',
     '__pycache__',
-    '.mypy_cache',
     '.ruff_cache',
     'docs',
     'venv',
@@ -95,7 +94,6 @@ include = ["app"]
 exclude = [
     '.git',
     '__pycache__',
-    '.mypy_cache',
     '.ruff_cache',
     '.pytest_cache',
     'docs',

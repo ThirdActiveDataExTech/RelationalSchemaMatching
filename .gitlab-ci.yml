@@ -24,7 +24,7 @@ include:
       stage: secret_detection
   - local: "/.gitlab/ci/secret-detection.gitlab-ci.yml"
   - local: "/.gitlab/ci/lint.gitlab-ci.yml"
-  - template: Security/SAST.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
   - local: "/.gitlab/ci/test.gitlab-ci.yml"
   - local: "/.gitlab/ci/deploy.gitlab-ci.yml"
   - template: Jobs/Container-Scanning.gitlab-ci.yml
