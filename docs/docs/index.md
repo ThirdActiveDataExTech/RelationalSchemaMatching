@@ -22,4 +22,4 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
     - (Non-Cloud environment) 분산 처리를 위한 Gunicorn 프리셋 구성을 위한 `gunicorn.Dockerfile`
     - 로컬에서 빠른 개발 환경 구동을 위한 `dev.Dockerfile`
 7. **Gunicorn**: multi process 환경 구성
-8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning
+8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning, triage, mkdocs

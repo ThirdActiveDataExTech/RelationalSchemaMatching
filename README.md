@@ -12,7 +12,8 @@
 
 <hr>
 
-> **Documentation** : https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/
+**Documentation** : https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/    
+**Source Code**: https://gitlab.com/wisenut-research/starter/python-fastapi-template
 
 <hr>
 
@@ -28,7 +29,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
     - (Non-Cloud environment) 분산 처리를 위한 Gunicorn 프리셋 구성을 위한 `gunicorn.Dockerfile`
     - 로컬에서 빠른 개발 환경 구동을 위한 `dev.Dockerfile`
 7. **Gunicorn**: multi process 환경 구성
-8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning
+8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning, triage, mkdocs
 
 ### Requirements
 
@@ -38,7 +39,7 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
 ## Quick start
 
-![quick start guide gif](static/guide/quick-start-guide.gif "quick start guide gif")
+![quick start guide gif](docs/docs/images/quick-start-guide.gif "quick start guide gif")
 
 ### 0. Create Project from template
 
@@ -47,10 +48,10 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
    1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
    2. `Create from template` 선택    
-      <img src="static/guide/create-from-template.png" alt="create from template png" width="800" />
+      <img src="docs/docs/images/create-from-template.png" alt="create from template png" width="800" />
    3. `Group` 선택
    4. **FastAPI**에서 `Use template` 선택    
-      <img src="static/guide/fastapi-use-template.png" alt="fastapi use template png" width="800" />
+      <img src="docs/docs/images/fastapi-use-template.png" alt="fastapi use template png" width="800" />
    5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
 
 > 🔴 **GitLab CI/CD Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 `read_registry, write_registry` Scope 선택해서 토큰 생성하기
@@ -97,4 +98,4 @@ $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wise
 ## Project Description
 
 > 프로젝트 생성, 환경 세팅, 실행방법, 앱 구조, GitLab CI/CD 파이프라인, Gunicorn 및 내부망 환경에 대해  
-> 더 자세히 알고싶으면 [PFT 문서](https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/)를 확인하세요.
+> 더 자세히 알고싶으면 [Python FastAPI 문서](https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/)를 확인하세요.

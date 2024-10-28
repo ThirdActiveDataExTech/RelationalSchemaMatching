@@ -25,6 +25,10 @@
       coverage_report:
         coverage_format: cobertura
         path: coverage.xml
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID == null'
+      changes:
+        - app/**/*
 
 pytest-39:
   extends: .unit-test
@@ -39,5 +43,9 @@ pytest-312:
   extends: .unit-test
   image: python:3.12-slim
 
-sast:
+semgrep-sast:
   stage: test
+  rules:
+    - if: '$CI_MERGE_REQUEST_ID == null'
+      changes:
+        - app/**/*
