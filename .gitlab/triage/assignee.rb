@@ -4,6 +4,6 @@ module Assignee
   end
 
   def has_assignee?
-    assignee.any?
+    assignee && assignee.any?
   end
 end
