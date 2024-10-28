@@ -7,7 +7,7 @@
 
 - Gitlab triage
   > Gitlab의 Epics, Issues, MR, Branch 등을 사용자 정의 규칙을 설정을 통해 분류하여, 그룹이나 프로젝트 단위에서 Issue나 MR의 분류를 자동화하는 것을 목표로 합니다.
-- Danger review
+- Danger review (기능 추가 예정)
   > MR이 생성되거나 변경사항이 발생하는 경우, 미리 설정한 규칙을 지키지 않은 경우, 이를 comment로 경고합니다. comment는 danger-bot이 동작할 때마다 comment를 추가하지 않고, 수정합니다.
 
 
@@ -37,15 +37,14 @@
 
 
 
-## Requirements - Danger review
+## Requirements - Danger review (추가 예정)
 **API** Scope의 최소 **Maintainer** 권한을 가진 Access Token을 생성 후, **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성합니다.
 > Access Token의 이름은 생성된 bot의 이름이 됩니다.
 
-Danger review 1.4.1 기준, 해당 변수는 적용되지 않으므로 **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성하세요.
+Danger review 1.4.1 기준 해당 변수는 적용되지 않으므로 **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성하세요.
 
 ```
 - component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
     inputs:
       gitlab_api_token_variable_name: $DANGER_GITLAB_API_TOKEN
 ```
-

@@ -13,14 +13,8 @@ stages:
   - deploy
   - container_test
   - triage-dry-run
-  - get_spec
-  - test_artifact
-  - render_html
-  - deploy_api
-  - test_mkdocs
-  - deploy_mkdocs
-  - build_mkdocs
-  - danger-review
+  - generate-mkdocs-api
+  - deploy-mkdocs
   - triage-run
 
 
@@ -41,12 +35,6 @@ include:
       - templates/Mkdocs/common/Deploy.gitlab-ci.yml
       - templates/Mkdocs/api/FastApi.gitlab-ci.yml
   - local: "/.gitlab/ci/mkdocs.gitlab-ci.yml"
-  - component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
-    inputs:
-      job_stage: danger-review
-      dangerfile: .gitlab/Dangerfile
-    rules:
-      - if: '$CI_SERVER_HOST == "gitlab.com"'
   - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
     inputs:
       stage: triage-dry-run

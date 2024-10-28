@@ -4,7 +4,7 @@
 
 ```REPOSITORY_ACCESS_TOKEN``` 이름으로 Access Token을 CI/CD Varialbe로 등록하세요.
 > - Personal Access Token 또는 최상단 그룹(wisenut)의 Access Token을 발급받아 사용하세요. -> Admin 권한 X
-> - 해당 토큰은 현재 [Admin 권한으로 파이프라인 실행시, git push 과정에서 403반환하는 버그](https://gitlab.com/gitlab-org/gitlab/-/issues/21700) 때문에 **(1)해당 버그를 우회**하기 위해, **(2)다른 프로젝트의 mkdocs ci template을 include**하기 위해 사용합니다. (사용자가 아닌 bot이 파이프라인을 트리거하면, include의 다른 프로젝트에 접근할 수 없는 버그 존재.)
+> - 해당 토큰은 현재 [Admin 권한으로 파이프라인 실행시, git push 과정에서 403반환하는 버그](https://gitlab.com/gitlab-org/gitlab/-/issues/21700) 때문에 **(1)해당 버그를 우회**하기 위해, **(2)다른 프로젝트의 mkdocs ci template을 include**하기 위해 사용합니다. (사용자가 아닌 bot이 파이프라인을 트리거하면, include의 다른 프로젝트에 접근할 수 없는 버그 존재)
 > - 버그가 해결된다면 템플릿의 변수 ```REMOTE_REPOSITORY: "https://oauth2:$REPOSITORY_ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"``` 대신 predefined variable인 ```CI_REPOSITORY_URL```을 사용하여 Access Token CI/CD Variable을 사용하지 않아도 됩니다.
 
 
@@ -45,17 +45,17 @@
 
 ``` mermaid
 graph TD
-    B{'/app' 변경사항?} -->|Yes| C[stage:get_spec - api.json];
+    B{'/app' 변경사항?} -->|Yes| C[job:get_spec - api.json];
     B --> |No| N1{'/docs' 변경사항?};
-    N1 --> |Yes| H[stage: test-mkdocs]
+    N1 --> |Yes| H[job: test-mkdocs]
     N1 --> |No| K(end pipeline)
-    C --> D[stage:test_artifact - lint api.json];
-    D --> E[stage:render_html - docs.html];
+    C --> D[job:test_artifact - lint api.json];
+    D --> E[job:render_html - docs.html];
     E --> F{'docs.html' 변경사항?};
-    F --> |Yes| G[stage:deploy_api - push docs.html to project];
+    F --> |Yes| G[job:deploy_api - push docs.html to project];
     F --> |No| N1;
     G --> H
-    H --> I[stage: deploy_mkdocs - gitlab pages 배포]
-    I --> |Manual| J[stage: build_mkdocs - docker build & container registry push]
+    H --> I[job: deploy_mkdocs - gitlab pages 배포]
+    I --> |Manual| J[job: build_mkdocs - docker build & container registry push]
     J --> K
 ```
