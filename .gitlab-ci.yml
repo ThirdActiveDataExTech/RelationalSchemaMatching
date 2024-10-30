@@ -10,11 +10,11 @@ stages:
   - secret_detection
   - lint
   - test
-  - deploy
+  - build-and-push-app
   - container_test
   - triage-dry-run
   - generate-mkdocs-api
-  - deploy-mkdocs
+  - build-and-push-mkdocs
   - triage-run
 
 
@@ -26,20 +26,19 @@ include:
   - local: "/.gitlab/ci/lint.gitlab-ci.yml"
   - template: Jobs/SAST.gitlab-ci.yml
   - local: "/.gitlab/ci/test.gitlab-ci.yml"
-  - local: "/.gitlab/ci/deploy.gitlab-ci.yml"
+  - local: "/.gitlab/ci/build-and-push-app.gitlab-ci.yml"
   - template: Jobs/Container-Scanning.gitlab-ci.yml
   - local: "/.gitlab/ci/container-test.gitlab-ci.yml"
   - project: wisenut-research/starter/gitlab-ci-template
     ref: main
-    file: 
+    file:
       - templates/Mkdocs/common/Deploy.gitlab-ci.yml
       - templates/Mkdocs/api/FastApi.gitlab-ci.yml
   - local: "/.gitlab/ci/mkdocs.gitlab-ci.yml"
   - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
     inputs:
       stage: triage-dry-run
-      # $API_TOKEN bot 실행을 위한 access token 이름
-      api_token: $API_TOKEN
+      api_token: $API_TOKEN   # $API_TOKEN bot 실행을 위한 access token 이름
       debug: true
       dry_run: true
       helpers_file: ./.gitlab/helpers.rb

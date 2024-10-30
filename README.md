@@ -46,16 +46,14 @@ Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 > 빠른 프로젝트 생성을 위한 GitLab Template 사용법
 > 
 
-   1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
-   2. `Create from template` 선택    
-      <img src="docs/docs/images/create-from-template.png" alt="create from template png" width="800" />
-   3. `Group` 선택
-   4. **FastAPI**에서 `Use template` 선택    
-      <img src="docs/docs/images/fastapi-use-template.png" alt="fastapi use template png" width="800" />
-   5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
+1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
+2. `Create from template` 선택    
+   <img src="docs/docs/images/create-from-template.png" alt="create from template png" width="800" />
+3. `Group` 선택
+4. **FastAPI**에서 `Use template` 선택    
+   <img src="docs/docs/images/fastapi-use-template.png" alt="fastapi use template png" width="800" />
+5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
 
-> 🔴 **GitLab CI/CD Container Registry Deploy**를 위해 프로젝트 생성시 무조건 `Settings > Repository > Deploy tokens`에 **gitlab-deploy-token** 이름으로 `read_registry, write_registry` Scope 선택해서 토큰 생성하기
-> 
 
 ### 1. Install Requirements
 

@@ -10,22 +10,24 @@
 
 ### Requirements
 
-> 💡 Settings > Access Tokens 발급받기    
-> **api** Scope의 최소 **Reporter** 권한을 가진 Access Token을 생성 후, **API_TOKEN** 이름으로 CI/CD 변수를 생성합니다.    
-> Access Token의 이름은 생성된 bot의 이름이 됩니다.  
+💡 **토큰 발급 필수**
 
-> 💡 발급 받은 Access Token을 `Settings > CI/CD > Variables`에 생성한 토큰명을 설정합니다. (`.gitlab-ci.yml`에 설정된 토큰명)
+1. **api** Scope의 최소 **Reporter** 권한을 가진 _Settings > Access Tokens_ 을 생성 후,
+    - Access Token의 이름은 생성된 bot의 이름이 됩니다.
+2. **API_TOKEN**(`.gitlab-ci.yml`의 triage inputs에 설정된 토큰명으로 변경 가능) 이름으로 `Settings > CI/CD > Variables`를 등록합니다.
+    ```yaml
+    - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+        inputs:
+          ...
+          api_token: $API_TOKEN    # $API_TOKEN bot 실행을 위한 access token 이름
+    ```
+   
+> ⚠ 만약 실행되지 않을 경우, _Settings > CI/CD > Variables Flags_ 의 `Protect variable`, `Expand variables reference` 두 가지 옵션을 해제하시길 바랍니다.
 
-```yaml
-- component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
-    inputs:
-      ...
-      api_token: $API_TOKEN    # $API_TOKEN bot 실행을 위한 access token 이름
-```
 
 ### Getting started
 
-1. [gitlab triage project](https://gitlab.com/gitlab-org/ruby/gems/gitlab-triage)를 참고하여 `.triage-policies.yml` 파일에 규칙을 정의하세요. (rules & actions)
+1. [Gitlab Triage Project](https://gitlab.com/gitlab-org/ruby/gems/gitlab-triage)를 참고하여 `.triage-policies.yml` 파일에 규칙을 정의하세요. (rules & actions)
 2. 필요하다면 ruby module 작성을 통해 사용자 지정 triage 표현식을 사용할 수 있습니다.
     - `.gitlab/triage/` 위치에 모듈 파일을 생성하세요.
     - `.gitlab/helpers.rb` 파일에 해당 모듈을 include 하세요.
@@ -40,14 +42,17 @@
 
 ### Requirements
 
-**API** Scope의 최소 **Maintainer** 권한을 가진 Access Token을 생성 후, **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성합니다.
+💡 **토큰 발급 필수**
 
-> Access Token의 이름은 생성된 bot의 이름이 됩니다.
+1. **api** Scope의 최소 **Maintainer** 권한을 가진 _Settings > Access Tokens_ 을 생성 후,
+    - Access Token의 이름은 생성된 bot의 이름이 됩니다.
+2. **DANGER_GITLAB_API_TOKEN**(`.gitlab-ci.yml`의 danger review inputs에 설정된 토큰명으로 변경 가능) 이름으로 `Settings > CI/CD > Variables`를 등록합니다.
+    ```yaml
+    - component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
+        inputs:
+          gitlab_api_token_variable_name: $DANGER_GITLAB_API_TOKEN
+    ```
 
-Danger review 1.4.1 기준 해당 변수는 적용되지 않으므로 **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성하세요.
+> ⚠ 만약 실행되지 않을 경우, _Settings > CI/CD > Variables Flags_ 의 `Protect variable`, `Expand variables reference` 두 가지 옵션을 해제하시길 바랍니다.
 
-```yaml
-- component: gitlab.com/gitlab-org/components/danger-review/danger-review@1.4.1
-    inputs:
-      gitlab_api_token_variable_name: $DANGER_GITLAB_API_TOKEN
-```
+> Danger review 1.4.1 기준 해당 변수는 적용되지 않으므로 **DANGER_GITLAB_API_TOKEN** 이름으로 CI/CD 변수를 생성하세요.

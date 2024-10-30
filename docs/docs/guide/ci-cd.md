@@ -26,8 +26,8 @@ flowchart TD
     container_scanning
     end
     
-    subgraph stage:deploy
-    deploy
+    subgraph stage:build-and-push-app
+    build-and-push-app
     end
     
     subgraph stage:triage
@@ -39,7 +39,7 @@ flowchart TD
     get_api_spec --> lint_openapi --> test_artifact --> render_html --> deploy_api_docs
     end
     
-    subgraph stage:deploy-mkdocs
+    subgraph stage:build-and-push-mkdocs
     test_mkdocs --> build_and_push_mkdocs
     pages
     end
@@ -53,8 +53,8 @@ flowchart TD
     stage:lint --> stage:test
     app-change-decision -- "NO" --> docs-change-decision
     stage:test --> docs-change-decision
-    docs-change-decision -- "YES" --> stage:generate-mkdocs-api --> stage:deploy-mkdocs --> main-branch-decision
+    docs-change-decision -- "YES" --> stage:generate-mkdocs-api --> stage:build-and-push-mkdocs --> main-branch-decision
     docs-change-decision -- "NO" -->  main-branch-decision
-    main-branch-decision -- "YES" --> stage:deploy
-    stage:deploy --> stage:container_test
+    main-branch-decision -- "YES" --> stage:build-and-push-app
+    stage:build-and-push-app --> stage:container_test
 ```
