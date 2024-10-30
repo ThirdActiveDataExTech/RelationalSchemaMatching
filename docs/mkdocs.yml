@@ -1,4 +1,4 @@
-site_name: Python FastAPI Template Docs
+site_name: Python FastAPI Template
 site_dir: public
 theme:
   name: material
@@ -56,3 +56,6 @@ plugins:
       version_selector: true
       css_dir: css
       javascript_dir: js
+  - search:
+      lang: ['en', 'ko']  # 다국어 지원 (한국어 검색 가능하게 설정)
+      separator: '[\s\-]+'

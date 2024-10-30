@@ -1,4 +1,4 @@
-.deploy:
+.build-and-push-app:
   image: docker:24.0.5
   services:
     - docker:24.0.5-dind
@@ -6,8 +6,6 @@
     PIPELINE_SEQUENCE: $CI_PIPELINE_IID
     TZ: "Asia/Seoul"
     FF_TIMESTAMPS: true
-    IMAGE_TAG_DEV: "$CI_REGISTRY_IMAGE:dev"
-    IMAGE_TAG_PROD: "$CI_REGISTRY_IMAGE:prod"
     IMAGE_TAG_LATEST: "$CI_REGISTRY_IMAGE:latest"
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
@@ -33,9 +31,9 @@
   only:
     - main
 
-deploy:
-  extends: .deploy
-  stage: deploy
+build-and-push-app:
+  extends: .build-and-push-app
+  stage: build-and-push-app
   script: # docker image cache를 사용하여 이미지 빌드, 컨테이너 레지스트리 푸시 진행
     - docker pull $IMAGE_TAG_LATEST || true # 마지막 이미지 가져오기
     - docker build --build-arg BUILDKIT_INLINE_CACHE=1 --cache-from $IMAGE_TAG_LATEST -t $IMAGE_TAG -t $IMAGE_TAG_LATEST . # 마지막 이미지를 캐시로 사용

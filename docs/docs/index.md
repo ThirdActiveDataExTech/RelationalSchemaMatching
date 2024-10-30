@@ -1,4 +1,4 @@
-# Python FastAPI Template Document - v0.1
+# Python FastAPI Template
 
 [![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
 [![FastAPI Version](https://img.shields.io/badge/fastapi-0.114.1-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
@@ -9,6 +9,13 @@
 
 > **빠르고 쉽게 파이썬 기반의 HTTP API 웹 서버를 개발하기 위한 템플릿**  
 > (API 명세는 와이즈넛 [Restful API 디자인 가이드](https://docs.google.com/document/d/1tSniwfrVaTIaTT4MxhBRAmv-S_ECcoSFAXlYrsg4K0Y/edit#heading=h.60fu2rc04bck)를 따른다)
+
+<hr>
+
+**Documentation** : <https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/>    
+**Source Code**: <https://gitlab.com/wisenut-research/starter/python-fastapi-template>
+
+<hr>
 
 Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
 
