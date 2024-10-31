@@ -27,7 +27,7 @@
       echo "git_revision: str = '$CI_COMMIT_SHA'" >> version_info.py
       echo "git_short_revision: str = '$CI_COMMIT_SHORT_SHA'" >> version_info.py
       echo "build_date: str = '$BUILD_DATE'" >> version_info.py
-    - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   only:
     - main
 
