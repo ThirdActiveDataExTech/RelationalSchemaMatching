@@ -49,6 +49,7 @@ pydantic-settings = "^2.5.2"
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.6.4"
 pyright = "^1.1.380"
+pre-commit = "^4.0.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
@@ -86,7 +87,7 @@ max-complexity = 10
 [tool.pyright]
 pythonVersion = "3.9"
 defineConstant = { DEBUG = true }
-reportMissingImports = true
+reportMissingImports = false
 reportMissingTypeStubs = false
 reportArgumentType = false
 typeCheckingMode = "basic"

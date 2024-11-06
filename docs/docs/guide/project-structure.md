@@ -1,9 +1,13 @@
 # Project Structure
 
 >
-> @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수 없다.
-> 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.   
-> 출처: <https://github.com/zhanymkanov/fastapi-best-practices>, <https://fastapi.tiangolo.com/tutorial/bigger-applications/>
+> @tiangolo 가 제공하는 유형(예: api, crud, 모델, 스키마)별로 파일을 구분하는 프로젝트 구조는 범위가 적은 마이크로 서비스 또는 프로젝트에 적합하지만 많은 도메인이 있는 모놀리식에는 맞출 수
+> 없다.    
+> 더 확장 가능하고 진화할 수 있는 구조는 Netflix의 Dispatch 에서 영감을 얻었다.
+
+- 출처
+    - <https://github.com/zhanymkanov/fastapi-best-practices>
+    - <https://fastapi.tiangolo.com/tutorial/bigger-applications/>
 
 ```
 .

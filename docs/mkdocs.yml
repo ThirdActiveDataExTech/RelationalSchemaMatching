@@ -42,6 +42,7 @@ nav:
     - Project Structure: './guide/project-structure.md'
     - GitLab CI/CD pipeline: './guide/ci-cd.md'
     - Gunicorn: './guide/gunicorn.md'
+    - Pre-commit: './guide/pre-commit.md'
     - Automation Bot: './guide/automation-bot.md'
     - Mkdocs: './guide/mkdocs.md'
   - API Docs: './api/docs.html'

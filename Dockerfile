@@ -1,9 +1,10 @@
 ARG PYTHON_VERSION=3.9.13
+ARG POETRY_VERSION=1.8.3
 
 FROM python:${PYTHON_VERSION}-slim as requirements
 
 # Make requirements.txt file from poetry dependencies
-RUN pip install --no-cache-dir poetry==1.8.3
+RUN pip install --no-cache-dir poetry==${POETRY_VERSION}
 COPY ./pyproject.toml ./poetry.lock /
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --without=test,lint,gunicorn
 
