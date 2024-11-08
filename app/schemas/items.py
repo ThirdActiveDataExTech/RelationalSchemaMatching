@@ -1,5 +1,6 @@
 """
 pydantic BaseModel을 기본적으로 활용한다.
+
 - 권장사항
     - Field(title, description, default, ...)를 사용하여 Swagger UI에 디폴트값, 설명, 예시 등을 작성한다.
     - @field_validator(...)를 사용하여 모델의 필드값을 검토하도록 한다.
