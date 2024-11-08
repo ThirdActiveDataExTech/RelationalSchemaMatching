@@ -38,7 +38,7 @@ pre-commit --v
 ```shell
 # 아래 명령어로 pre-commit 훅을 활성화합니다.
 # 커밋이 될 때마다 위에서 설정한 파일이 pre-commit 단계에서 실행되도록 명령어를 입력한다.
-# 필수 단계로 해당 작업을 진행하지 않을 경우, pre-commit 실행안됨
+# 필수 단계로 해당 작업을 진행하지 않을 경우, pre-commit 실행이 되지 않는다.
 pre-commit install
 
 # 이제 pre-commit이 적용되어 커밋을 할때마다 자동으로 pre-commit을 실행한다.

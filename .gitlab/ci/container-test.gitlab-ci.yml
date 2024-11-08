@@ -1,7 +1,0 @@
-container_scanning:
-  stage: container_test
-  variables:
-    CS_DISABLE_LANGUAGE_VULNERABILITY_SCAN: "false"
-    CS_IMAGE: $CI_REGISTRY_IMAGE:latest
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'

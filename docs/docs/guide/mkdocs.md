@@ -11,10 +11,10 @@
     _내 프로필 > Preferences > Personal Access Token_ Select scopes: _read_repository, write_repository_
 2. **REPOSITORY_ACCESS_TOKEN** 이름으로 `Settings > CI/CD > Variables`로 등록합니다.
 
-> - Personal Access Token 또는 최상단 그룹(wisenut)의 Access Token을 발급받아 사용하세요. (Admin 권한 X)    
-> - 해당 토큰은 현재 [Admin 권한으로 파이프라인 실행시, git push 과정에서 403 반환하는 버그](https://gitlab.com/gitlab-org/gitlab/-/issues/21700) 때문에 **해당 버그를 우회**하기 위해 **다른 프로젝트의 mkdocs ci template을 include**하기 위해 사용합니다.    
->     (⚠ 사용자가 아닌 bot이 파이프라인을 트리거하면, include의 다른 프로젝트에 접근할 수 없는 버그 존재)    
-> - 버그가 해결된다면 템플릿의 변수 ```REMOTE_REPOSITORY: "https://oauth2:$REPOSITORY_ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"``` 대신 predefined variable인 ```CI_REPOSITORY_URL```을 사용하여 Access Token CI/CD Variable을 사용하지 않아도 됩니다.
+- Personal Access Token 또는 최상단 그룹(wisenut)의 Access Token을 발급받아 사용하세요. (Admin 권한 X)    
+- 해당 토큰은 현재 [Admin 권한으로 파이프라인 실행시, git push 과정에서 403 반환하는 버그](https://gitlab.com/gitlab-org/gitlab/-/issues/21700) 때문에 **해당 버그를 우회**하기 위해 **다른 프로젝트의 mkdocs ci template을 include**하기 위해 사용합니다.
+    - (⚠ 사용자가 아닌 bot이 파이프라인을 트리거하면, include의 다른 프로젝트에 접근할 수 없는 버그 존재)    
+- 버그가 해결된다면 템플릿의 변수 ```REMOTE_REPOSITORY: "https://oauth2:$REPOSITORY_ACCESS_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH.git"``` 대신 predefined variable인 ```CI_REPOSITORY_URL```을 사용하여 Access Token CI/CD Variable을 사용하지 않아도 됩니다.
 
 > ⚠ 만약 실행되지 않을 경우, _Settings > CI/CD > Variables Flags_ 의 `Protect variable`, `Expand variables reference` 두 가지 옵션을 해제하시길 바랍니다.
 
