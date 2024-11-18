@@ -12,5 +12,5 @@ class MatchingModel(str, Enum):
     INITIAL = "initial_model"
 
 
-class Combination(str, Enum):
+class CombinationType(str, Enum):
     TRAIN = "train"
