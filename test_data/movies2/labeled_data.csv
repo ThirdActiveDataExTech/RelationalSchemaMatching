@@ -1,0 +1,401 @@
+_id,ltable.ID,rtable.ID,ltable.title,ltable.year,rtable.title,rtable.year,class_label
+1,1,1,The Martian,2015,The Martian,2015,1
+2728,5,61,The Intern(I),2015,The Intern,2015,1
+21244,32,283,Me and Earl and the Dying Girl,2015,Me and Earl and the Dying Girl,2015,1
+23758,36,549,The Hunger Games: Mockingjay - Part 2,2015,The Hunger Games: Mockingjay - Part 2,2015,1
+24245,37,12,The Maze Runner,2014,Maze Runner: The Scorch Trials,2015,0
+31947,49,141,Magic Mike XXL,2015,Magic Mike XXL,2015,1
+33241,51,24,Guardians of the Galaxy,2014,Guardians of the Galaxy,2014,1
+33448,51,478,Guardians of the Galaxy,2014,The Purge,2013,0
+33721,51,1574,Guardians of the Galaxy,2014,The Spectacular Now,2013,0
+41236,63,908,The Last Witch Hunter,2015,The Last Witch Hunter,2015,1
+42133,65,156,Dope,2015,Dope,2015,1
+42960,67,175,The Loft,2014,The Loft,2014,1
+49085,76,67,The Dark Knight,2008,The Dark Knight,2008,1
+49273,76,1720,The Dark Knight,2008,Scooby-Doo! and the Samurai Sword,2009,0
+53279,82,649,Goosebumps,2015,Goosebumps,2015,1
+54165,83,1845,The Perfect Guy,2015,Into the Grizzly Maze,2015,0
+59632,92,226,Titanic,1997,Titanic,1997,1
+59789,93,51,The Avengers,2012,The Avengers,2012,1
+65736,102,9,Minions,2015,Minions,2015,1
+66481,103,80,Poltergeist,2015,Poltergeist,2015,1
+68406,105,1862,A Walk in the Woods,2015,A Walk in the Woods,2015,1
+68655,106,117,Harry Potter and the Sorcerer's Stone,2001,Harry Potter and the Philosopher's Stone,2001,0
+68661,106,224,Harry Potter and the Sorcerer's Stone,2001,Harry Potter and the Chamber of Secrets,2002,0
+69782,109,27,John Wick,2014,John Wick,2014,1
+71710,112,104,Mad Max,1979,Mad Max,1979,1
+75560,121,194,Into the Woods,2014,We're the Millers,2013,0
+76597,122,1269,Under the Skin(I),2013,The Railway Man,2013,0
+77812,125,230,Pulp Fiction,1994,Pulp Fiction,1994,1
+88844,142,415,One Flew Over the Cuckoo's Nest,1975,One Flew Over the Cuckoo's Nest,1975,1
+95446,154,136,American Ultra,2015,American Ultra,2015,1
+101692,165,485,Snow White and the Huntsman,2012,Snow White and the Huntsman,2012,1
+102958,167,773,No Escape(I),2015,No Escape,2015,1
+103728,171,63,Captain America: The Winter Soldier,2014,Captain America: The Winter Soldier,2014,1
+105278,173,59,Child 44,2015,Child 44,2015,1
+106206,175,155,The Final Girls,2015,The Final Girls,2015,1
+107664,177,160,Thor,2011,Thor,2011,1
+118565,198,24,The Theory of Everything,2014,Guardians of the Galaxy,2014,0
+118742,198,385,The Theory of Everything,2014,The Conjuring,2013,0
+119045,198,1574,The Theory of Everything,2014,The Spectacular Now,2013,0
+126678,211,754,American Beauty,1999,American Beauty,1999,1
+130066,217,510,Harry Potter and the Deathly Hallows: Part 2,2011,The Girl with the Dragon Tattoo,2011,0
+130405,218,427,Goodfellas,1990,Goodfellas,1990,1
+132251,223,316,Grown Ups 2,2013,Grown Ups 2,2013,1
+132775,224,256,300,2006,300,2006,1
+133506,228,93,Avatar,2009,Avatar,2009,1
+134318,229,1293,The Fault in Our Stars,2014,The Little Death,2014,0
+137498,235,2888,Friday the 13th,2009,The Collector,2009,0
+138215,237,147,Mad Max 2: The Road Warrior,1981,Mad Max 2: The Road Warrior,1981,1
+139592,240,2578,Jem and the Holograms,2015,The Search for Freedom,2015,0
+140508,242,442,Star Trek Into Darkness,2013,Star Trek Into Darkness,2013,1
+143915,248,1893,The Hobbit: The Battle of the Five Armies,2014,The Duke of Burgundy,2015,0
+143929,248,1951,The Hobbit: The Battle of the Five Armies,2014,Hector and the Search for Happiness,2014,0
+147816,258,1483,The Breakfast Club,1985,The Karate Kid,1984,0
+150754,263,1802,Captain America: The First Avenger,2011,The Wolfman,2010,0
+152054,265,2207,I Spit on Your Grave,2010,I Spit on Your Grave,2010,1
+157147,280,64,Terminator 2: Judgment Day,1991,Terminator 2: Judgment Day,1991,1
+157734,282,785,Transformers: Age of Extinction,2014,The Best of Me,2014,0
+158745,283,1480,Wildlike,2014,Wildlike,2015,1
+161547,290,1087,Magic Mike,2012,Magic Mike,2012,1
+162664,294,737,Snowpiercer,2013,Snowpiercer,2013,1
+165236,301,3041,No Country for Old Men,2007,No Way Out,2008,0
+166456,305,958,The Girl with the Dragon Tattoo,2011,The Social Network,2010,0
+167009,307,1185,The Incredibles,2004,The Machinist,2004,0
+167531,308,1574,The Conjuring,2013,The Spectacular Now,2013,0
+173112,323,151,The Overnight,2015,The Expendables 3,2014,0
+174105,326,857,National Lampoon's Vacation,1983,National Lampoon's Vacation,1983,1
+183017,341,1654,Cider with Rosie,2015,Cider With Rosie,2015,1
+188611,354,335,Inherent Vice,2014,Inherent Vice,2014,1
+189329,356,306,The Twilight Saga: Breaking Dawn - Part 2,2012,The Twilight Saga: Breaking Dawn - Part 1,2011,0
+189750,357,159,Toy Story,1995,Toy Story,1995,1
+191892,362,572,Top Gun,1986,Top Gun,1986,1
+194821,368,1845,The Judge,2014,Into the Grizzly Maze,2015,0
+204299,388,1171,Pan's Labyrinth,2006,Pan's Labyrinth,2006,1
+205253,391,1828,Blow,2001,Blow,2001,1
+212304,409,364,The Gambler(III),2014,The Gambler,2014,1
+217004,420,161,I Spit on Your Grave: Vengeance is Mine,2015,I Spit on Your Grave III: Vengeance is Mine,2015,1
+218613,424,168,Star Wars: Episode VI - Return of the Jedi,1983,Star Wars: Episode VI - Return of the Jedi,1983,1
+219997,429,809,The Sixth Sense,1999,The Sixth Sense,1999,1
+220268,433,200,V for Vendetta,2005,V for Vendetta,2006,1
+220775,434,2947,The Lord of the Rings: The Return of the King,2003,The Rundown,2003,0
+225642,445,618,Black Swan,2010,Black Swan,2010,1
+227860,448,781,The Lego Movie,2014,The Prince,2014,0
+228389,449,186,2001: A Space Odyssey,1968,2001: A Space Odyssey,1968,1
+229077,450,3002,I Saw the Light,2015,The Rewrite,2014,0
+231700,458,19,The Good Dinosaur,2015,The Hobbit: The Battle of the Five Armies,2014,0
+232130,458,1893,The Good Dinosaur,2015,The Duke of Burgundy,2015,0
+232358,458,3021,The Good Dinosaur,2015,The Good Dinosaur,2015,1
+236908,469,89,The Hobbit: An Unexpected Journey,2012,The Hobbit: The Desolation of Smaug,2013,0
+238709,473,229,Pirates of the Caribbean: At World's End,2007,Pirates of the Caribbean: Dead Man's Chest,2006,0
+241220,478,2345,Transformers,2007,Transformers,2007,1
+241345,479,363,The Social Network,2010,Harry Potter and the Deathly Hallows: Part 2,2011,0
+241359,479,510,The Social Network,2010,The Girl with the Dragon Tattoo,2011,0
+241417,479,958,The Social Network,2010,The Social Network,2010,1
+241638,479,2559,The Social Network,2010,The Change-Up,2011,0
+244061,488,1108,Interview with the Vampire: The Vampire Chronicles,1994,Interview with the Vampire,1994,1
+248490,498,1151,Scott Pilgrim vs. the World,2010,Scott Pilgrim vs. the World,2010,1
+251864,504,966,Sweeney Todd: The Demon Barber of Fleet Street,2007,Fantastic 4: Rise of the Silver Surfer,2007,0
+261723,523,1433,Don Jon,2013,Don Jon,2013,1
+262019,525,2011,Guardians of the Galaxy Vol. 2,2017,Guardians of the Galaxy Vol. 2,2017,1
+262020,525,2167,Guardians of the Galaxy Vol. 2,2017,Avatar 2,2017,0
+262195,529,252,Spirited Away,2001,Spirited Away,2001,1
+263039,533,1531,The Curious Case of Benjamin Button,2008,The Seeker: The Dark Is Rising,2007,0
+263233,534,303,Cars,2006,Cars,2006,1
+266385,543,780,Quantum of Solace,2008,(500) Days of Summer,2009,0
+271500,555,672,G.I. Joe: Retaliation,2013,G.I. Joe: Retaliation,2013,1
+276137,568,1052,The Counselor,2013,Out of the Furnace,2013,0
+282325,584,548,Harry Potter and the Half-Blood Prince,2009,The Twilight Saga: Eclipse,2010,0
+282522,584,2107,Harry Potter and the Half-Blood Prince,2009,The Final Destination,2009,0
+284932,588,341,Ted,2012,Ted,2012,1
+287882,594,2053,The Secret Life of Walter Mitty,2013,Thunder and the House of Magic,2013,0
+293557,612,343,Barely Lethal,2015,Barely Lethal,2015,1
+298399,627,1263,Hostel,2005,Hostel,2005,1
+302356,636,1019,Pearl Harbor,2001,Pearl Harbor,2001,1
+303747,642,260,The Machinist,2004,The Incredibles,2004,0
+303826,642,1185,The Machinist,2004,The Machinist,2004,1
+305544,646,1759,The Lazarus Effect,2015,The Rover,2014,0
+315970,663,211,Ocean's Eleven,2001,Ocean's Eleven,2001,1
+318942,671,2908,The D Train,2015,The Eichmann Show,2015,0
+321897,677,1250,The Messenger(I),2015,Salting the Battlefield,2014,0
+322109,677,2447,The Messenger(I),2015,The Bag Man,2014,0
+326127,686,493,Noah,2014,Noah,2014,1
+330266,694,1250,The Hive(I),2015,Salting the Battlefield,2014,0
+330270,694,1260,The Hive(I),2015,The Lazarus Effect,2015,0
+332017,699,183,The Purge(I),2013,The Theory of Everything,2014,0
+332037,699,264,The Purge(I),2013,The Purge: Anarchy,2014,0
+335898,708,3048,The Cobbler,2014,The Woman in Black 2: Angel of Death,2014,0
+336953,710,1050,This Is 40,2012,This Is 40,2012,1
+342336,724,1310,Shaun of the Dead,2004,Shaun of the Dead,2004,1
+342522,725,654,Starship Troopers,1997,Starship Troopers,1997,1
+344059,730,2037,The Blind Side,2009,Legend of the BoneKnapper Dragon,2010,0
+344137,730,2714,The Blind Side,2009,The Debt,2010,0
+344497,733,199,The Matrix Reloaded,2003,The Matrix Reloaded,2003,1
+345271,736,1483,The Karate Kid,1984,The Karate Kid,1984,1
+347505,743,566,Raiders of the Lost Ark,1981,E.T. the Extra-Terrestrial,1982,0
+351996,754,1584,American Gangster,2007,American Gangster,2007,1
+352568,755,1110,Selma,2014,Selma,2014,1
+353730,757,832,Batman Returns,1992,Batman Returns,1992,1
+353805,758,102,The Lord of the Rings: The Two Towers,2002,The Lord of the Rings: The Fellowship of the Ring,2001,0
+357339,767,607,Superman Returns,2006,Superman Returns,2006,1
+358529,770,740,That Awkward Moment,2014,That Awkward Moment,2014,1
+360019,772,739,Mr. Holmes,2015,Mr. Holmes,2015,1
+360958,775,1060,TRON: Legacy,2010,TRON: Legacy,2010,1
+361379,776,1531,Harry Potter and the Order of the Phoenix,2007,The Seeker: The Dark Is Rising,2007,0
+361484,776,2530,Harry Potter and the Order of the Phoenix,2007,30 Days of Night,2007,0
+361913,778,1105,Jack Reacher,2012,Jack Reacher,2012,1
+363035,781,1347,The Lone Ranger,2013,The Lone Ranger,2013,1
+368169,793,239,Blunt Force Trauma,2015,Blunt Force Trauma,2015,1
+369124,796,1673,Deliverance,1972,Deliverance,1972,1
+370246,799,1014,Pretty Woman,1990,Pretty Woman,1990,1
+370805,801,1168,The Mist,2007,The Mist,2007,1
+379600,823,1607,Matilda,1996,Matilda,1996,1
+380010,826,504,Hercules,1997,Hercules,1997,1
+380860,828,1626,Horns,2013,Horns,2013,1
+383813,834,1039,Amlie,2001,Amlie,2001,1
+386565,839,1595,Wayne's World,1992,Wayne's World,1992,1
+387996,842,148,Despicable Me 2,2013,Despicable Me 2,2013,1
+389439,845,935,Mud,2012,Mud,2012,1
+391733,849,1123,Twelve Monkeys,1995,Twelve Monkeys,1995,1
+393259,853,329,Men in Black,1997,Men in Black,1997,1
+396746,861,203,RoboCop,2014,RoboCop,2014,1
+401565,873,2271,Carrie,2013,Carrie,2013,1
+402512,876,647,The Pianist,2002,The Pianist,2002,1
+404657,881,1432,Not Another Teen Movie,2001,Not Another Teen Movie,2001,1
+406207,887,1652,White Chicks,2004,White Chicks,2004,1
+407531,892,19,R.L. Stine's Monsterville: The Cabinet of Souls,2015,The Hobbit: The Battle of the Five Armies,2014,0
+408391,894,971,The Punisher,2004,The Punisher,2004,1
+412460,904,3008,Safe Haven(I),2013,Safe Haven,2013,1
+414838,911,684,Underworld,2003,Underworld,2003,1
+418584,922,2564,EuroTrip,2004,EuroTrip,2004,1
+420188,926,760,The League of Extraordinary Gentlemen,2003,The League of Extraordinary Gentlemen,2003,1
+421910,930,75,Wild Card,2015,Wild Card,2015,1
+425860,937,763,Daredevil,2003,Daredevil,2003,1
+427464,942,574,Casablanca,1942,Casablanca,1942,1
+430748,951,485,The Croods,2013,Snow White and the Huntsman,2012,0
+431458,952,893,Olympus Has Fallen,2013,Olympus Has Fallen,2013,1
+436216,963,576,Gone with the Wind,1939,The Wizard of Oz,1939,0
+436313,964,1348,8 Mile,2002,8 Mile,2002,1
+439673,972,1671,Paul,2011,Paul,2011,1
+442814,980,1142,Scary Movie,2000,Scary Movie,2000,1
+450414,1002,1253,Prince of Persia: The Sands of Time,2010,Prince of Persia: The Sands of Time,2010,1
+451897,1006,1315,One Day,2011,One Day,2011,1
+452613,1008,129,The November Man,2014,The November Man,2014,1
+454708,1014,1737,Step Brothers,2008,Step Brothers,2008,1
+457320,1020,1350,Gangster Squad,2013,Gangster Squad,2013,1
+458114,1022,1505,Spy Kids,2001,Spy Kids,2001,1
+467802,1044,1757,Unforgiven,1992,Unforgiven,1992,1
+468618,1048,328,Sherlock Holmes: A Game of Shadows,2011,Sherlock Holmes: A Game of Shadows,2011,1
+472807,1058,1203,Legion,2010,Legion,2010,1
+478458,1077,873,Kill Bill: Vol. 2,2004,Kill Bill: Vol. 2,2004,1
+481910,1085,1469,Transformers: Dark of the Moon,2011,The Vow,2012,0
+488254,1105,1574,The Wolverine,2013,The Spectacular Now,2013,0
+488361,1105,2144,The Wolverine,2013,The Machine,2013,0
+496382,1125,1276,The Dreamers,2003,The Dreamers,2003,1
+498891,1131,1301,The Parent Trap,1998,The Parent Trap,1998,1
+500665,1135,1707,The Road(I),2009,American Pie Presents: The Book of Love,2009,0
+501582,1138,1403,King Arthur,2004,King Arthur,2004,1
+502261,1141,153,The Fighter(I),2010,Harry Potter and the Deathly Hallows: Part 1,2010,0
+502277,1141,294,The Fighter(I),2010,Harry Potter and the Half-Blood Prince,2009,0
+502363,1141,994,The Fighter(I),2010,The Fighter,2010,1
+503510,1143,509,Monty Python and the Holy Grail,1975,Monty Python and the Holy Grail,1975,1
+505070,1147,2129,End of Watch,2012,Diary of a Wimpy Kid: Rodrick Rules,2011,0
+505137,1147,2717,End of Watch,2012,Diary of a Wimpy Kid: Dog Days,2012,0
+505815,1150,435,District 9,2009,District 9,2009,1
+512481,1168,1431,Spaceballs,1987,Spaceballs,1987,1
+524333,1204,1917,Into the Blue,2005,Into the Blue,2005,1
+526380,1208,2140,Death Proof,2007,Death Proof,2007,1
+533149,1226,655,Ocean's Twelve,2004,Ocean's Twelve,2004,1
+537145,1233,1418,National Lampoon's Christmas Vacation,1989,National Lampoon's Christmas Vacation,1989,1
+546233,1257,886,Anchorman 2: The Legend Continues,2013,The Guest,2014,0
+546767,1258,930,Seven Psychopaths,2012,Seven Psychopaths,2012,1
+547261,1261,767,Wanted,2008,Wanted,2008,1
+555114,1278,2804,High School Musical,2006,High School Musical 2,2007,0
+556328,1281,1845,Into the Grizzly Maze,2015,Into the Grizzly Maze,2015,1
+561041,1292,1269,Wrath of the Titans,2012,The Railway Man,2013,0
+568924,1314,494,Chain of Command,2015,Chain of Command,2015,1
+569726,1316,537,Stargate,1994,Stargate,1994,1
+574614,1327,1754,The World Is Not Enough,1999,Pokmon: The First Movie: Mewtwo Strikes Back,1998,0
+574977,1328,1710,The Master,2012,The Three Musketeers,2011,0
+575553,1329,1083,Jack Ryan: Shadow Recruit,2014,Jack Ryan: Shadow Recruit,2014,1
+576473,1333,718,Sex and the City 2,2010,The Chronicles of Narnia: The Voyage of the Dawn Treader,2010,0
+577252,1335,2530,30 Days of Night,2007,30 Days of Night,2007,1
+579620,1344,433,Coming to America,1988,Licence to Kill,1989,0
+580126,1346,1683,Who Framed Roger Rabbit,1988,Who Framed Roger Rabbit,1988,1
+583191,1352,2011,The Circle,2016,Guardians of the Galaxy Vol. 2,2017,0
+591153,1376,982,Raging Bull,1980,Raging Bull,1980,1
+594391,1388,2620,Epic Movie,2007,Disaster Movie,2008,0
+594810,1390,1888,The Descent,2005,The Princess Diaries 2: Royal Engagement,2004,0
+598169,1401,668,Paddington,2014,Paddington,2014,1
+599513,1403,1845,Maps to the Stars,2014,Into the Grizzly Maze,2015,0
+600938,1409,705,Step Up All In,2014,Step Up All In,2014,1
+603308,1413,3048,Some Kind Of Beautiful,2014,The Woman in Black 2: Angel of Death,2014,0
+605284,1418,1127,Meet the Parents,2000,Meet the Parents,2000,1
+609287,1435,1034,The Polar Express,2004,The Polar Express,2004,1
+619138,1461,1072,The Great Escape,1963,The Great Escape,1963,1
+621129,1464,2193,Burn After Reading,2008,Burn After Reading,2008,1
+621731,1466,2068,Night at the Museum: Battle of the Smithsonian,2009,Date Night,2010,0
+628212,1480,510,The Twilight Saga: Eclipse,2010,The Girl with the Dragon Tattoo,2011,0
+628270,1480,958,The Twilight Saga: Eclipse,2010,The Social Network,2010,0
+628491,1480,2559,The Twilight Saga: Eclipse,2010,The Change-Up,2011,0
+631540,1489,681,There's Something About Mary,1998,There's Something About Mary,1998,1
+634699,1500,651,Rio,2011,Rio,2011,1
+640667,1521,811,Dances with Wolves,1990,Dances with Wolves,1990,1
+643549,1526,1088,Mirror Mirror(I),2012,Mirror Mirror,2012,1
+644632,1529,1000,The Three Musketeers,2011,The Next Three Days,2010,0
+655784,1562,699,Underworld: Awakening,2012,Underworld: Awakening,2012,1
+656781,1563,2909,Strange Magic,2015,Strange Magic,2015,1
+659537,1571,925,Meet the Fockers,2004,Meet the Fockers,2004,1
+663001,1582,1440,Resident Evil: Apocalypse,2004,Resident Evil: Apocalypse,2004,1
+664322,1590,917,Rise of the Planet of the Apes,2011,Rise of the Planet of the Apes,2011,1
+665808,1594,1199,The Princess and the Frog,2009,The Road,2009,0
+665888,1594,1824,The Princess and the Frog,2009,The Blind Side,2009,0
+668340,1600,1980,The Blues Brothers,1980,The Blues Brothers,1980,1
+677895,1621,422,The X Files: I Want to Believe,2008,The Twilight Saga: New Moon,2009,0
+679387,1625,863,Spartacus,1960,Spartacus,1960,1
+685859,1639,2257,The Constant Gardener,2005,The Constant Gardener,2005,1
+687787,1647,1573,Con Air,1997,Con Air,1997,1
+688215,1649,641,My Own Private Idaho,1991,My Own Private Idaho,1991,1
+694402,1666,3062,Trading Places,1983,Trading Places,1983,1
+694788,1668,2377,Mission to Mars,2000,Mission to Mars,2000,1
+698974,1679,2545,The Falling,2014,The Falling,2014,1
+706717,1701,2157,Hall Pass,2011,Hall Pass,2011,1
+709456,1707,242,A Bug's Life,1998,A Bug's Life,1998,1
+711655,1716,520,The Vatican Tapes,2015,Shaun the Sheep Movie,2015,0
+712017,1716,2481,The Vatican Tapes,2015,Hitting the Apex,2015,0
+720928,1738,2167,The Conjuring 2: The Enfield Poltergeist,2016,Avatar 2,2017,0
+721537,1741,1778,The Fall,2006,The Fall,2006,1
+722752,1744,2380,The Assassin,2015,The Assassin,2015,1
+729383,1761,1695,Demonic,2015,Demonic,2015,1
+733971,1771,497,Sabotage,2014,Sabotage,2014,1
+737654,1776,2961,Cleveland Abduction,2015,Cleveland Abduction,2015,1
+749571,1812,721,Valkyrie,2008,Valkyrie,2008,1
+756176,1830,1023,Goldfinger,1964,Goldfinger,1964,1
+756254,1831,759,The Chronicles of Narnia: Prince Caspian,2008,The Chronicles of Narnia: Prince Caspian,2008,1
+756696,1832,1194,Hanna,2011,Hanna,2011,1
+758946,1838,536,Last Action Hero,1993,Last Action Hero,1993,1
+759516,1839,1489,Leviathan,2014,Leviathan,2014,1
+759905,1840,1147,Planet of the Apes,1968,Planet of the Apes,1968,1
+760958,1842,283,The Town That Dreaded Sundown,2014,Me and Earl and the Dying Girl,2015,0
+761713,1843,862,Elf,2003,Elf,2003,1
+769262,1863,2218,The Cell,2000,The Cell,2000,1
+770450,1866,346,The Prince,2014,The Lego Movie,2014,0
+773298,1873,1612,Killing Them Softly,2012,Killing Them Softly,2012,1
+777020,1885,204,Ice Age,2002,Ice Age,2002,1
+784292,1903,1124,When the Game Stands Tall,2014,The Cobbler,2014,0
+784319,1903,1259,When the Game Stands Tall,2014,Far from the Madding Crowd,2015,0
+788695,1914,1447,The Homesman,2014,The Homesman,2014,1
+789795,1916,294,The Unborn,2009,Harry Potter and the Half-Blood Prince,2009,0
+790249,1917,1416,The Rundown,2003,The Animatrix,2003,0
+790488,1918,1182,Fantastic 4: Rise of the Silver Surfer,2007,Alvin and the Chipmunks,2007,0
+790567,1918,1836,Fantastic 4: Rise of the Silver Surfer,2007,Over the Hedge,2006,0
+794923,1936,144,Master and Commander: The Far Side of the World,2003,The Lord of the Rings: The Return of the King,2003,0
+797584,1942,2970,Martyrs,2008,Martyrs,2008,1
+806448,1971,2280,The Hunt for Red October,1990,The Hunt for Red October,1990,1
+807495,1974,1207,Austin Powers in Goldmember,2002,Austin Powers in Goldmember,2002,1
+808079,1976,2959,La Vie en Rose,2007,La Vie en Rose,2007,1
+817130,2002,1424,Lucky Number Slevin,2006,Lucky Number Slevin,2006,1
+819291,2010,1245,Soul Surfer,2011,Soul Surfer,2011,1
+823159,2023,1852,The Thomas Crown Affair,1999,The 13th Warrior,1999,0
+827196,2038,519,Blade: Trinity,2004,Blade: Trinity,2004,1
+832308,2055,1392,Rocky III,1982,Rocky III,1982,1
+836828,2075,556,Das Boot,1981,Das Boot,1981,1
+843285,2092,2566,The Duchess,2008,The Duchess,2008,1
+845816,2101,2437,The Omen,1976,The Omen,1976,1
+846123,2102,2129,A Dangerous Method,2011,Diary of a Wimpy Kid: Rodrick Rules,2011,0
+846329,2104,593,Transporter 2,2005,Transporter 2,2005,1
+847593,2110,1915,The Forger,2014,The Forger,2014,1
+859100,2147,2237,27 Dresses,2008,27 Dresses,2008,1
+863870,2159,1544,Little Children,2006,Little Children,2006,1
+865600,2165,1446,No Good Deed(I),2014,No Good Deed,2014,1
+866475,2166,1478,A Long Way Down,2014,A Long Way Down,2014,1
+868905,2171,1421,Dead Silence,2007,Dead Silence,2007,1
+874166,2188,1290,The Heartbreak Kid,2007,The Heartbreak Kid,2007,1
+874910,2191,1676,Shallow Hal,2001,Shallow Hal,2001,1
+875479,2194,1575,Freaky Friday,2003,Freaky Friday,2003,1
+879144,2206,385,The Raven(I),2012,The Conjuring,2013,0
+879353,2206,1574,The Raven(I),2012,The Spectacular Now,2013,0
+886693,2226,686,Death Race,2008,Death Race,2008,1
+887032,2228,479,Underworld: Evolution,2006,Underworld: Evolution,2006,1
+890063,2234,1784,Europa Report,2013,Europa Report,2013,1
+895536,2253,1342,Horton Hears a Who!,2008,Horton Hears a Who!,2008,1
+896666,2257,2425,You Don't Mess with the Zohan,2008,The Wave,2008,0
+896695,2257,2639,You Don't Mess with the Zohan,2008,I Now Pronounce You Chuck & Larry,2007,0
+897573,2261,643,The Hours,2002,The Mummy Returns,2001,0
+897583,2261,760,The Hours,2002,The League of Extraordinary Gentlemen,2003,0
+900712,2273,648,American Wedding,2003,American Wedding,2003,1
+901656,2275,2263,Cinema Paradiso,1988,Cinema Paradiso,1988,1
+903467,2280,1756,The Time Traveler's Wife,2009,The Time Traveler's Wife,2009,1
+905121,2287,1068,Saw II,2005,Saw II,2005,1
+907176,2292,2182,August Rush,2007,August Rush,2007,1
+912833,2309,813,Charlie's Angels: Full Throttle,2003,Charlie's Angels: Full Throttle,2003,1
+917441,2322,1852,A Night at the Roxbury,1998,The 13th Warrior,1999,0
+918603,2328,701,Space Jam,1996,Space Jam,1996,1
+920661,2333,1802,The Wolfman,2010,The Wolfman,2010,1
+943652,2411,2595,The Replacements,2000,The Replacements,2000,1
+946565,2419,2037,The Ward,2010,Legend of the BoneKnapper Dragon,2010,0
+958765,2450,1792,Unstoppable,2010,Unstoppable,2010,1
+964656,2468,1260,The Bag Man(I),2014,The Lazarus Effect,2015,0
+964697,2468,1474,The Bag Man(I),2014,The Perfect Guy,2015,0
+970073,2481,1836,Alvin and the Chipmunks,2007,Over the Hedge,2006,0
+970435,2484,1277,Spy Game,2001,Spy Game,2001,1
+971560,2487,1536,Ben-Hur,1959,Ben-Hur,1959,1
+979709,2512,478,The Immigrant,2013,The Purge,2013,0
+979943,2512,1711,The Immigrant,2013,The Raven,2012,0
+980248,2513,548,The Change-Up,2011,The Twilight Saga: Eclipse,2010,0
+983491,2527,1944,Underworld: Rise of the Lycans,2009,Sex and the City,2008,0
+983808,2529,1021,Man on a Ledge,2012,Man on a Ledge,2012,1
+985728,2536,955,Tears of the Sun,2003,Tears of the Sun,2003,1
+987279,2540,549,The Rewrite,2014,The Hunger Games: Mockingjay - Part 2,2015,0
+1000258,2577,2665,I'm Not There.,2007,I'm Not There.,2007,1
+1004870,2590,1302,Anger Management,2003,Anger Management,2003,1
+1005729,2594,2403,After the Dark,2013,Seal Team Six: The Raid on Osama Bin Laden,2012,0
+1007762,2600,2997,Song One,2014,Song One,2014,1
+1008086,2602,792,The Railway Man,2013,The Art of the Steal,2013,0
+1008141,2602,1059,The Railway Man,2013,Wrath of the Titans,2012,0
+1008170,2602,1269,The Railway Man,2013,The Railway Man,2013,1
+1016066,2622,2341,The 'Burbs,1989,Gremlins 2: The New Batch,1990,0
+1016599,2624,1250,The Rover,2014,Salting the Battlefield,2014,0
+1018065,2628,836,The Inbetweeners Movie,2011,The Town,2010,0
+1025157,2646,623,The Simpsons Movie,2007,The Curious Case of Benjamin Button,2008,0
+1026666,2649,1408,Spy Kids: All the Time in the World in 4D,2011,Spy Kids: All the Time in the World,2011,1
+1030047,2656,2576,Monsters,2010,Monsters,2010,1
+1033104,2666,2051,Escape from Alcatraz,1979,Escape from Alcatraz,1979,1
+1048953,2710,2379,Australia,2008,Australia,2008,1
+1052420,2723,1357,The Green Hornet,2011,The Artist,2011,0
+1058815,2742,2386,Frequency,2000,Frequency,2000,1
+1064210,2762,2700,The Girl Next Door,2007,The Girl Next Door,2007,1
+1065709,2768,2352,Miller's Crossing,1990,Miller's Crossing,1990,1
+1065851,2769,1319,The Game Plan,2007,She's the Man,2006,0
+1073966,2792,1809,Contraband,2012,Contraband,2012,1
+1074405,2793,825,My Little Pony: Equestria Girls - Friendship Games,2015,My Little Pony: Equestria Girls - Friendship Games,2015,1
+1078005,2801,338,Scary Movie 4,2006,The Simpsons Movie,2007,0
+1079452,2806,1438,Green Zone,2010,Green Zone,2010,1
+1080780,2808,1837,Drive Angry,2011,Drive Angry,2011,1
+1081995,2812,788,Aliens vs. Predator: Requiem,2007,Aliens vs Predator: Requiem,2007,1
+1084653,2823,2871,La Haine,1995,La Haine,1995,1
+1085820,2828,2482,Elizabeth,1998,Elizabeth,1998,1
+1086411,2830,2726,The Piano Teacher,2001,The Santa Clause 2,2002,0
+1091143,2849,2079,The Jacket,2005,The Ant Bully,2006,0
+1094469,2861,478,The Machine(I),2013,The Purge,2013,0
+1094787,2861,2144,The Machine(I),2013,The Machine,2013,1
+1100864,2876,363,Hit and Run,2012,Harry Potter and the Deathly Hallows: Part 2,2011,0
+1104449,2890,1068,Saw III,2006,Saw II,2005,0
+1105499,2894,1164,A Fistful of Dollars,1964,A Fistful of Dollars,1964,1
+1108790,2908,1808,Monte Carlo,2011,Monte Carlo,2011,1
+1113073,2921,201,The Little Death,2014,The Fault in Our Stars,2014,0
+1116321,2931,1727,Ice Age: Collision Course,2016,Ice Age: Collision Course,2016,1
+1118435,2938,1785,The Ring Two,2005,The Ring Two,2005,1
+1118821,2940,2108,The Texas Chainsaw Massacre: The Beginning,2006,The Texas Chainsaw Massacre: The Beginning,2006,1
+1118907,2940,2928,The Texas Chainsaw Massacre: The Beginning,2006,The Librarian: Return to King Solomon's Mines,2006,0
+1127656,2959,1751,Frankenweenie,2012,Frankenweenie,2012,1
+1128350,2962,471,Date Night,2010,Night at the Museum: Battle of the Smithsonian,2009,0
+1129711,2965,1391,Runner Runner,2013,Runner Runner,2013,1
+1130370,2967,1847,Tootsie,1982,Tootsie,1982,1
+1132512,2975,2414,Killing Season,2013,Killing Season,2013,1
+1135741,2982,1224,The Living Daylights,1987,The Living Daylights,1987,1
+1142904,3007,1333,The Taking of Pelham 1 2 3,2009,The Taking of Pelham 123,2009,1
+1142983,3007,2026,The Taking of Pelham 1 2 3,2009,Body of Lies,2008,0
+1146181,3015,89,The Three Stooges,2012,The Hobbit: The Desolation of Smaug,2013,0
+1146438,3015,1577,The Three Stooges,2012,Rise of the Guardians,2012,0
+1148030,3026,2620,Disaster Movie,2008,Disaster Movie,2008,1

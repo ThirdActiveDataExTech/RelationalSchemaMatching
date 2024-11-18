@@ -1,0 +1,401 @@
+_id,ltable.id,rtable.id,ltable.address,ltable.city,ltable.name,ltable.phone,ltable.state,ltable.zipcode,rtable.address,rtable.city,rtable.name,rtable.phone,rtable.state,rtable.zipcode,gold
+64,20,71,500 Lawrence Expy,Sunnyvale,Luv Pho,(408) 733-8883,CA,94085,500 Lawrence Expy,Sunnyvale,Luv Pho Restaurant,(408) 733-8883,CA,94085,1
+235,34,1702,638 El Camino Real,Santa Clara,Fiorillo's Restaurant Inc.,(408) 766-7527,CA,95050,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+305,36,192,2789 El Camino Real,Santa Clara,Sushi O Sushi Japanese Cuisine,(408) 241-1677,CA,95051,2325 El Camino Real,Santa Clara,Dusita Thai Cuisine,(408) 247-5199,CA,95050,0
+323,36,265,2789 El Camino Real,Santa Clara,Sushi O Sushi Japanese Cuisine,(408) 241-1677,CA,95051,2232 El Camino Real,Santa Clara,Mayuri Indian Cuisine,(408) 248-9747,CA,95050,0
+447,36,1810,2789 El Camino Real,Santa Clara,Sushi O Sushi Japanese Cuisine,(408) 241-1677,CA,95051,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,0
+849,48,1473,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,1
+1063,63,141,1214 Apollo Way # 404-B,Sunnyvale,Sneha South & North Indian Restaurant,(408) 481-0700,CA,94085,1214 Apollo Way,Sunnyvale,Sneha,(408) 481-0700,CA,94085,1
+1071,68,76,511 Borregas Ave,Sunnyvale,Seto Japanese Cuisine,(408) 735-8280,CA,94085,511 Borregas Ave,Sunnyvale,Seto Restaurant,(408) 735-8280,CA,94085,1
+1111,80,71,500 Lawrence Expy,Sunnyvale,Luv Pho,(408) 733-8883,CA,94085,500 Lawrence Expy,Sunnyvale,Luv Pho Restaurant,(408) 733-8883,CA,94085,1
+2141,139,3,911 E Duane Ave,Sunnyvale,Mediterranean Cuisine,(408) 685-2269,CA,94085,911 E Duane Ave,Sunnyvale,Obed Mediterranean Cuisine,(408) 685-2269,CA,94085,1
+2641,191,1729,595 E El Camino Real,Sunnyvale,Chocolate Sushi & Tofu House,(408) 830-0638,CA,94087,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,0
+3431,199,1417,411 E El Camino Real,Sunnyvale,Katana Sushi & Sake,(408) 746-3000,CA,94087,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+3506,201,39,832 W El Camino Real,Sunnyvale,The Cheese Steak Shop,(408) 530-8159,CA,94087,146 W El Camino Real,Sunnyvale,The Habit Burger Grill,(408) 774-9015,CA,94087,0
+5351,226,1081,2230 El Camino Real,Santa Clara,Mayuri Indian Cuisine,(408) 248-9747,CA,95050,855 El Camino Real Ste 162,Palo Alto,Tava Indian Kitchen,(650) 321-8282,CA,94301,0
+5513,227,339,2367 El Camino Real,Santa Clara,Andy's BBQ,(408) 249-8158,CA,95050,3380 El Camino Real,Santa Clara,El Camino Mongolian BBQ,(408) 241-2413,CA,95051,0
+5609,227,1719,2367 El Camino Real,Santa Clara,Andy's BBQ,(408) 249-8158,CA,95050,700 El Camino Real,Menlo Park,MP Mongolian BBQ,(650) 853-1118,CA,94025,0
+5803,228,1742,638 El Camino Real,Santa Clara,Fiorillos Restaurant Inc.,(408) 984-0414,CA,95050,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+5955,229,1354,2325 El Camino Real Ste 104,Santa Clara,Dusita Thai Cuisine,(408) 247-5199,CA,95050,366 El Camino Real,San Carlos,Sirayvah Organic Thai,(650) 637-1500,CA,94070,0
+6607,240,224,2855 Stevens Creek Blvd Ste 2451,Santa Clara,Boudin Bakery,(408) 249-4101,CA,95050,3275 Stevens Creek Blvd,San Jose,Yeganeh Bakery & Kafe Unik,(408) 666-1229,CA,95117,0
+7770,272,1702,2325 El Camino Real Ste 101,Santa Clara,Ninety-Nine Restaurant and Pub,(408) 241-9658,CA,95050,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+7784,272,1762,2325 El Camino Real Ste 101,Santa Clara,Ninety-Nine Restaurant and Pub,(408) 241-9658,CA,95050,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+8045,278,244,638 El Camino Real,Santa Clara,Fiorillo's Restaurant Inc.,(408) 766-7527,CA,95050,2110 El Camino Real,Santa Clara,China Stix Restaurant,(408) 244-1684,CA,95050,0
+8166,278,1762,638 El Camino Real,Santa Clara,Fiorillo's Restaurant Inc.,(408) 766-7527,CA,95050,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+8443,282,339,2367 El Camino Real,Santa Clara,Andy's BBQ,(408) 249-8158,CA,95050,3380 El Camino Real,Santa Clara,El Camino Mongolian BBQ,(408) 241-2413,CA,95051,0
+8727,283,1714,638 El Camino Real,Santa Clara,Fiorillos Restaurant Inc.,(408) 984-0414,CA,95050,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+8925,284,1754,2325 El Camino Real Ste 104,Santa Clara,Dusita Thai Cuisine,(408) 247-5199,CA,95050,3401 W El Camino Real,Atherton,Bonsai Japanese Cuisine,(650) 367-6547,CA,94027,0
+9699,300,1414,638 El Camino Real,Santa Clara,Fiorillo's Restaurant Inc.,(408) 766-7527,CA,95050,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+9729,300,1762,638 El Camino Real,Santa Clara,Fiorillo's Restaurant Inc.,(408) 766-7527,CA,95050,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+10371,325,299,1000 Lafayette St Ste C,Santa Clara,Hungry Hound,(408) 241-2756,CA,95050,1000 Lafayette St,Santa Clara,Hungry Hound,(408) 241-2756,CA,95050,1
+11109,343,1382,1111 El Camino Real,Santa Clara,Su's Mongolian Barbeque Restaurant,(408) 985-2958,CA,95050,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+11130,343,1702,1111 El Camino Real,Santa Clara,Su's Mongolian Barbeque Restaurant,(408) 985-2958,CA,95050,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+11517,348,1520,2230 El Camino Real,Santa Clara,Mayuri Indian Cuisine,(408) 248-9747,CA,95050,855 El Camino Real Ste 162,Palo Alto,Tava Indian Kitchen,(650) 321-8282,CA,94301,0
+11629,349,777,2325 El Camino Real Ste 104,Santa Clara,Dusita Thai Cuisine,(408) 247-5199,CA,95050,825 El Camino Real,Redwood City,Bangkok Bay Thai Cuisine,(650) 365-5369,CA,94063,0
+12957,391,216,2002 El Camino Real,Santa Clara,Peet's Coffee & Tea,(408) 831-7517,CA,95050,3014 El Camino Real,Santa Clara,Big Mug Coffee Roaster,(408) 816-7932,CA,95051,0
+14640,413,208,2219 The Alameda,Santa Clara,Tonkotsu Taka,(408) 564-4467,CA,95050,2219 The Alameda,Santa Clara,Ramen Taka,(408) 564-4467,CA,95050,1
+15680,498,1451,855 W El Camino Real,Mountain View,Chef Xue Restaurant,(650) 988-8820,CA,94040,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+16479,509,1702,2290 W El Camino Real,Mountain View,Amber India Restaurant,(650) 968-7511,CA,94040,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+16530,510,72,176 S Murphy Ave,Sunnyvale,Gumba's Italian Restaurant,(408) 737-8384,CA,94086,140 S Murphy Ave,Sunnyvale,Tarragon Restaurant,(408) 737-8003,CA,94086,0
+16822,516,738,705 E El Camino Real,Mountain View,Satsuma Restaurant,(650) 966-1122,CA,94040,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+16921,516,1762,705 E El Camino Real,Mountain View,Satsuma Restaurant,(650) 966-1122,CA,94040,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+17258,545,615,977 E Hillsdale Blvd,Foster City,Corner Bakery Cafe,(650) 458-5511,CA,94404,977 E Hillsdale Blvd,Foster City,Corner Bakery Cafe,(650) 458-5511,CA,94404,1
+17306,551,530,1058 Shell Blvd,Foster City,Lotus Garden Restaurant,(650) 349-1151,CA,94404,1058B Shell Blvd,Foster City,Lotus Garden Restaurant,(650) 349-1151,CA,94404,1
+17317,554,574,1495 Beach Park Blvd,Foster City,Kenta Ramen,(650) 212-2883,CA,94404,1495 Beach Park Blvd,Foster City,Kenta Ramen,(650) 212-2883,CA,94404,1
+17345,558,587,973 E Hillsdale Blvd,Foster City,ABC Sea Food Restaurant,(650) 328-2288,CA,94404,973 E Hillsdale Blvd,Foster City,ABC Seafood Restaurant,(650) 328-2288,CA,94404,1
+17512,568,1702,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+17516,568,1714,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+17526,568,1762,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+17667,572,1308,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+18276,624,540,969 Edgewater Blvd,Foster City,Waterfront Pizza,(650) 573-6634,CA,94404,969 D Edgewater Blvd,Foster City,Waterfront,(650) 573-6634,CA,94404,1
+20043,680,738,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+20057,680,814,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+20132,680,1714,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+20458,685,1211,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1360 El Camino Real,Belmont,The Iron Gate,(650) 592-7893,CA,94002,1
+20710,690,1742,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1
+22099,722,681,980 Woodside Rd,Redwood City,Bravo Taqueria,(650) 364-3511,CA,94061,980 Woodside Rd,Redwood City,Bravo Taqueria,(650) 364-3511,CA,94061,1
+22234,728,1417,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+22993,740,1402,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1001 El Camino Real,Menlo Park,Applewood Pizza,(650) 324-3486,CA,94025,0
+23084,754,174,2525 El Camino Real,Redwood City,El Grullense Grill,(650) 368-3172,CA,94061,980 El Camino Real,Santa Clara,Euro Grill,(408) 244-9745,CA,95050,0
+23511,756,784,2627 El Camino Real,Redwood City,Tacos El Camino,(650) 366-3630,CA,94061,1280 El Camino Real,Redwood City,Taqueria El Grullense,(650) 368-3737,CA,94063,0
+23512,756,788,2627 El Camino Real,Redwood City,Tacos El Camino,(650) 366-3630,CA,94061,999 El Camino Real,Redwood City,Tacos el Grullense E&E,(650) 568-3242,CA,94063,0
+23515,756,803,2627 El Camino Real,Redwood City,Tacos El Camino,(650) 366-3630,CA,94061,2627 El Camino Real,Redwood City,Tacos El Camino,(650) 366-3630,CA,94061,1
+23628,756,2155,2627 El Camino Real,Redwood City,Tacos El Camino,(650) 366-3630,CA,94061,13998 Old El Camino Real,San Diego,Rancho El Camino Equestrian,(858) 792-8466,CA,92130,0
+24019,769,812,593 Woodside Rd,Redwood City,Villa Roma,(650) 365-5060,CA,94061,593 Woodside Rd,Redwood City,The Villa Roma Cocktail Lounge,(650) 365-5060,CA,94061,1
+24988,777,152,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,909 W El Camino Real,Sunnyvale,Thai Spoons,(408) 739-1798,CA,94087,0
+25089,777,1354,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,366 El Camino Real,San Carlos,Sirayvah Organic Thai,(650) 637-1500,CA,94070,0
+25101,777,1414,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+25127,777,1742,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+25923,794,739,1041 Middlefield Rd,Redwood City,Donato Enoteca,(650) 701-1000,CA,94063,1041 Middlefield Rd,Redwood City,Donato Enoteca,(650) 701-1000,CA,94063,1
+25924,795,813,2639 Broadway St,Redwood City,Erawan Thai Restaurant,(650) 556-9966,CA,94063,2639 Broadway St,Redwood City,Erawan Thai Restaurant,(650) 556-9969,CA,94063,1
+26346,804,244,314 El Camino Real,Redwood City,Stacks Restaurant,(650) 482-2850,CA,94062,2110 El Camino Real,Santa Clara,China Stix Restaurant,(408) 244-1684,CA,95050,0
+26499,805,4315,949 Veterans Blvd,Redwood City,In-N-Out Burger,(800) 786-1000,CA,94063,7940 N Central Expy,Dallas,In-N-Out Burger,(800) 786-1000,TX,75206,1
+26502,810,744,2401 Middlefield Rd,Redwood City,El Grullense E & E,(650) 369-9013,CA,94063,2401 Middlefield Rd,Redwood City,El Grullense E & E,(650) 369-9013,CA,94063,1
+26571,813,777,825 El Camino Real,Redwood City,Bangkok Bay Thai Cuisine,(650) 365-5369,CA,94063,825 El Camino Real,Redwood City,Bangkok Bay Thai Cuisine,(650) 365-5369,CA,94063,1
+26694,814,770,909 Main St,Redwood City,The Patty Shack,(650) 364-1400,CA,94063,909 Main St,Redwood City,The Patty Shack,(650) 364-1400,CA,94063,1
+26696,816,808,831 Middlefield Rd,Redwood City,Pizza My Heart,(650) 361-1010,CA,94063,831 Middlefield Rd.,Redwood City,Pizza My Heart,(650) 361-1010,CA,94063,1
+27021,823,1417,540 El Camino Real,Redwood City,Higuma Japanese Restaurant,(650) 369-3240,CA,94063,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+27036,823,1702,540 El Camino Real,Redwood City,Higuma Japanese Restaurant,(650) 369-3240,CA,94063,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+27048,823,1754,540 El Camino Real,Redwood City,Higuma Japanese Restaurant,(650) 369-3240,CA,94063,3401 W El Camino Real,Atherton,Bonsai Japanese Cuisine,(650) 367-6547,CA,94027,0
+28016,874,738,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+28030,874,814,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+28307,878,1762,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+28652,892,943,174 E 3rd Ave,San Mateo,San Mateo Prime,(650) 558-8918,CA,94401,174 3rd Ave,San Mateo,San Mateo Prime,(650) 558-8918,CA,94401,1
+28748,895,999,88 E 4th Ave,San Mateo,Champagne Seafood Restaurant,(650) 343-6988,CA,94401,173 E 4th Ave,San Mateo,Thai Satay Restaurant,(650) 342-6451,CA,94401,0
+28883,906,905,33 E 3rd Ave,San Mateo,Hotaru Japanese Restaurant,(650) 343-1152,CA,94401,50 E 3rd Ave,San Mateo,Three Restaurant & Bar,(650) 344-9444,CA,94401,0
+28888,906,917,33 E 3rd Ave,San Mateo,Hotaru Japanese Restaurant,(650) 343-1152,CA,94401,33 E 3rd Ave,San Mateo,Hotaru Japanese Restaurant,(650) 343-1152,CA,94401,1
+28938,908,926,428 E 3rd Ave,San Mateo,Fuji Sukiyak Restaurant,(650) 348-7810,CA,94401,428 E 3rd Ave,San Mateo,Fuji Sukiyaki,(650) 348-7810,CA,94401,1
+29169,917,904,215 E 3rd Ave,San Mateo,Little China Kitchen,(650) 348-3890,CA,94401,215 E 3rd Ave,San Mateo,Little China Kitchen,(650) 348-3890,CA,94401,1
+29247,919,989,418 E 3rd Ave,San Mateo,Saigon City Restaurant,(650) 340-8878,CA,94401,500 E 3rd Ave,San Mateo,Wing Fat Restaurant,(650) 344-0751,CA,94401,0
+29254,928,1251,41 W Hillsdale Blvd,San Mateo,The Counter,(650) 212-3200,CA,94403,41 W Hillsdale Blvd,San Mateo,The Counter - San Mateo,(650) 212-3200,CA,94403,1
+29365,929,1308,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+29381,929,1382,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+29416,929,1762,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+29523,933,814,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+29573,933,1382,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+30423,973,877,147 E 3rd Ave,San Mateo,Vespucci Ristorante Italiano,(650) 685-6151,CA,94401,147 E 3rd Ave,San Mateo,Vespucci Ristorante Italiano,(650) 685-6151,CA,94401,1
+30576,979,905,50 E 3rd Ave,San Mateo,Three Restaurant & Bar,(650) 344-9444,CA,94401,50 E 3rd Ave,San Mateo,Three Restaurant & Bar,(650) 344-9444,CA,94401,1
+30741,981,1308,104 S El Camino Real,San Mateo,Yu Raku Japanese Chinese Restaurant,(650) 558-8239,CA,94401,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+30906,990,1003,223 E 4th Ave,San Mateo,Spiedo Restaurant,(650) 375-0818,CA,94401,173 E 4th Ave,San Mateo,Thai Satay Restaurant,(650) 342-6451,CA,94401,0
+31261,1004,966,168 E 4th Ave,San Mateo,Little Sichuan Restaurant,(650) 345-9168,CA,94401,47 E 4th Ave,San Mateo,Kisaku Japanese Restaurant,(650) 347-4121,CA,94401,0
+31322,1009,861,320 S B St,San Mateo,B Street & Vine,(650) 347-8463,CA,94401,320 S B St,San Mateo,B Street & Vine,(650) 347-8463,CA,94401,1
+31348,1009,987,320 S B St,San Mateo,B Street & Vine,(650) 347-8463,CA,94401,236 S B St,San Mateo,B Street Station,(650) 348-8008,CA,94401,0
+31481,1016,955,2 N B St,San Mateo,The Melting Pot,(650) 342-6358,CA,94401,2 N B St,San Mateo,Melting Pot,(650) 342-6358,CA,94401,1
+31517,1018,861,359 S B St,San Mateo,Bean Street Coffee,(650) 579-1844,CA,94401,320 S B St,San Mateo,B Street & Vine,(650) 347-8463,CA,94401,0
+32064,1052,116,855 El Camino Real Ste 158,Palo Alto,Sushi House,(650) 321-3453,CA,94301,595 E El Camino Real,Sunnyvale,Olleh Sushi and Tofu House,(408) 830-0628,CA,94086,0
+32441,1062,1109,473 University Ave,Palo Alto,Arte Ristorante,(650) 329-8300,CA,94301,473 University Ave,Palo Alto,Arte Ristorante,(650) 329-8300,CA,94301,1
+32984,1071,1762,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+34151,1113,1742,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+34628,1123,738,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1
+34642,1123,814,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+35847,1144,1417,67 El Camino Real,Palo Alto,Hobees Restaurant,(650) 327-4111,CA,94301,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+35876,1144,1762,67 El Camino Real,Palo Alto,Hobees Restaurant,(650) 327-4111,CA,94301,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+36488,1163,1131,369 Lytton Ave,Palo Alto,Janta Indian Restaurant,(650) 462-5903,CA,94301,369 Lytton Ave,Palo Alto,Janta Indian Cuisine,(650) 462-5903,CA,94301,1
+36779,1165,1248,855 El Camino Real,Palo Alto,Tava Indian Kitchen,(650) 321-8282,CA,94301,3799 S El Camino Real Ave,San Mateo,Cuban Kitchen,(650) 753-1735,CA,94403,0
+36894,1171,174,1 El Camino Real,Palo Alto,Scotts Seafood Grill & Bar,(650) 323-1555,CA,94301,980 El Camino Real,Santa Clara,Euro Grill,(408) 244-9745,CA,95050,0
+36988,1171,1343,1 El Camino Real,Palo Alto,Scotts Seafood Grill & Bar,(650) 323-1555,CA,94301,1397 El Camino Real,Belmont,Sumac Mediterranean Grill,(650) 592-2107,CA,94002,0
+37470,1196,1416,642 Ramona St,Palo Alto,Coconuts Caribbean Restaurant & Bar,(650) 329-9533,CA,94301,642 Ramona St,Palo Alto,Coconuts Caribbean Restaurant & Bar,(650) 329-9533,CA,94301,1
+37487,1212,1037,367 University Ave,Palo Alto,Crepevine,(650) 323-3900,CA,94301,367 University Ave,Palo Alto,Crepevine,(650) 323-3900,CA,94301,1
+37604,1220,1308,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+38289,1242,1330,1410 Old County Rd,Belmont,Saint James Gate,(650) 592-5923,CA,94002,1410 Old County Rd,Belmont,St. James Gate Pub & Restaurant,(650) 592-5923,CA,94002,1
+38870,1247,1225,120 Harbor Blvd,Belmont,El Metate Taqueria,(650) 595-1110,CA,94002,120 Harbor Blvd,Belmont,Taqueria El Metate,(650) 595-1110,CA,94002,1
+39213,1259,1714,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+39415,1263,1762,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+39593,1267,1442,1324 El Camino Real,San Carlos,Round Table Pizza,(650) 591-1998,CA,94070,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,0
+39792,1276,1308,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+40077,1287,1235,600 Ralston Ave,Belmont,China Village Seafood Restaurant,(650) 593-1831,CA,94002,600 Ralston Ave,Belmont,China Village Seafood Restaurant,(650) 593-1831,CA,94002,1
+40827,1300,1742,300 El Camino Real,Belmont,Shalizaar Restaurant,(650) 596-9000,CA,94002,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+41376,1315,1382,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+41397,1315,1702,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+42053,1331,1821,1050 El Camino Real Ste D,Belmont,A G Ferrari Foods,(650) 632-1655,CA,94002,875 El Camino Real,Menlo Park,A Perfect Tan,(650) 322-9900,CA,94025,0
+42190,1332,1363,1397 El Camino Real,Belmont,Sunshine Cafe,(650) 654-1230,CA,94002,1010 El Camino Real,Menlo Park,Cafe Borrone,(650) 327-0830,CA,94025,0
+42809,1347,1417,1316 El Camino Real,Belmont,Chez Saigon Thai & Vietnamese Restaurant,(650) 591-9888,CA,94002,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+43475,1364,1330,1410 Old County Rd,Belmont,St. James Gate Irish Pub & Restaurant,(650) 592-5923,CA,94002,1410 Old County Rd,Belmont,St. James Gate Pub & Restaurant,(650) 592-5923,CA,94002,1
+43744,1366,814,1397 El Camino Real,Belmont,Belmont Gyros House Mediterranean Grill,(650) 592-2107,CA,94002,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+43785,1366,1343,1397 El Camino Real,Belmont,Belmont Gyros House Mediterranean Grill,(650) 592-2107,CA,94002,1397 El Camino Real,Belmont,Sumac Mediterranean Grill,(650) 592-2107,CA,94002,0
+43796,1366,1390,1397 El Camino Real,Belmont,Belmont Gyros House Mediterranean Grill,(650) 592-2107,CA,94002,100 El Camino Real,Menlo Park,Menlo Grill Bistro & Bar,(650) 330-2790,CA,94025,0
+45212,1379,1202,968 Ralston Ave,Belmont,Divino,(650) 620-9102,CA,94002,968 Ralston Ave,Belmont,Divino,(650) 620-9102,CA,94002,1
+45214,1380,39,210 El Camino Real,Belmont,The HoneyBaked Ham Company,(650) 595-8551,CA,94002,146 W El Camino Real,Sunnyvale,The Habit Burger Grill,(408) 774-9015,CA,94087,0
+45326,1380,1325,210 El Camino Real,Belmont,The HoneyBaked Ham Company,(650) 595-8551,CA,94002,4060 S El Camino Real,San Mateo,The Skin Spa,(650) 458-7278,CA,94403,0
+45565,1382,1708,1504 El Camino Real,Belmont,Cafe Monk,(650) 592-4837,CA,94002,1010 El Camino Real,Menlo Park,Cafe Borrone,(650) 327-0830,CA,94025,0
+45993,1392,39,4000 S El Camino Real,San Mateo,Cube Bar & Grill,(650) 212-2643,CA,94403,146 W El Camino Real,Sunnyvale,The Habit Burger Grill,(408) 774-9015,CA,94087,0
+46015,1392,174,4000 S El Camino Real,San Mateo,Cube Bar & Grill,(650) 212-2643,CA,94403,980 El Camino Real,Santa Clara,Euro Grill,(408) 244-9745,CA,95050,0
+46882,1409,1197,2456 S El Camino Real,San Mateo,Mama's Vietnamese Cuisine,(650) 572-8822,CA,94403,135 El Camino Real,San Carlos,Kabul Afghan Cuisine,(650) 594-2840,CA,94070,0
+47077,1411,1211,552 El Camino Real,San Carlos,The New Patio,(650) 654-0654,CA,94070,1360 El Camino Real,Belmont,The Iron Gate,(650) 592-7893,CA,94002,0
+47158,1411,1831,552 El Camino Real,San Carlos,The New Patio,(650) 654-0654,CA,94070,241 El Camino Real,Menlo Park,The Oasis,(650) 326-8896,CA,94025,0
+47236,1421,244,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,2110 El Camino Real,Santa Clara,China Stix Restaurant,(408) 244-1684,CA,95050,0
+47327,1421,1414,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+47601,1425,1714,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+47796,1428,1380,888 El Camino Real,Menlo Park,Jeffrey's Hamburgers Menlo Park,(650) 322-1959,CA,94025,100 El Camino Real,Menlo Park,Stanford Park Hotel,(650) 322-1234,CA,94025,0
+47809,1428,1481,888 El Camino Real,Menlo Park,Jeffrey's Hamburgers Menlo Park,(650) 322-1959,CA,94025,1011 El Camino Real,Menlo Park,Menlo Pilates & Yoga,(408) 480-8977,CA,94025,0
+47933,1430,245,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,2002 El Camino Real,Santa Clara,MOD Pizza,,CA,95050,0
+48048,1430,1738,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1001 El Camino Real,Menlo Park,Applewood Pizza,(650) 324-3486,CA,94025,0
+48085,1431,2239,325 Sharon Park Dr Ste A2,Menlo Park,Restaurant Mitsunobu,(650) 234-1084,CA,94025,325 Sharon Park Dr,Menlo Park,El Cerrito Mexican Restaurant,(650) 854-7300,CA,94025,0
+48319,1435,1743,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1
+48377,1437,283,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,2783 El Camino Real,Santa Clara,Shabuway Japanese Style Hot Pot,(408) 244-8500,CA,95051,0
+48480,1437,1714,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+48831,1439,1363,1246 El Camino Real,Menlo Park,Jason's Cafe,(650) 321-3300,CA,94025,1010 El Camino Real,Menlo Park,Cafe Borrone,(650) 327-0830,CA,94025,0
+49229,1443,1382,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+49245,1443,1508,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,0
+49403,1444,1308,1352 El Camino Real,Menlo Park,Tenfu Chinese Restaurant,(650) 323-6134,CA,94025,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+49484,1445,39,100 El Camino Real,Menlo Park,Menlo Grill Bistro & Bar,(650) 330-2790,CA,94025,146 W El Camino Real,Sunnyvale,The Habit Burger Grill,(408) 774-9015,CA,94087,0
+49600,1445,1343,100 El Camino Real,Menlo Park,Menlo Grill Bistro & Bar,(650) 330-2790,CA,94025,1397 El Camino Real,Belmont,Sumac Mediterranean Grill,(650) 592-2107,CA,94002,0
+49784,1452,1308,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+50736,1468,1308,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+50783,1468,1742,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+50817,1469,1721,1137 Chestnut St,Menlo Park,Shiok Singapore Kitchen,(650) 838-9448,CA,94025,1137 Chestnut St,Menlo Park,Shiok Singapore Kitchen,(650) 838-9448,CA,94025,1
+50845,1470,1827,820 Santa Cruz Ave,Menlo Park,Angelo Mio,(650) 323-3665,CA,94025,820 Santa Cruz Ave,Menlo Park,Angelo Mio,(650) 323-3665,CA,94025,1
+51749,1482,1743,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1
+52159,1486,166,1246 El Camino Real,Menlo Park,Jason's Cafe,(650) 321-3300,CA,94025,1177 W El Camino Real,Sunnyvale,Madras Cafe,(408) 737-2323,CA,94087,0
+52544,1490,110,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,411 E El Camino Real,Sunnyvale,Katana Sushi & Sake,(408) 746-3000,CA,94087,0
+53103,1496,1377,1189 Willow Rd,Menlo Park,Back A Yard Grill,(650) 323-4244,CA,94025,1189 Willow Rd,Menlo Park,Back A Yard Caribbean American Grill,(650) 323-4244,CA,94025,1
+53251,1499,1702,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+53752,1509,814,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+54075,1515,1758,635 Santa Cruz Ave,Menlo Park,Left Bank Menlo Park Brasserie,(650) 473-6543,CA,94025,620 Santa Cruz Ave,Menlo Park,Menlo Cafe,(650) 321-6666,CA,94025,0
+54084,1515,1828,635 Santa Cruz Ave,Menlo Park,Left Bank Menlo Park Brasserie,(650) 473-6543,CA,94025,950 Santa Cruz Ave,Menlo Park,Menlo Park Presbyterian Church,(650) 323-8600,CA,94025,0
+54435,1519,1742,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+54439,1519,1762,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+54725,1525,1705,651 Oak Grove Ave,Menlo Park,Piccolo Italian Restaurant,(650) 326-1314,CA,94025,651 Oak Grove Ave,Menlo Park,Piccolo Ristorante Italiano,(650) 326-1314,CA,94025,1
+55327,1533,1508,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,1
+55339,1533,1729,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,0
+57272,1550,1308,1081 El Camino Real,Menlo Park,Mamacoco Mexican Restaurant,(650) 272-6634,CA,94025,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+57319,1550,1742,1081 El Camino Real,Menlo Park,Mamacoco Mexican Restaurant,(650) 272-6634,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+58484,1605,1197,3401 El Camino Real,Atherton,Bonsai Japaness Cuisine,(650) 367-6547,CA,94027,135 El Camino Real,San Carlos,Kabul Afghan Cuisine,(650) 594-2840,CA,94070,0
+59213,1609,738,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1
+59261,1609,1308,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+59786,1616,1402,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1001 El Camino Real,Menlo Park,Applewood Pizza,(650) 324-3486,CA,94025,0
+60182,1620,1308,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+60198,1620,1382,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1
+60682,1623,244,1352 El Camino Real,Menlo Park,Tenfu Chinese Restaurant,(650) 323-6134,CA,94025,2110 El Camino Real,Santa Clara,China Stix Restaurant,(408) 244-1684,CA,95050,0
+60793,1623,1714,1352 El Camino Real,Menlo Park,Tenfu Chinese Restaurant,(650) 323-6134,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+60850,1625,1736,635 Santa Cruz Ave,Menlo Park,Left Bank Menlo Park Brasserie,(650) 473-6543,CA,94025,859 Santa Cruz Ave,Menlo Park,Fleet Feet Sports Menlo Park,(650) 325-9432,CA,94025,0
+61068,1628,116,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,595 E El Camino Real,Sunnyvale,Olleh Sushi and Tofu House,(408) 830-0628,CA,94086,0
+61805,1641,1211,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1360 El Camino Real,Belmont,The Iron Gate,(650) 592-7893,CA,94002,1
+61818,1641,1308,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+61855,1641,1702,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+62026,1646,1382,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+62031,1646,1414,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+62051,1646,1714,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+62057,1646,1742,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1
+62179,1647,1119,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,855 El Camino Real,Palo Alto,Nespresso Boutique at Sur La Table,(800) 562-1465,CA,94301,0
+62722,1654,738,1850 El Camino Real,Atherton,Celias Mexican Restaurant.,(650) 321-8227,CA,94027,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+62736,1654,814,1850 El Camino Real,Atherton,Celias Mexican Restaurant.,(650) 321-8227,CA,94027,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+63370,1660,814,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,0
+63425,1660,1414,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+64122,1667,1762,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+64728,1672,1463,635 Santa Cruz Ave,Menlo Park,Left Bank Menlo Park Brasserie,(650) 473-6543,CA,94025,620 Santa Cruz Ave,Menlo Park,Menlo Cafe,(650) 321-6666,CA,94025,0
+64955,1675,110,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,411 E El Camino Real,Sunnyvale,Katana Sushi & Sake,(408) 746-3000,CA,94087,0
+65728,1688,1414,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+65787,1692,1076,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,1
+65920,1693,1414,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+66134,1694,1732,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1
+67949,1730,682,593 Woodside Rd,Redwood City,Diner Japonica,(650) 364-4649,CA,94061,593 Woodside Rd,Redwood City,Diner Japonica,(650) 364-4649,CA,94061,1
+69023,1745,1308,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+69060,1745,1702,1742 El Camino Real,Redwood City,Thai House Restaurant,(650) 299-9495,CA,94063,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+69304,1748,110,2107 & 2111 El Camino Real,Palo Alto,Odori Sushi Teppanyaki,(650) 327-2222,CA,94306,411 E El Camino Real,Sunnyvale,Katana Sushi & Sake,(408) 746-3000,CA,94087,0
+71500,1803,1935,2000 Avenue Of The Stars Ste 25,Los Angeles,Habanero Grill,(310) 277-4440,CA,90067,1901 Avenue of the Stars,Los Angeles,Century Grill,(310) 553-6650,CA,90067,0
+71508,1803,2020,2000 Avenue Of The Stars Ste 25,Los Angeles,Habanero Grill,(310) 277-4440,CA,90067,2000 Avenue of the Stars,Century City,Habanero Grill,(310) 277-4440,CA,90067,1
+71610,1805,1949,10250 Santa Monica Blvd,Los Angeles,Coral Tree Express,(310) 553-8733,CA,90067,10250 Santa Monica Blvd,Los Angeles,Coral Tree Express,(310) 553-8733,CA,90067,1
+71729,1806,2454,10250 Santa Monica Blvd,Los Angeles,Obika Mozzarella Bar,(310) 556-2452,CA,90067,9465 S Santa Monica Blvd,Beverly Hills,Basanti Tea Bar,(213) 379-9026,CA,90210,0
+72298,1819,2543,10100 Constellation Blvd,Los Angeles,Craft,(310) 279-4180,CA,90067,10100 Constellation Blvd,Los Angeles,Craft,(310) 279-4180,CA,90067,1
+73218,1834,1995,1888 Century Park E # 125,Los Angeles,Cafe Connection,(310) 553-1888,CA,90067,1840 Century Park E,Los Angeles,The Garden Cafe,(310) 788-5188,CA,90067,0
+73234,1834,2528,1888 Century Park E # 125,Los Angeles,Cafe Connection,(310) 553-1888,CA,90067,1880 Century Park E,Los Angeles,1880 Cafe,(310) 553-1880,CA,90067,0
+73493,1841,1885,2121 Avenue Of The Stars Ste MEZZ,Los Angeles,City Bean,(310) 203-0079,CA,90067,2000 Avenue of the Stars,Los Angeles,The Coffee Bean & Tea Leaf,(310) 286-2273,CA,90067,0
+73595,1845,1873,10 W Century Dr,Los Angeles,Hinoki & The Bird,(310) 552-1200,CA,90067,10 W Century Dr,Los Angeles,Hinoki & The Bird,(310) 552-1200,CA,90067,1
+73879,1852,2528,1840 Century Park E,Los Angeles,The Garden Cafe,(310) 788-5188,CA,90067,1880 Century Park E,Los Angeles,1880 Cafe,(310) 553-1880,CA,90067,0
+74212,1859,1904,10250 Santa Monica Blvd,Los Angeles,Massis Kabob,(818) 242-2333,CA,90067,10250 Santa Monica Blvd FC 11,Los Angeles,Massis Kabob - The Original Kabobery,(310) 556-4400,CA,90067,1
+74968,1868,2454,10250 Santa Monica Blvd Gelson's #04 Grocery,Los Angeles,Peet's Coffee & Tea,(310) 277-4288,CA,90067,9465 S Santa Monica Blvd,Beverly Hills,Basanti Tea Bar,(213) 379-9026,CA,90210,0
+75268,1873,1878,1880 Century Park E Ste 103,Los Angeles,1880 Cafe,(310) 553-1880,CA,90067,1888 Century Park E,Century City,Cafe Paraggi,(310) 284-8555,CA,90067,0
+76622,1894,1913,10250 Santa Monica Blvd #155,Los Angeles,Giggles N Hugs-Childrens Restaurant and Playspace,(310) 478-4847,CA,90067,10250 Santa Monica Blvd,Los Angeles,Meizhou Dongpo Restaurant,(310) 788-0120,CA,90067,0
+77216,1922,2053,6027 Paseo Delicias,Rancho Santa Fe,Caffe Positano (village),(858) 759-1940,CA,92067,6027 Paseo Delicias,Rancho Santa Fe,Caffe Positano,(858) 759-1940,CA,92067,1
+77219,1923,2063,5951 Linea Del Cielo,Rancho Santa Fe,The Inn at Rancho Santa Fe,(858) 756-1131,CA,92067,5951 Linea Del Cielo,Rancho Santa Fe,The Inn at Rancho Santa Fe,(858) 756-1131,CA,92067,1
+77263,1937,2109,162 S Rancho Santa Fe Rd,Encinitas,Bentley's Steak & Chop House,(760) 632-9333,CA,92024,160 S Rancho Santa Fe Rd,Encinitas,The Original Pancake House,(760) 943-1939,CA,92024,0
+77538,1946,1742,267 N El Camino Real,Encinitas,Savory Restaurant,(760) 634-5556,CA,92024,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+77741,1961,1810,257 N El Camino Real Suite D & E,Encinitas,Blue Fin Sushi Bar,(760) 479-1555,CA,92024,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,0
+78065,1996,1414,267 N El Camino Real,Encinitas,Savory Restaurant,(760) 634-5556,CA,92024,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+78085,1996,1714,267 N El Camino Real,Encinitas,Savory Restaurant,(760) 634-5556,CA,92024,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+78457,2015,1508,257 N El Camino Real Suite D & E,Encinitas,Blue Fin Sushi Bar,(760) 479-1555,CA,92024,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,0
+78772,2023,294,211 S El Camino Real,Encinitas,Miyabi Japanese Steakhouse & Sushi,(760) 632-0888,CA,92024,2789 El Camino Real,Santa Clara,Sushi O Sushi,(408) 241-1677,CA,95051,0
+78853,2023,1417,211 S El Camino Real,Encinitas,Miyabi Japanese Steakhouse & Sushi,(760) 632-0888,CA,92024,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+79502,2029,166,120 N El Camino Real,Encinitas,El Camino Santa Fe Cafe,(760) 942-1366,CA,92024,1177 W El Camino Real,Sunnyvale,Madras Cafe,(408) 737-2323,CA,94087,0
+79670,2029,2161,120 N El Camino Real,Encinitas,El Camino Santa Fe Cafe,(760) 942-1366,CA,92024,13998 Old El Camino Real,San Diego,Rancho El Camino Equestrian,(858) 792-8466,CA,92130,0
+79685,2030,116,130 N El Camino Real,Encinitas,Kaito Sushi,(760) 634-2746,CA,92024,595 E El Camino Real,Sunnyvale,Olleh Sushi and Tofu House,(408) 830-0628,CA,94086,0
+79808,2030,1468,130 N El Camino Real,Encinitas,Kaito Sushi,(760) 634-2746,CA,92024,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,0
+80097,2034,265,138 N El Camino Real,Encinitas,Thaipan Cuisine,(760) 632-8800,CA,92024,2232 El Camino Real,Santa Clara,Mayuri Indian Cuisine,(408) 248-9747,CA,95050,0
+80145,2034,1197,138 N El Camino Real,Encinitas,Thaipan Cuisine,(760) 632-8800,CA,92024,135 El Camino Real,San Carlos,Kabul Afghan Cuisine,(650) 594-2840,CA,94070,0
+80587,2036,1729,111 N El Camino Real Ste B,Encinitas,Mr Sushi,(760) 944-2800,CA,92024,1328 El Camino Real,Menlo Park,Naomi Sushi,(650) 321-6902,CA,94025,0
+81343,2052,93,191 N El Camino Real,Encinitas,Giant New York Pizza & Pasta,(760) 334-5555,CA,92024,110 E El Camino Real,Sunnyvale,Pizza My Heart,(408) 245-4100,CA,94087,0
+82536,2093,110,7720 El Camino Real,Carlsbad,Rock & Roll Sushi,(760) 632-8787,CA,92009,411 E El Camino Real,Sunnyvale,Katana Sushi & Sake,(408) 746-3000,CA,94087,0
+82715,2096,2045,640 Via De La Valle,Solana Beach,The Fish Market,(858) 755-2277,CA,92075,3702 Via De La Valle,Del Mar,Market,(858) 523-0007,CA,92014,0
+83394,2135,1451,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+83600,2137,1714,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+83891,2142,738,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+84152,2147,1414,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+84638,2170,1508,2107 & 2111 El Camino Real,Palo Alto,Odori Sushi Teppanyaki,(650) 327-2222,CA,94306,925 El Camino Real,Menlo Park,Akasaka Sushi,(650) 325-0444,CA,94025,0
+84703,2175,2230,2825 Sand Hill Rd,Menlo Park,Madera,(650) 561-1540,CA,94025,2825 Sand Hill Rd,Menlo Park,Madera,(650) 561-1540,CA,94025,1
+84856,2183,1382,751 El Camino Real,Menlo Park,Cook's Seafood Restaurant & Market,(650) 600-3490,CA,94025,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+85431,2190,1414,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+85432,2190,1417,1360 El Camino Real,Belmont,Iron Gate Restaurant,(650) 592-7893,CA,94002,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+85490,2194,1076,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,443 Emerson St,Palo Alto,Jing-Jing Szechwan Hunan Gourmet,(650) 328-6885,CA,94301,1
+85623,2195,1414,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+85811,2197,1402,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,1001 El Camino Real,Menlo Park,Applewood Pizza,(650) 324-3486,CA,94025,0
+87083,2221,1402,4546 El Camino Real Ste A6,Los Altos,Oregano's Wood-Fired Pizza,(650) 941-3600,CA,94022,1001 El Camino Real,Menlo Park,Applewood Pizza,(650) 324-3486,CA,94025,0
+87208,2226,738,2515 El Camino Real,Palo Alto,Olive Garden Italian Restaurant,(650) 503-9028,CA,94306,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+87293,2226,1702,2515 El Camino Real,Palo Alto,Olive Garden Italian Restaurant,(650) 503-9028,CA,94306,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,0
+87377,2227,245,1225 El Camino Real,Menlo Park,Round Table Pizza,(650) 321-6861,CA,94025,2002 El Camino Real,Santa Clara,MOD Pizza,,CA,95050,0
+88099,2235,1385,546 University Ave,Palo Alto,Tamarine Restaurant,(650) 325-8500,CA,94301,546 University Ave,Palo Alto,Tamarine Restaurant,(650) 325-8500,CA,94301,1
+88251,2237,1714,2290 W El Camino Real,Mountain View,Amber India Restaurant,(650) 968-7511,CA,94040,1368 El Camino Real,Menlo Park,Fey Restaurant,(650) 324-8888,CA,94025,0
+88452,2241,1762,4224 El Camino Real,Palo Alto,Hobee's Restaurant,(650) 493-7823,CA,94306,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+89278,2254,1422,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1026 Alma St,Menlo Park,Iberia Restaurant,(650) 325-8981,CA,94025,1
+89409,2255,1389,3150 El Camino Real,Palo Alto,The Fish Market,(650) 493-9188,CA,94306,241 El Camino Real,Menlo Park,The Oasis,(650) 326-8896,CA,94025,0
+89534,2257,738,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,3001 El Camino Real,Redwood City,Chantilly Restaurant,(650) 321-4080,CA,94061,0
+89598,2257,1382,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,1
+89604,2257,1417,1438 El Camino Real,Menlo Park,Gombei Japanese Restaurant,(650) 329-1799,CA,94025,211 El Camino Real,Menlo Park,Koma Sushi Restaurant,(650) 321-5662,CA,94025,0
+89675,2259,116,855 El Camino Real Ste 158,Palo Alto,Sushi House,(650) 321-3453,CA,94301,595 E El Camino Real,Sunnyvale,Olleh Sushi and Tofu House,(408) 830-0628,CA,94086,0
+89713,2259,294,855 El Camino Real Ste 158,Palo Alto,Sushi House,(650) 321-3453,CA,94301,2789 El Camino Real,Santa Clara,Sushi O Sushi,(408) 241-1677,CA,95051,0
+89945,2261,1195,855 El Camino Real Ste 130,Palo Alto,Calafia Cafe,(650) 322-9200,CA,94301,1504 El Camino Real,Belmont,Good Bites Cafe,(650) 592-4837,CA,94002,0
+90587,2268,1762,2310 El Camino Real,Palo Alto,Peking Duck Restaurant,(650) 856-3338,CA,94306,1077 El Camino Real,Menlo Park,Trellis Restaurant,(650) 326-9028,CA,94025,0
+91756,2279,1144,209 University Ave,Palo Alto,Steam,(650) 322-1888,CA,94301,209 University Ave,Palo Alto,Steam,(650) 322-1888,CA,94301,1
+92630,2290,1308,3295 El Camino Real,Palo Alto,INDO Restaurant & Lounge,(650) 494-9184,CA,94306,2507 S El Camino Real,San Mateo,Oceanic Restaurant,(650) 570-4234,CA,94403,0
+94183,2354,2427,9777 Santa Monica Blvd,Beverly Hills,Ki Ra La,(310) 275-9003,CA,90210,9785 Santa Monica Blvd,Beverly Hills,La Dolce Vita,(310) 278-1845,CA,90210,0
+94264,2365,2414,9689 Santa Monica Blvd,Beverly Hills,The Nosh Of Beverly Hills,(310) 271-3730,CA,90210,9601 Santa Monica Blvd,Beverly Hills,Panini Cafe Beverly Hills,(310) 247-8300,CA,90210,0
+94488,2377,3508,9749 Santa Monica Blvd,Beverly Hills,Pasquale Restaurant,(310) 859-3884,CA,90210,9749 S Santa Monica Blvd,Beverly Hills,Da Pasquale Restaurant,(310) 859-3884,CA,90210,1
+95273,2406,2427,9631 Santa Monica Blvd,Beverly Hills,La Salsa Fresh Mexican Grill,(310) 276-2373,CA,90210,9785 Santa Monica Blvd,Beverly Hills,La Dolce Vita,(310) 278-1845,CA,90210,0
+95597,2414,2494,445 N Beverly Dr,Beverly Hills,The Coffee Bean & Tea Leaf,(310) 278-1865,CA,90210,439 N Beverly Dr,Beverly Hills,The Farm of Beverly Hills,(310) 273-5578,CA,90210,0
+95631,2418,2498,474 N Beverly Dr,Beverly Hills,Beverly Hills Diner,(310) 271-2227,CA,90210,419 N Beverly Dr,Beverly Hills,The Cheese Store of Beverly Hills,(310) 278-2855,CA,90210,0
+96750,2480,2582,21123 Newport Coast Dr,Newport Coast,Zov's Newport Coast,(949) 760-9687,CA,92657,21157 Newport Coast Dr,Newport Coast,Newport Animal Hospital,(949) 200-6675,CA,92657,0
+96953,2509,2594,7946 E Coast Hwy,Newport Coast,Modo Mio Restaurant Cucina Restica,(949) 497-9770,CA,92657,3840 E Coast Hwy,Corona Del Mar,Nagisa Sushi Restaurant,(949) 673-3933,CA,92625,0
+97619,2535,2584,22701 Pelican Hill Rd S,Newport Coast,The Resort at Pelican Hill,(949) 612-1916,CA,92657,22651 Pelican Hill Rd,Newport Coast,Pelican Hill Golf Club,(855) 421-0443,CA,92657,0
+97755,2538,2626,3224 E Coast Hwy,Corona Del Mar,The Quiet Woman,(949) 640-7440,CA,92625,2325 E Coast Hwy,Corona del Mar,The Crow Bar and Kitchen,(949) 675-0070,CA,92625,0
+98739,2590,2613,143 Newport Center Dr,Newport Beach,Red O Fashion Island,(949) 718-0300,CA,92660,143 Newport Ctr Dr,Newport Beach,Red O,(949) 718-0300,CA,92660,1
+98861,2598,2653,1511 Newport Center Dr,Newport Beach,California Pizza Kitchen (Newport Center Dr),(800) 510-3663,CA,92660,951 Newport Center Dr,Newport Beach,Cucina Enoteca Newport Beach,(949) 706-1416,CA,92660,0
+98904,2601,2654,451 Newport Center Dr,Newport Beach,Hard Rock Cafe,(949) 640-8844,CA,92660,240 Newport Center Dr,Newport Beach,Wild Strawberry Cafe,(949) 706-0462,CA,92660,0
+99058,2619,2651,2515 E Coast Hwy,Corona Del Mar,El Ranchito Mexican,(949) 644-8226,CA,92625,3520 E Coast Hwy,Corona del Mar,El Cholo Corona del Mar,(949) 777-6137,CA,92625,0
+99146,2624,2592,1151 Newport Center Dr,Newport Beach,California Pizza Kitchen,(949) 759-5543,CA,92660,451 Newport Center Dr,Newport Beach,True Food Kitchen,(949) 644-2400,CA,92660,0
+99228,2665,2754,34 Water St,New York,Pranzo,(212) 344-8068,NY,10004,34 Water St,New York,Pranzo,(212) 344-8068,NY,10004,1
+99246,2701,902,217 E 49th St Between 2nd & 3rd Ave,New York,Bukhara Grill (Indian Spice Rave),(646) 833-0580,NY,10017,144 E 3rd Ave,San Mateo,Rave Burger,(650) 342-6689,CA,94401,0
+99284,2719,2798,52 Stone St,New York,Stone Street Tavern,(212) 785-5658,NY,10004,52 Stone St,New York,Stone Street Tavern,(212) 785-5658,NY,10004,1
+99389,2838,2768,27 Whitehall St,New York,Flavors,(212) 269-6100,NY,10004,27 Whitehall St,New York,Flavors,(212) 269-6100,NY,10004,1
+99392,2845,2900,620 Anderson Hill Rd,Purchase,Cobble Stone,(914) 253-9678,NY,10577,620 Anderson Hill Rd,Purchase,Cobble Stone,(914) 253-9678,NY,10577,1
+99642,2994,3002,128 Mamaroneck Ave,White Plains,David King Chinese Restrnt Inc,(914) 948-9290,NY,10601,128 Mamaroneck Ave,White Plains,David King,(914) 948-9290,NY,10601,1
+99694,3020,3081,264 S County Rd,Palm Beach,264 The Grill,(561) 833-6444,FL,33480,1 S County Rd,Palm Beach,The Circle At The Breakers,(855) 435-5744,FL,33480,0
+99696,3020,3097,264 S County Rd,Palm Beach,264 The Grill,(561) 833-6444,FL,33480,1 S County Rd,Palm Beach,HMF at The Breakers,(561) 290-0104,FL,33480,0
+99730,3035,3074,1 S County Rd,Palm Beach,Seafood Bar At The Breakers,(561) 659-8488,FL,33480,1 S County Rd,Palm Beach,The Seafood Bar,(561) 655-6611,FL,33480,1
+99791,3066,3137,264 S County Rd,Palm Beach,264 The Grill,(561) 833-6444,FL,33480,1 S County Rd,Palm Beach,The Breakers News & Gourmet,(561) 653-6370,FL,33480,0
+99956,3134,3081,264 S County Rd,Palm Beach,Two Sixty Four The Grill,(561) 833-6444,FL,33480,1 S County Rd,Palm Beach,The Circle At The Breakers,(855) 435-5744,FL,33480,0
+99973,3138,3202,1 S County Rd,Palm Beach,The Breakers,(561) 655-6611,FL,33480,1 S County Rd,Palm Beach,The Breakers,(561) 655-6611,FL,33480,1
+100015,3147,3091,132 N County Rd,Palm Beach,Chez Jean-Pierre Bistro,(561) 833-1171,FL,33480,132 N County Rd,Palm Beach,Chez Jean-Pierre,(561) 833-1171,FL,33480,1
+100191,3202,3355,123 N Wacker Dr,Chicago,Sushi Sai,(312) 332-8822,IL,60606,123 N Wacker Dr,Chicago,Sushi Sai,(312) 332-8822,IL,60606,1
+100210,3205,4071,3107 N Broadway St,Chicago,The Bagel Restaurant & Deli,(773) 997-2333,IL,60657,44 N Broadway St,Fellsmere,Marsh Landing Restaurant,(772) 571-8622,FL,32948,0
+100312,3220,3301,300 W Adams St,Chicago,Hot Woks Cool Sushi,(312) 220-0011,IL,60606,312 W Adams St,Chicago,Hot Woks Cool Sushi,(312) 220-0011,IL,60606,1
+100434,3242,3368,250 S Wacker Dr,Chicago,Panera Bread,(312) 496-0021,IL,60606,250 South Wacker Drive,Chicago,Panera Bread,(312) 496-0021,IL,60606,1
+100527,3267,3271,130 S Canal St,Chicago,Arturo Express,(312) 474-9289,IL,60606,122 S Canal St,Chicago,Arturo Express,(312) 474-9289,IL,60606,1
+100998,3335,3441,2948 N Beverly Glen Cir,Los Angeles,Beverly Glen Deli,(310) 475-2719,CA,90077,2948 N Beverly Glen Cir,Los Angeles,Beverly Glen Deli,(310) 475-2719,CA,90077,1
+101110,3346,1969,"11929 Santa Monica Blvd, Los Angeles CA, 90025",Los Angeles,Monte Alban Restaurant,(310) 444-7736,CA,90025,9907 1/2 S Santa Monica Blvd,Beverly Hills,Sunday Kitchen Pop-up Restaurant,(310) 553-1011,CA,90212,0
+101169,3370,3552,2960 N Beverly Glen Cir,Los Angeles,Fabrocini's-Beverly Glen,(310) 475-7404,CA,90077,1603 N Beverly Glen Blvd,Los Angeles,Glen Market,(310) 474-1272,CA,90077,0
+101193,3375,3402,701 Stone Canyon Rd,Los Angeles,Wolfgang Puck at Bel Air Hotel,(310) 472-1211,CA,90077,701 Stone Canyon Rd,Los Angeles,Wolfgang Puck At Hotel Bel-Air,(310) 472-1211,CA,90077,1
+101221,3380,3441,2948 N Beverly Glen Cir,Los Angeles,Beverly Glen Deli,(310) 475-2719,CA,90077,2948 N Beverly Glen Cir,Los Angeles,Beverly Glen Deli,(310) 475-2719,CA,90077,1
+101564,3472,3511,12953 Ventura Blvd,Studio City,Iroha Sushi of Tokyo,(818) 990-9559,CA,91604,12953 Ventura Blvd,Studio City,Iroha Sushi of Tokyo,(818) 990-9559,CA,91604,1
+101821,3487,3571,454 Old Post Rd,Bedford,Trattoria Lucia,(914) 234-7600,NY,10506,454 Old Post Rd,Bedford,Ristorante Lucia,(914) 234-7600,NY,10506,1
+102183,3493,3608,954 Old Post Rd,Bedford,Altamarea Group,(914) 234-6570,NY,10506,634 Old Post Rd,Bedford,Bedford Village Ortho Group,(914) 292-5154,NY,10506,0
+102276,3501,3623,426 Old Post Rd,Bedford,Bedford Village Pastry,(914) 234-9555,NY,10506,643 Old Post Rd,Bedford,Bedford Photo-Graphic,(914) 234-3123,NY,10506,0
+102280,3501,3627,426 Old Post Rd,Bedford,Bedford Village Pastry,(914) 234-9555,NY,10506,648 Old Post Rd,Bedford,Bedford Village Frame Shop,(914) 234-4811,NY,10506,0
+102367,3502,3629,652 Old Post Rd,Bedford,Bedford Gourmet,(914) 234-9409,NY,10506,614 Old Post Rd,Bedford,Bedford Historical Society,(914) 234-9751,NY,10506,0
+103130,3544,3611,426 Old Post Rd,Bedford,Bedford Village Pastry,(914) 234-9555,NY,10506,460 Old Post Rd,Bedford,Bedford Pilates and Fitness Studio,(914) 234-4634,NY,10506,0
+103274,3545,5347,652 Old Post Rd,Bedford,Bedford Gourmet,(914) 234-9409,NY,10506,635 Old Post Rd,Bedford,Bedford 234,(914) 234-5656,NY,10506,0
+103467,3670,3794,22211 W Interstate 10 # 1101,San Antonio,Di Frabo Ristorante Italiano,(210) 272-0758,TX,78257,22211 IH-10 W,San Antonio,Di Frabo Ristorante Italiano,(210) 272-0758,TX,78257,1
+103518,3679,3807,24165 W Interstate 10 Ste 437,San Antonio,Bourbon Street Seafood Kitchen,(210) 698-9888,TX,78257,24165 IH 10 W,San Antonio,Bourbon Street Seafood Kitchen,(210) 698-9888,TX,78255,1
+104281,3835,3887,15900 La Cantera Pkwy,San Antonio,The Cheesecake Factory,(210) 558-1900,TX,78256,16641 La Cantera Pkwy,San Antonio,The Resort Course at La Cantera,(210) 558-1307,TX,78256,0
+104345,3838,3770,15900 La Cantera Pkwy,San Antonio,Perry's Restaurant,(210) 558-6161,TX,78256,15900 La Cantera Pkwy,San Antonio,Mariposa Restaurant,(210) 694-3550,TX,78256,0
+104488,3841,3828,16641 La Cantera Pkwy,San Antonio,La Cantera Hill Country Resort,(210) 558-2442,TX,78256,"15900 La Cantera Pkwy, Suite 6698",San Antonio,The Shops at La Cantera,(210) 582-6255,TX,78256,0
+104824,3902,3934,3149 Ocean Dr,Vero Beach,Cravings,(772) 231-0208,FL,32963,3149 Ocean Dr,Vero Beach,Cravings,(772) 231-0208,FL,32963,1
+104842,3929,4058,1840 Wabasso Beach Rd,Vero Beach,Penny Hill Beach Emporium,(772) 581-0700,FL,32963,1840 Wabasso Beach Rd,Vero Beach,Penny Hill Beach Emporium,(772) 581-0700,FL,32963,1
+104954,4107,4145,309 Gray St # 107,Houston,Fish,(713) 526-5294,TX,77002,309 Gray St,Houston,The Fish,(713) 526-5294,TX,77002,1
+104960,4131,4162,801 Louisiana St # 100,Houston,Treebeards Restaurant,(713) 224-6677,TX,77002,711 Louisiana St,Houston,Treebeards,(713) 224-6677,TX,77002,1
+104986,4196,4223,1910 Bagby St,Houston,The Republic Smokehouse and saloon,(832) 925-8865,TX,77002,1910 Bagby St,Houston,The Republic Smokehouse & Saloon,(832) 925-8871,TX,77002,1
+105017,4252,4129,218 Gray St,Houston,Coco's Crepes & Coffee,(713) 521-0700,TX,77002,218 Gray St,Houston,"CoCo Crepes, Waffles & Coffee - Midtown",(713) 521-0700,TX,77002,1
+105138,4287,4350,11111 N Central Expy Suite G,Dallas,Cindi's NY Deli Bakery & Restaurant,(214) 739-0918,TX,75243,8687 N Central Expy,Dallas,Bread Winners Cafe and Bakery,(469) 232-9798,TX,75225,0
+105227,4321,4350,8687 N Central Expy,Dallas,Breadwinners Cafe & Bakery,(469) 232-9798,TX,75225,8687 N Central Expy,Dallas,Bread Winners Cafe and Bakery,(469) 232-9798,TX,75225,1
+105346,4355,4331,8687 N Central Expy,Dallas,Pho Kitchen,(214) 706-3595,TX,75225,"8687 N Central Expy, Ste 1516",Dallas,La Duni Latin Kitchen & Coffee Studio,(214) 987-2260,TX,75225,0
+105358,4361,4267,8307 Westchester Dr,Dallas,Salata Restaurant,(214) 363-6991,TX,75225,8307 Westchester Dr,Dallas,Salata,(214) 363-6991,TX,75225,1
+105432,4373,4331,8687 N Central Expy,Dallas,La Duni Latin Kitchen & Coffee,(214) 987-2260,TX,75225,"8687 N Central Expy, Ste 1516",Dallas,La Duni Latin Kitchen & Coffee Studio,(214) 987-2260,TX,75225,1
+105719,4429,4252,6030 Luther Ln,Dallas,Hopdoddy Burger Bar,(214) 363-2337,TX,75225,6030 Luther Ln,Dallas,Hopdoddy Burger Bar,(214) 363-2337,TX,75225,1
+105820,4440,4302,8687 N Central Expy,Dallas,Chipotle Mexican Grill,(214) 615-3887,TX,75225,7700 N Central Expy,Dallas,Chipotle Mexican Grill,(469) 232-0963,TX,75206,0
+106234,4449,4473,3393 Peachtree Rd NE,Atlanta,Zodiac Restaurant,(404) 266-8200,GA,30326,3242 Peachtree Rd NE,Atlanta,Gordon Biersch Brewery Restaurant,(404) 264-0253,GA,30305,0
+106612,4459,4469,3500 Peachtree Rd NE Ste G2,Atlanta,Mandarin Express,(404) 233-0600,GA,30326,3376 Peachtree Rd NE,Atlanta,"Mandarin Oriental, Atlanta",(404) 995-7500,GA,30326,0
+106886,4463,4422,3400 Around Lenox Rd NE,Atlanta,Seven Lamps,(404) 467-8950,GA,30326,3400 Around Lenox Rd,Atlanta,Seven Lamps,(404) 467-8950,GA,30326,1
+106997,4467,4448,3379 Peachtree Rd NE Ste 555,Atlanta,Meliora Organic Restaurant,(404) 965-0879,GA,30326,3500 Peachtree Rd NE,Atlanta,Twist Restaurant & Tapas Bar,(404) 869-1191,GA,30326,0
+107101,4468,4549,3368 Peachtree Rd NE,Atlanta,Maggiano's - Buckhead,(404) 816-9650,GA,30326,3343 Peachtree Rd NE,Atlanta,City Club of Buckhead,(404) 442-2600,GA,30326,0
+107857,4494,4492,3393 Peachtree Rd NE Suite 3076A,Atlanta,The Cheesecake Factory,(404) 816-2555,GA,30326,"3376 Peachtree Rd NE, 3rd Fl",Atlanta,"The Spa at Mandarin Oriental, Atlanta",(404) 995-7526,GA,30326,0
+107966,4500,4499,"3434 Peachtree Rd NE , N E",Atlanta,The Cafe,(404) 240-7035,GA,30326,3455 Peachtree Rd NE,Atlanta,The Pinnacle Cafe,(404) 495-0241,GA,30326,0
+107968,4500,4504,"3434 Peachtree Rd NE , N E",Atlanta,The Cafe,(404) 240-7035,GA,30326,3340 Peachtree Rd NE,Atlanta,Cafe 100,(404) 812-9300,GA,30326,0
+108032,4501,4499,3455 Peachtree Rd NE Ste 150,Atlanta,Pinnacle Cafe,(404) 495-0241,GA,30326,3455 Peachtree Rd NE,Atlanta,The Pinnacle Cafe,(404) 495-0241,GA,30326,1
+108678,4514,4454,3393 Peachtree Rd NE Ste 4033,Atlanta,Corner Bakery Cafe,(404) 266-8282,GA,30326,3353 Peachtree Rd NE,Atlanta,Highland Bakery,(678) 904-2146,GA,30326,0
+108686,4514,4478,3393 Peachtree Rd NE Ste 4033,Atlanta,Corner Bakery Cafe,(404) 266-8282,GA,30326,3393 Peachtree Rd NE,Atlanta,NM Cafe at Neiman Marcus,(404) 266-8200,GA,30326,0
+109431,4540,4484,3393 Peachtree Rd NE,Atlanta,California Pizza Kitchen,(404) 262-9221,GA,30326,3393 Peachtree Rd NE,Atlanta,California Pizza Kitchen - Temp. CLOSED,(404) 262-9221,GA,30326,1
+109619,4543,4424,3393 Peachtree Rd NE,Atlanta,True Food Kitchen,(404) 481-2980,GA,30326,3393 Peachtree Rd NE,Atlanta,True Food Kitchen,(404) 481-2980,GA,30326,1
+109783,4545,4499,3340 Peachtree Rd NE,Atlanta,Cafe 100,(404) 266-2433,GA,30326,3455 Peachtree Rd NE,Atlanta,The Pinnacle Cafe,(404) 495-0241,GA,30326,0
+109930,4551,4492,3438 Peachtree Rd NE,Atlanta,Table One At Phipps Plaza,(404) 869-5535,GA,30326,"3376 Peachtree Rd NE, 3rd Fl",Atlanta,"The Spa at Mandarin Oriental, Atlanta",(404) 995-7526,GA,30326,0
+110175,4555,4443,3500 Peachtree Rd NE # G9,Atlanta,Gorin's Cafe,(404) 231-5244,GA,30326,3368 Peachtree Rd NE,Atlanta,Corner Bakery Cafe,(404) 816-5100,GA,30326,0
+110792,4563,4573,3393 Peachtree Rd NE,Atlanta,NM Cafe,(404) 279-5850,GA,30326,3350 Peachtree Rd NE,Atlanta,Big Apple Cafe & Catering Group,(404) 841-1004,GA,30326,0
+111103,4568,4460,3393 Peachtree Rd NE,Atlanta,The Labarca,(404) 842-0365,GA,30326,3393 Peachtree Road NE,Atlanta,The Cheesecake Factory,(404) 816-2555,GA,30326,0
+113094,4599,4440,3393 Peachtree Rd NE,Atlanta,Meatball Bar & Moore,(404) 814-1700,GA,30326,3393 Peachtree Rd NE,Atlanta,Zinburger Wine & Burger Bar,(404) 963-9611,GA,30326,0
+113174,4600,4467,3342 Peachtree Rd NE,Atlanta,DoubleTree by Hilton Hotel Atlanta - Buckhead,(404) 231-1234,GA,30326,3434 Peachtree Rd NE,Atlanta,The Cafe at the Ritz-Carlton Buckhead,(404) 237-2700,GA,30326,0
+113245,4601,4478,3500 Peachtree Rd NE,Atlanta,Nestle Toll House Cafe,(678) 905-3434,GA,30326,3393 Peachtree Rd NE,Atlanta,NM Cafe at Neiman Marcus,(404) 266-8200,GA,30326,0
+113255,4601,4499,3500 Peachtree Rd NE,Atlanta,Nestle Toll House Cafe,(678) 905-3434,GA,30326,3455 Peachtree Rd NE,Atlanta,The Pinnacle Cafe,(404) 495-0241,GA,30326,0
+113287,4601,4573,3500 Peachtree Rd NE,Atlanta,Nestle Toll House Cafe,(678) 905-3434,GA,30326,3350 Peachtree Rd NE,Atlanta,Big Apple Cafe & Catering Group,(404) 841-1004,GA,30326,0
+113347,4659,4597,1524 Northern Blvd,Manhasset,Stresa Italian Restaurant,(516) 365-6956,NY,11030,1524 Northern Blvd,Manhasset,Stresa Italian Restaurant,(516) 365-6956,NY,11030,1
+113358,4670,4638,1661 Northern Blvd,Manhasset,Munsey Park Bagels,(516) 869-8077,NY,11030,1661 Northern Blvd,Manhasset,Munsey Park Bagels,(516) 869-8077,NY,11030,1
+113629,4794,4877,1410 Pine Ridge Rd,Naples,Sushi One,(239) 354-0101,FL,34108,1585 Pine Ridge Rd,Naples,Noodles Italian Cafe & Sushi Bar,(239) 592-0050,FL,34109,0
+113698,4799,4779,9110 Strada Pl Ste 6130,Naples,The Counter,(239) 566-0644,FL,34108,9110 Strada Place,Naples,The Counter,(239) 566-0644,FL,34108,1
+114047,4838,4808,1410 Pine Ridge Rd,Naples,Sushi One,(239) 354-0101,FL,34108,1575 Pine Ridge Rd,Naples,Komoon Thai Sushi & Ceviche,(239) 596-9991,FL,34109,0
+114051,4838,4861,1410 Pine Ridge Rd,Naples,Sushi One,(239) 354-0101,FL,34108,1410 Pine Ridge Rd,Naples,Sushi One,(239) 354-0101,FL,34105,1
+114121,4843,4779,9110 Strada Pl Ste 6130,Naples,The Counter,(239) 566-0644,FL,34108,9110 Strada Place,Naples,The Counter,(239) 566-0644,FL,34108,1
+114221,4861,4766,12820 Tamiami Trl N,Naples,Trail Cafe & Grill,(239) 300-2015,FL,34110,9853 Tamiami Trl N,Naples,Greek Island Cafe,(239) 593-5196,FL,34108,0
+114227,4861,4835,12820 Tamiami Trl N,Naples,Trail Cafe & Grill,(239) 300-2015,FL,34110,4951 Tamiami Trl N,Naples,Pelagos Cafe,(239) 263-2996,FL,34103,0
+114475,4882,4778,843 Vanderbilt Beach Rd,Naples,Skillets,(239) 597-5577,FL,34108,847 Vanderbilt Beach Rd,Naples,Skillets,(239) 330-2515,FL,34108,0
+114953,4914,4826,1410 Pine Ridge Rd Ste 23,Naples,Five Guys Burgers & Fries,(239) 261-5603,FL,34108,1410 Pine Ridge Rd,Naples,Five Guys Burgers and Fries,(239) 261-5603,FL,34109,1
+115604,4984,5069,800 N Michigan Ave (Park Hyatt Hotel),Chicago,NoMI,(312) 239-4030,IL,60611,800 N Michigan Ave,Chicago,Nomi Lounge,(312) 239-4030,IL,60611,1
+115822,5042,4951,535 N Michigan Ave Ste 208,Chicago,Bandera Restaurant,(312) 644-3524,IL,60611,535 N Michigan Ave,Chicago,Bandera Restaurant,(312) 644-3524,IL,60611,1
+115935,5075,5035,900 N Michigan Ave,Chicago,Oak Tree Restaurant,(312) 751-1988,IL,60611,676 N Michigan Ave,Chicago,676 Restaurant & Bar,(312) 944-7676,IL,60611,0
+115959,5078,5046,620 N Fairbanks Ct,Chicago,West Egg Cafe,(312) 280-8366,IL,60611,620 N Fairbanks Ct,Chicago,West Egg Cafe,(312) 280-8366,IL,60611,1
+116464,5147,5073,600 N Michigan Ave,Chicago,The Cheesecake Factory,(312) 254-0631,IL,60611,875 N Michigan Ave,Chicago,The Signature Room at the 95th,(312) 787-9596,IL,60611,0
+116963,5433,5277,94 Spring St,South Salem,The Horse & Hound,(914) 763-3108,NY,10590,94 Spring St,South Salem,The Horse & Hound,(914) 763-3108,NY,10590,1
+116986,5451,5285,470 Main St,Ridgefield,Yuan Asian Cuisine,(203) 431-7688,CT,6877,470 Main St,Ridgefield,Yuan Asian Cuisine,(203) 431-7688,CT,6877,1
+116988,5452,5342,62 Main St,New Canaan,Vicolo Pizza & Trattoria,(203) 966-4966,CT,6840,62 Main St,New Canaan,Vicolo Pizza & Trattoria,(203) 966-4966,CT,6840,1
+117115,5543,5444,3842 Kennett Pike,Wilmington,Brew Ha Ha!,(302) 658-6336,DE,19807,3842 Kennett Pike,Greenville,Brew Ha Ha,(302) 658-6336,DE,19807,1
+117160,5581,5452,1901 Delaware Ave,Wilmington,Southeast Kitchen,(302) 691-7728,DE,19806,1901 Delaware Ave,Wilmington,Southeast Kitchen,(302) 691-7728,DE,19806,1
+117258,5608,5481,906 N Union St,Wilmington,Kozy Korner Restaurant,(302) 658-0812,DE,19805,906 N Union St,Wilmington,Kozy Korner Restaurant,(302) 658-0812,DE,19805,1
+117419,5799,5734,7807 Clayton Rd,Saint Louis,Choice Saint Louis,(314) 932-1230,MO,63105,7807 Clayton Rd,Clayton,Choice Saint Louis,(314) 932-1230,MO,63105,1
+117437,5809,5655,8396 Musick Memorial Dr.,Saint Louis,Mai Lee Restaurant,(314) 645-2835,MO,63144,8396 Musick Memorial Dr,Saint Louis,Mai Lee,(314) 645-2835,MO,63144,1
+117440,5813,5614,1600 S Lindbergh Blvd,Saint Louis,Schneithorsts Restaurant & Bar,(314) 993-4100,MO,63131,535 S Lindbergh Blvd,Saint Louis,Kreis Restaurant,(314) 993-0735,MO,63131,0
+117444,5816,5671,8001 Forsyth Blvd,Saint Louis,First Watch Restaurant,(314) 863-7330,MO,63105,8001 Forsyth Blvd.,Clayton,First Watch,(314) 863-7330,MO,63105,1
+117495,5865,5785,95 King St,Chappaqua,Kira Asian Bistro,(914) 861-2727,NY,10514,95 King St,Chappaqua,Waka Asian Fusion,(914) 861-2727,NY,10514,1
+117576,5873,5816,10 S Greeley Ave,Chappaqua,Chappaqua Restaurant & Cafe,(914) 238-3869,NY,10514,59 S Greeley Ave,Chappaqua,Chappaqua Paint and Hardware,(914) 861-2777,NY,10514,0
+117731,5909,5873,27 S Greeley Ave,Chappaqua,Jrr S Deli Inc,(914) 238-7153,NY,10514,114 S Greeley Ave,Chappaqua,Preferred Auto Service Inc.,(914) 238-4437,NY,10514,0
+117778,5915,5781,95 King St,Chappaqua,Le Jardin Du Roi,(914) 238-1368,NY,10514,95 King St,Chappaqua,Le Jardin Du Roi,(914) 238-1368,NY,10514,1
+117913,5927,5794,95 King St Ste 2,Chappaqua,Bagel Emporium Of Chappaque,(914) 238-9777,NY,10514,95 King St,Chappaqua,Bagel Emporium Of Chappaqua,(914) 238-9777,NY,10514,1
+118192,6095,5963,655 Forest Ave,Lake Forest,Market House on the Square,(847) 234-8800,IL,60045,655 Forest Ave,Lake Forest,Market House On The Square,(847) 234-8800,IL,60045,1
+118528,6174,5983,28 E Center Ave Ste LL,Lake Bluff,Inovasi,(847) 295-1000,IL,60044,28 E Center Ave,Lake Bluff,Inovasi,(331) 303-0559,IL,60044,1
+118550,6214,6052,303 Waukegan Rd,Lake Bluff,Noodles & Company,(847) 482-1680,IL,60044,303 S Waukegan Rd,Lake Bluff,Noodles & Company,(847) 482-1680,IL,60044,1
+119394,10154,5704,1 Central Ave S,Saint Stephen,Trobec's Bar & Grill,(320) 251-0946,MN,56375,1 N Central Ave,Saint Louis,Chipotle Mexican Grill,(314) 725-5650,MO,63105,0

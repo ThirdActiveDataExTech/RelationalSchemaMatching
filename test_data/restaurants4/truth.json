@@ -1,0 +1,50 @@
+{
+  "_meta": {
+    "Table1": "yellow_pages",
+    "Table2": "yelp"
+  },
+  "matches": [
+    {
+      "source_table": "yellow_pages",
+      "source_column": "id",
+      "target_table": "yelp",
+      "target_column": "id"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "address",
+      "target_table": "yelp",
+      "target_column": "address"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "city",
+      "target_table": "yelp",
+      "target_column": "city"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "name",
+      "target_table": "yelp",
+      "target_column": "name"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "phone",
+      "target_table": "yelp",
+      "target_column": "phone"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "state",
+      "target_table": "yelp",
+      "target_column": "state"
+    },
+    {
+      "source_table": "yellow_pages",
+      "source_column": "zipcode",
+      "target_table": "yelp",
+      "target_column": "zipcode"
+    }
+  ]
+}

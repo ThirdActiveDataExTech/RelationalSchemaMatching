@@ -1,0 +1,20 @@
+{
+  "_meta": {
+    "Table1": "imdb",
+    "Table2": "tmd"
+  },
+  "matches": [
+    {
+      "source_column": "ID",
+      "target_column": "ID"
+    },
+    {
+      "source_column": "title",
+      "target_column": "title"
+    },
+    {
+      "source_column": "year",
+      "target_column": "year"
+    }
+  ]
+}

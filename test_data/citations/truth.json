@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "Table1": "dblp",
+    "Table2": "google_scholar"
+  },
+  "matches": [
+    {
+      "source_table": "dblp",
+      "source_column": "id",
+      "target_table": "google_scholar",
+      "target_column": "id"
+    },
+    {
+      "source_table": "dblp",
+      "source_column": "title",
+      "target_table": "google_scholar",
+      "target_column": "title"
+    },
+    {
+      "source_table": "dblp",
+      "source_column": "authors",
+      "target_table": "google_scholar",
+      "target_column": "authors"
+    },
+    {
+      "source_table": "dblp",
+      "source_column": "venue",
+      "target_table": "google_scholar",
+      "target_column": "venue"
+    },
+    {
+      "source_table": "dblp",
+      "source_column": "year",
+      "target_table": "google_scholar",
+      "target_column": "year"
+    }
+  ]
+}

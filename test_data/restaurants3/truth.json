@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "Table1": "yelp",
+    "Table2": "yellow_pages"
+  },
+  "matches": [
+    {
+      "source_table": "yelp",
+      "source_column": "id",
+      "target_table": "yellow_pages",
+      "target_column": "id"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "name",
+      "target_table": "yellow_pages",
+      "target_column": "name"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "streetAddress",
+      "target_table": "yellow_pages",
+      "target_column": "streetAddress"
+    }
+  ]
+}

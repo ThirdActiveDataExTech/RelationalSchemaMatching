@@ -1,0 +1,32 @@
+{
+  "_meta": {
+    "Table1": "rotten_tomatoes",
+    "Table2": "imdb"
+  },
+  "matches": [
+    {
+      "source_table": "imdb",
+      "source_column": "Id",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Id"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Director",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Director"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Name",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Name"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Year",
+      "target_table": "rotten_tomatoes",
+      "target_column": "YearRange"
+    }
+  ]
+}
