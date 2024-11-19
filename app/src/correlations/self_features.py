@@ -263,6 +263,5 @@ def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
         feature_array.append(feature)
 
     features = np.vstack(feature_array) if feature_array else None
-    logging.debug(f"make_self_features_from(): {features.shape}\n{features}")
 
     return features
