@@ -6,10 +6,10 @@ from collections import defaultdict
 import pandas as pd
 
 
-def read_table(path: str) -> pd:
+def read_table(path: str) -> pd.DataFrame:
     """
-    Params: path MUST be a path to a csv, json, jsonl file
-    Returns: pandas dataframe
+    @param: path MUST be a path to a csv, json, jsonl file
+    @return: pandas dataframe
     """
     if path.endswith(".csv"):
         df = pd.read_csv(path)
