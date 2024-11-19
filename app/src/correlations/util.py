@@ -1,3 +1,4 @@
+import logging
 import time
 from functools import wraps
 
@@ -9,7 +10,7 @@ def time_logger(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         duration = end_time - start_time
-        print(f"'{func.__name__}': {duration:.4f} seconds")
+        logging.info(f"'{func.__name__}': {duration:.4f} seconds")
         return result
 
     return wrapper
