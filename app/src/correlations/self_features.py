@@ -30,45 +30,62 @@ class DataTypes(Enum):
         return len(self.__class__.__members__)
 
 
+class Constants:
+    NUMERIC_PART_RATIO = 0.5
+    STRICT_NUMERIC_RATIO = 0.95
+    MAINLY_NUMERIC_RATIO = 0.9
+
+
 def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
     """
-    @param verbose: for debugging
-    @return if data_list contains only numeric values True
+
+    Args:
+        data_list: 확인할 데이터
+        verbose: for debugging
+
+    Returns: 
+        bool: data_list 내의 numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
+
     """
     cnt = 0
     for x in data_list:
         try:
             y = float(x)
             if verbose:
-                print(x)
-                print(y)
+                logging.debug(f"is_strict_numeric: src:{x} float{y}")
             cnt += 1
         except ValueError as _:
             continue
-    if cnt >= 0.95 * len(data_list):
-        return True
 
-    return False
+    return cnt >= Constants.STRICT_NUMERIC_RATIO * len(data_list)
 
 
 def is_mainly_numeric(data_list: list[any]) -> bool:
     """
-    @return if data_list contains mostly numeric values True
+    data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
+
+    Args:
+        data_list: 확인할 데이터
+
+    Returns:
+        bool: data_list 내의 mainly_numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
+
     """
     cnt = 0
     for data in data_list:
         data = str(data)
         data = data.replace(",", "")
+
+        # 백, 천, 만, K, B등의 단위 제거
         for unit in UNIT_DICT.keys():
             data = data.replace(unit, "")
+
+        # data 내 numeric part 가 NUMERIC_PART_RATIO 이상일 경우 True
         numeric_part = re.findall(r'\d+', data)
-        if len(numeric_part) > 0 and sum(len(x) for x in numeric_part) >= 0.5 * len(data):
+        if len(numeric_part) > 0 and sum(len(x) for x in numeric_part) >= Constants.NUMERIC_PART_RATIO * len(data):
             cnt += 1
 
-    if cnt >= 0.9 * len(data_list):
-        return True
-
-    return False
+    return cnt >= Constants.MAINLY_NUMERIC_RATIO * len(data_list)
 
 
 def extract_numeric(data_list: list[any]) -> list[float]:
