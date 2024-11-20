@@ -39,7 +39,7 @@ ENV PYTHONIOENCODING=utf-8
 ENV PYTHONPATH=$APP_HOME:${PYTHONPATH}
 
 # Copy installed Python packages from the build stage
-COPY --from=build /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+COPY --from=build /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 COPY --from=build /usr/local/bin /usr/local/bin
 
 # Copy necessary files and directory
