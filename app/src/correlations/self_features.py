@@ -113,7 +113,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
         data = str(data)
         data = data.replace(",", "")
 
-        # find all numeric parts as list[list[tuple[str, str]]]
+        # find all numeric parts as [list[tuple[str, str]]
         # TODO: use only first index value, replace re.findall()
         matched = re.findall(r'(-?(\d*[.])?\d+)', data)
 
