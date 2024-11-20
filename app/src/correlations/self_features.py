@@ -301,16 +301,20 @@ def extract_features(data_list: list[any]) -> np.ndarray:
 
 def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
     """
-    @type table_df: pd.DataFrame
-    @return Extracts features from the given table path and returns a feature table.
+
+    Returns:
+         np.ndarray: Extracts features from the given table path and returns a feature table.
     """
     feature_array = []
     for column in table_df.columns:
+        # TODO: why use "Unnamed:"
         if "Unnamed:" in column:
             continue
+
         feature = extract_features(table_df[column]).reshape(1, -1)
         feature_array.append(feature)
 
+    # if not empty, concatenate all features
     features = np.vstack(feature_array) if feature_array else None
 
     return features
