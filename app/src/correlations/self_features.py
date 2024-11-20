@@ -91,9 +91,10 @@ def is_mainly_numeric(data_list: list[any]) -> bool:
 def extract_numeric(data_list: list[any]) -> list[float]:
     """
     Note:
-        unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万를 사용되어 원본 값과 크게 차이 날 수 있음.
+        unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万가 사용되어 원본 값과 크게 차이 날 수 있음.
         unit 이 존재한다면 이후의 값이 유실됨, "3万5"의 경우 30000.0 으로 변환됨.
-        한글에서 "1억 5천만"과 같이 숫자 내 whitespace를 사용하는 경우는 고려되지 않음.
+        한글에서 "1억 5천만"과 같이 숫자 내 whitespace를 사용하는 경우 drop 됨.
+        "만", "亿" 과 같은 unit 사용된 문자열의 경우 drop 됨.
 
     Args:
         data_list: DataType.NUMERIC 이 검증된 데이터
