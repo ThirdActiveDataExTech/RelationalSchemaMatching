@@ -86,6 +86,7 @@ def is_mainly_numeric(data_list: list[any]) -> bool:
 
 def extract_numeric(data_list: list[any]) -> list[float]:
     """
+
     Note:
         unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万가 사용되어 원본 값과 크게 차이 날 수 있음.
         unit 이 존재한다면 이후의 값이 유실됨, "3万5"의 경우 30000.0 으로 변환됨.
@@ -136,7 +137,11 @@ def extract_numeric(data_list: list[any]) -> list[float]:
 
 def numeric_features(data_list: list[any]) -> np.array:
     """
-    @return Extracts numeric features from the given data. Including Mean,Min, Max, Variance, Standard Deviation, and the number of unique values.
+
+    Returns:
+        np.array: Extracts numeric features from the given data.
+
+        Including Mean, Min, Max, Variance, Standard Deviation, and the number of unique values.
     """
     mean = np.mean(data_list)
     min = np.min(data_list)
@@ -149,7 +154,9 @@ def numeric_features(data_list: list[any]) -> np.array:
 
 def is_url(data_list: list[any]) -> bool:
     """
-    @return True if data_list contains url strings
+
+    Returns:
+        bool: True if data_list contains url strings than URL_RATIO
     """
     cnt = 0
     url_pattern = r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
@@ -166,7 +173,9 @@ def is_url(data_list: list[any]) -> bool:
 
 def is_date(data_list: list[any]) -> bool:
     """
-    @return True if data_list contains date format strings.
+
+    Returns:
+        bool: True if data_list contains date strings than DATE_RATIO
     """
     cnt = 0
     for data in data_list:
@@ -192,7 +201,9 @@ def is_date(data_list: list[any]) -> bool:
 
 def character_features(data_list: list[any]) -> np.array:
     """
-    @return Extracts character features from the given data
+
+    Returns:
+         np.array: Extracts character features from the given data.
     """
     whitespace_ratios = []  # Ratio of whitespace to length
     punctuation_ratios = []  # Ratio of punctuation to length
@@ -200,7 +211,7 @@ def character_features(data_list: list[any]) -> np.array:
     numeric_ratios = []  # Ratio of numeric to length
 
     for data in data_list:
-        # data 의 각 문자 x가 자기 문자일 경우 1을 더함
+        # data 의 각 문자 x가 자기 문자일 경우 count 1 증가
         whitespace_ratio = (data.count(" ") + data.count("\t") + data.count("\n")) / len(data)
         whitespace_ratios.append(whitespace_ratio)
 
@@ -232,7 +243,12 @@ def character_features(data_list: list[any]) -> np.array:
 
 def deep_embedding(data_list: list[any]) -> any:
     """
-    @return Extracts deep embedding features from the given data using sentence-transformers.
+
+    Note:
+        Deep Embedding Feature 는 data 를 SentenceTransformer 로 encoding 후 값들의 mean 을 취함.
+
+    Returns:
+        np.ndarray: Extracts deep embedding features from the given data using sentence-transformers.
     """
     if len(data_list) >= 20:
         data_list = random.sample(data_list, 20)
