@@ -223,16 +223,21 @@ def character_features(data_list: list[any]) -> np.array:
         numeric_ratio = sum(1 for x in data if x.isdigit()) / len(data)
         numeric_ratios.append(numeric_ratio)
 
+    # TODO: why use 1e-12
     epsilon = np.array([1e-12] * len(data_list))
+
     whitespace_ratios = np.array(whitespace_ratios + epsilon)
     punctuation_ratios = np.array(punctuation_ratios + epsilon)
     special_character_ratios = np.array(special_character_ratios + epsilon)
     numeric_ratios = np.array(numeric_ratios + epsilon)
+
     return np.array([
+        # Means
         np.mean(whitespace_ratios),
         np.mean(punctuation_ratios),
         np.mean(special_character_ratios),
         np.mean(numeric_ratios),
+        # CVs
         np.var(whitespace_ratios) / np.mean(whitespace_ratios),
         np.var(punctuation_ratios) / np.mean(punctuation_ratios),
         np.var(special_character_ratios) / np.mean(special_character_ratios),
