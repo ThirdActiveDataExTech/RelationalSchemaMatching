@@ -25,7 +25,8 @@ class DataTypes(Enum):
     MAINLY_NUMERIC = 1,
     DATE = 2,
     STRING = 3,
-    STRICT_NUMERIC = 4
+    # TODO: replace 1
+    STRICT_NUMERIC = 1
 
     def __len__(self):
         return len(self.__class__.__members__)
@@ -303,7 +304,8 @@ def extract_features(data_list: list[any]) -> np.ndarray:
     data_type = classify_data_type(data_list)
 
     # Make data type feature one hot encoding
-    data_type_feature = np.zeros(len(DataTypes))
+    # TODO: rely on enum len. when datatypes changes make XGBoost Length err.
+    data_type_feature = np.zeros(len(DataTypes) - 1)
     data_type_feature[data_type.value] = 1
 
     # Give numeric features if the data is MAINLY_NUMERIC or STRICT_NUMERIC
