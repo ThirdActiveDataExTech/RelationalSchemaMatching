@@ -10,8 +10,8 @@ from sklearn.metrics import f1_score, precision_score, recall_score
 from xgboost import Booster
 
 from app.src.correlations.data_preprocessor import read_table, drop_na_columns
-from app.src.correlations.enums import Strategy, CombinationType, MatchingModel, TestType
-from app.src.correlations.relation_features import create_feature_matrix
+from app.src.correlations.enums import Strategy, MatchingModel, TestType
+from app.src.correlations.relation_features import create_feature_matrix_inference
 
 
 def schema_matching(
@@ -22,12 +22,16 @@ def schema_matching(
         threshold: Optional[float] = None
 ):
     """
-    @param model: Schema Matching XGBoost Model
-    @param l_table_path
-    @param r_table_path 
-    @param strategy: matching strategy. Check app.src.correlations.enums.Strategy.
-    @param threshold: correlation threshold
-    @return: schema matching result
+
+    Args:
+        l_table_path: path to l_table
+        r_table_path: path to r_table
+        model: Schema Matching XGBoost Model
+        strategy: matching strategy. Check app.src.correlations.enums.Strategy.
+        threshold: correlation value threshold.
+
+    Returns:
+        schema matching result
     """
 
     # filter columns
@@ -40,7 +44,7 @@ def schema_matching(
     r_df = drop_na_columns(r_df)
 
     # extract features
-    features, _ = create_feature_matrix(l_df, r_df, combination_type=CombinationType.TEST)
+    features = create_feature_matrix_inference(l_df, r_df)
 
     preds, pred_labels_list = predicts(features, model, threshold)
     df_pred, df_pred_labels, predicted_pairs = create_similarity_matrix(l_df, r_df, preds, pred_labels_list,
