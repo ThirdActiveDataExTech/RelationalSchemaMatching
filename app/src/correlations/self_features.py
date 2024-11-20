@@ -9,8 +9,11 @@ from dateutil.parser import parse as parse_date
 
 from app.src.correlations.model import SentenceTransformer
 
-# 중국어 dataset에서 숫자 단위를 변환하기 위한 Dictionary
+"""
+한자 번체, 신자체, 영어 dataset에서 숫자 단위를 변환하기 위한 dict
+"""
 UNIT_DICT = {"万": 10000, "亿": 100000000, "萬": 10000, "億": 100000000, "K+": 1000, "M+": 1000000, "B+": 1000000000}
+
 DATE_DICT = {"月", "日", "年"}
 PUNCTUATIONS = [",", ".", ";", "!", "?", "，", "。", "；", "！", "？"]
 SPECIAL_CHARACTERS = ["／", "/", "\\", "-", "_", "+", "=", "*", "&", "^", "%", "$", "#", "@", "~", "`", "(", ")",
@@ -70,33 +73,51 @@ def is_mainly_numeric(data_list: list[any]) -> bool:
 
 def extract_numeric(data_list: list[any]) -> list[float]:
     """
-    @return Extracts numeric part(including float) from string list
+    Note:
+        unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万를 사용되어 원본 값과 크게 차이 날 수 있음.
+        unit 이 존재한다면 이후의 값이 유실됨, "3万5"의 경우 30000.0 으로 변환됨.
+        한글에서 "1억 5천만"과 같이 숫자 내 whitespace를 사용하는 경우는 고려되지 않음.
+
+    Args:
+        data_list: DataType.NUMERIC 이 검증된 데이터
+
+    Returns:
+        list[float]: Extracts numeric part(including float) from string list
+
     """
     try:
         data_list = [float(d) for d in data_list]
     except ValueError as _:
+        logging.warning(f"{__name__}: {data_list} can not conversion to float list")
         pass
-    numeric_part = []
-    unit = []
+
+    numeric_list = []
     for data in data_list:
         data = str(data)
         data = data.replace(",", "")
-        numeric_part.append(re.findall(r'([-]?([0-9]*[.])?[0-9]+)', data))
+
+        # find all numeric parts as list[list[tuple[str, str]]]
+        # TODO: use only first index value, replace re.findall()
+        matched = re.findall(r'(-?(\d*[.])?\d+)', data)
+
+        if len(matched) <= 0:
+            logging.warning(f"{__name__}: {data} does not contain any numeric part.")
+            continue
+
+        # use first part only
+        float_part = float(matched[0][0])
 
         # unit_key에 해당하는 부분이 있다면, 숫자로 변환
-        this_unit = 1
+        # TODO: unit priority
+        unit = 1
         for unit_key in UNIT_DICT.keys():
             if unit_key in data:
-                this_unit = UNIT_DICT[unit_key]
+                unit = UNIT_DICT[unit_key]
                 break
-        unit.append(this_unit)
 
-    numeric_part = [x for x in numeric_part if len(x) > 0]
-    if len(numeric_part) != len(data_list):
-        logging.warning(
-            f"Warning: extract_numeric() found different number of numeric part({len(numeric_part)}) and data list({len(data_list)})")
-    numeric_part = [float(x[0][0]) * unit[i] for i, x in enumerate(numeric_part)]
-    return numeric_part
+        numeric_list.append(float_part * unit)
+
+    return numeric_list
 
 
 def numeric_features(data_list: list[any]) -> np.array:
