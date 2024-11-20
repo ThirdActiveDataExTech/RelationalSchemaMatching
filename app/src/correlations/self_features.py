@@ -22,9 +22,10 @@ SPECIAL_CHARACTERS = ["／", "/", "\\", "-", "_", "+", "=", "*", "&", "^", "%", 
 
 class DataTypes(Enum):
     URL = 0,
-    NUMERIC = 1,
+    MAINLY_NUMERIC = 1,
     DATE = 2,
-    STRING = 3
+    STRING = 3,
+    STRICT_NUMERIC = 4
 
     def __len__(self):
         return len(self.__class__.__members__)
@@ -36,6 +37,14 @@ class Constants:
     NUMERIC_PART_RATIO = 0.5
     STRICT_NUMERIC_RATIO = 0.95
     MAINLY_NUMERIC_RATIO = 0.9
+
+    NUMERIC_FEATURES_DIMENSION = 6
+    CHARACTER_FEATURES_DIMENSION = 8
+    DEEP_EMBEDDING_FEATURES_DIMENSION = 768
+
+    # features 에서 -1과 -999는 유효하지 않은 값을 나타내는 것으로 보임
+    GENERAL_FEATURE_INVALID_VALUE = -1
+    DEEP_FEATURE_INVALID_VALUE = -999
 
 
 def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
@@ -266,46 +275,60 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
     return np.mean(embeddings, axis=0)
 
 
-def extract_features(data_list: list[any]) -> np.ndarray:
-    """
-    @return Extract some features from the given data(column) or list
-    """
-
-    # Drop outlier columns.
-    data_list = [d for d in data_list if d == d and d != "--"]
-
-    # Classify the data's type, URL or Date or Numeric
+def classify_data_type(data_list: list[any]) -> DataTypes:
     data_type = DataTypes.STRING
     if is_url(data_list):
         data_type = DataTypes.URL
     elif is_date(data_list):
         data_type = DataTypes.DATE
-    elif is_strict_numeric(data_list) or is_mainly_numeric(data_list):
-        data_type = DataTypes.NUMERIC
+    elif is_strict_numeric(data_list):
+        data_type = DataTypes.STRICT_NUMERIC
+    elif is_mainly_numeric(data_list):
+        data_type = DataTypes.MAINLY_NUMERIC
+
+    return data_type
+
+
+def extract_features(data_list: list[any]) -> np.ndarray:
+    """
+    Args:
+        data_list (list[any]): data can be column or list.
+    Returns:
+        np.array: Extract some features from the given data
+    """
+
+    # Drop outlier columns
+    data_list = [d for d in data_list if d == d and d != "--"]
+
+    data_type = classify_data_type(data_list)
 
     # Make data type feature one hot encoding
     data_type_feature = np.zeros(len(DataTypes))
     data_type_feature[data_type.value] = 1
 
-    # Give numeric features if the data is mostly numeric
-    if data_type == DataTypes.NUMERIC:
+    # Give numeric features if the data is MAINLY_NUMERIC or STRICT_NUMERIC
+    if data_type == DataTypes.MAINLY_NUMERIC or data_type == DataTypes.STRICT_NUMERIC:
         data_numeric = extract_numeric(data_list)
         num_fts = numeric_features(data_numeric)
     else:
-        num_fts = np.array([-1] * 6)
+        # dont use numeric features, give default values
+        num_fts = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.NUMERIC_FEATURES_DIMENSION)
 
+    # TODO: ignored comment, need to fix this
     # If data is not numeric, give length features
     length_fts = numeric_features([len(str(d)) for d in data_list])
 
-    # Give character features and deep embeddings if the data is string
-    if data_type == DataTypes.STRING or (not is_strict_numeric(data_list) and is_mainly_numeric(data_list)):
+    # Give character features and deep embeddings if the data is string or MAINLY_NUMERIC
+    if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
         char_fts = character_features(data_list)
         deep_fts = deep_embedding(data_list)
     else:
-        char_fts = np.array([-1] * 8)
-        deep_fts = np.array([-999] * 768)
+        # dont use character and deep embedding features, give default values
+        char_fts = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.CHARACTER_FEATURES_DIMENSION)
+        deep_fts = np.array([Constants.DEEP_FEATURE_INVALID_VALUE] * Constants.DEEP_EMBEDDING_FEATURES_DIMENSION)
 
     output_features = np.concatenate((data_type_feature, num_fts, length_fts, char_fts, deep_fts))
+
     return output_features
 
 
