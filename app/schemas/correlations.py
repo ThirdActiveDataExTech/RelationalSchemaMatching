@@ -25,6 +25,13 @@ class SchemaMatchingRequestModel(BaseModel):
     threshold: Optional[float] = Field(description="threshold", default=None)
 
 
+class DatasetMatchingRequestModel(BaseModel):
+    dataset: str = Field(description="dataset path")
+    model: str = Field(description="model path", default="initial"),
+    strategy: str = Field(description="strategy", default="many_to_many"),
+    threshold: Optional[float] = Field(description="threshold", default=None)
+
+
 class DummyCorrelation(BaseModel):
     response: bool
 

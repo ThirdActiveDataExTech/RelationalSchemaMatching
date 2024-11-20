@@ -8,8 +8,9 @@ from fastapi import APIRouter, Depends, Body
 from fastapi.responses import JSONResponse
 
 from app.dependencies import get_token_header
-from app.schemas.correlations import DummyCorrelation, SchemaMatchingResponseModel, SchemaMatchingRequestModel
-from app.src.correlations.endpoints import run
+from app.schemas.correlations import DummyCorrelation, SchemaMatchingResponseModel, SchemaMatchingRequestModel, \
+    DatasetMatchingRequestModel
+from app.src.correlations.endpoints import run, match_from_test_dataset
 from app.src.correlations.enums import MatchingModel, Strategy
 
 router = APIRouter(
@@ -41,4 +42,20 @@ async def schema_matching(
     truth_json = request_body.truth_json
     threshold = request_body.threshold
     response = run(l_table, r_table, result_path, truth_json, model, strategy, threshold)
+    return SchemaMatchingResponseModel(result=DummyCorrelation(response=response), description="스키마 매칭 성공")
+
+
+@router.get("/dataset",
+            response_model=SchemaMatchingResponseModel,
+            response_class=JSONResponse)
+async def dataset_schema_matching(
+        request_body: Annotated[DatasetMatchingRequestModel, Body(
+            title="아이템 업데이트를 위한 아이템명 설정",
+            description="아이템 이름, 상태, 재고 입력",
+            media_type="application/json"
+        )]
+):
+    dataset = request_body.dataset
+
+    response = match_from_test_dataset(dataset)
     return SchemaMatchingResponseModel(result=DummyCorrelation(response=response), description="스키마 매칭 성공")
