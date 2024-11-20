@@ -31,6 +31,8 @@ class DataTypes(Enum):
 
 
 class Constants:
+    DATE_RATIO = 0.9
+    URL_RATIO = 0.9
     NUMERIC_PART_RATIO = 0.5
     STRICT_NUMERIC_RATIO = 0.95
     MAINLY_NUMERIC_RATIO = 0.9
@@ -165,10 +167,8 @@ def is_url(data_list: list[any]) -> bool:
             continue
         if re.search(url_pattern, data):
             cnt += 1
-    if cnt >= 0.9 * len(data_list):
-        return True
 
-    return False
+    return cnt >= Constants.URL_RATIO * len(data_list)
 
 
 def is_date(data_list: list[any]) -> bool:
@@ -194,9 +194,7 @@ def is_date(data_list: list[any]) -> bool:
         except Exception as _:
             continue
 
-    if cnt >= 0.9 * len(data_list):
-        return True
-    return False
+    return cnt >= Constants.DATE_RATIO * len(data_list)
 
 
 def character_features(data_list: list[any]) -> np.array:
