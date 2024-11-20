@@ -239,7 +239,7 @@ def character_features(data_list: list[any]) -> np.array:
     ])
 
 
-def deep_embedding(data_list: list[any]) -> any:
+def deep_embedding(data_list: list[any]) -> np.ndarray:
     """
 
     Note:
@@ -250,9 +250,13 @@ def deep_embedding(data_list: list[any]) -> any:
     """
     if len(data_list) >= 20:
         data_list = random.sample(data_list, 20)
+
+    # TODO: use Depends
     model = SentenceTransformer.get()
-    embeddings = [model.encode(str(data)) for data in data_list]
-    embeddings = np.array(embeddings)
+
+    # str encode
+    embeddings = np.array([model.encode(str(data)) for data in data_list])
+
     return np.mean(embeddings, axis=0)
 
 
