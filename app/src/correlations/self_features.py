@@ -61,11 +61,7 @@ def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
 
 
 def is_mainly_numeric(data_list: list[any]) -> bool:
-    """
-    data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
-
-    Args:
-        data_list: 확인할 데이터
+    """data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
 
     Returns:
         bool: data_list 내의 mainly_numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
