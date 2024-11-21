@@ -76,6 +76,7 @@ def get_col_names_features(
 
 def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: np.ndarray) -> np.ndarray:
     """
+
     Returns:
          np.ndarray: cosine similarity between two sentences embeddings.
     """
@@ -93,6 +94,7 @@ def get_output_feature_from_row(
 ) -> np.ndarray:
     # (feature 의 차의 abs) / (feature 의 합 + EPSILON)
     difference_features_percent = np.abs(l_feature - r_feature) / (l_feature + r_feature + Constants.EPSILON)
+    # TODO: 정확히 무슨 계산인지?
 
     # for col_name additional features
     col_names_features = get_col_names_features(l_col_name, r_col_name, l_col_name_embedding, r_col_name_embedding)
