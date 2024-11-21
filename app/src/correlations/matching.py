@@ -85,7 +85,9 @@ def predict_inference(
         pred_labels = np.where(pred > best_threshold, 1, 0)
         # UNCHECKED CODE
 
+        # Booster 가 결합된 feature 로 predict, 현재 분리 불가
         preds.append(pred)
+
         pred_labels_list.append(pred_labels)
         del bst
 
