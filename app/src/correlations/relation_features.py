@@ -156,7 +156,10 @@ def get_col_names_features(text1: str, text2: str, column_name_embeddings: dict[
     transformer_score = util.cos_sim(column_name_embeddings[text1], column_name_embeddings[text2])
     one_in_one = text1 in text2 or text2 in text1
 
-    col_names_features = np.array([bleu_score, edit_distance, lcs, transformer_score, one_in_one])
+    col_names_features = np.array(
+        [bleu_score, edit_distance, lcs, transformer_score, one_in_one],
+        dtype=np.float32
+    )
 
     return col_names_features
 
