@@ -48,9 +48,9 @@ def schema_matching(
     preds, pred_labels_list = predict_inference(features, model, threshold)
 
     # MAYBE METRIC
-    df_pred, df_pred_labels, predicted_pairs = create_similarity_matrix(l_df, r_df, preds, pred_labels_list,
-                                                                        strategy=strategy)
-    return df_pred, df_pred_labels, predicted_pairs
+    df_pred, df_pred_labels, predicted_tuples = create_similarity_matrix(l_df, r_df, preds, pred_labels_list,
+                                                                         strategy=strategy)
+    return df_pred, df_pred_labels, predicted_tuples
 
 
 def predict_inference(
@@ -145,9 +145,11 @@ def create_similarity_matrix(
 
     df_pred = pd.DataFrame(preds_matrix, columns=df2_cols, index=df1_cols)
     df_pred_labels = pd.DataFrame(pred_labels_matrix, columns=df2_cols, index=df1_cols)
-    for i in range(len(df_pred_labels)):
-        for j in range(len(df_pred_labels.iloc[i])):
-            if df_pred_labels.iloc[i, j] == 1:
-                predicted_pairs.append((df_pred.index[i], df_pred.columns[j], df_pred.iloc[i, j]))
 
-    return df_pred, df_pred_labels, predicted_pairs
+    # tuple l_col_name, r_col_name, predict_value
+    predicted_tuples = [
+        (df_pred.index[i], df_pred.columns[j], df_pred.iloc[i, j])
+        for i, j in zip(*np.where(df_pred_labels == 1))
+    ]
+
+    return df_pred, df_pred_labels, predicted_tuples

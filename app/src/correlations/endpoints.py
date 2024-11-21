@@ -51,13 +51,13 @@ def run(
         threshold: Optional[float] = None,
         calculate_metrics: bool = True
 ) -> any:
-    df_pred, df_pred_labels, predicted_pairs = schema_matching(l_table, r_table, model, strategy, threshold)
+    df_pred, df_pred_labels, predicted_tuples = schema_matching(l_table, r_table, model, strategy, threshold)
 
     if result_path and os.path.exists(result_path):
         export_metric_as_csv(result_path, df_pred, df_pred_labels)
 
     if calculate_metrics:
-        get_metric(predicted_pairs, truth_json)
+        get_metric(predicted_tuples, truth_json)
 
     return True
 
@@ -72,18 +72,18 @@ def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels
     logging.info(f"label.csv saved to {pred_label_path}")
 
 
-# TODO: specify type predicted_pairs 
-def get_metric(predicted_pairs: list[tuple[str, str, any]], truth_json: Optional[str] = None):
+# TODO: specify type predicted_tuples
+def get_metric(predicted_tuples: list[tuple[str, str, any]], truth_json: Optional[str] = None):
     # 스키마 매칭 결과 log 출력
     logging.info("Predicted Pairs:")
-    for pair in predicted_pairs:
-        logging.info(pair)
+    for pt in predicted_tuples:
+        logging.info(pt)
 
     if truth_json and os.path.exists(truth_json):
         with open(truth_json) as f:
             json_data = json.load(f)
         y_true = [(m['source_column'], m['target_column']) for m in json_data['matches']]
-        y_pred = [(pt[0], pt[1]) for pt in predicted_pairs]
+        y_pred = [(pt[0], pt[1]) for pt in predicted_tuples]
 
         # y_true와 y_pred의 고유한 쌍을 설정
         unique_labels = set(y_true) | set(y_pred)
