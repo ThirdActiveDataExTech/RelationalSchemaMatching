@@ -48,6 +48,120 @@ class Constants:
     DEEP_FEATURE_INVALID_VALUE = -999
 
 
+def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
+    """
+
+    Returns:
+         np.ndarray: Extracts features from the given table path and returns a feature table.
+    """
+    feature_array = []
+    for column in table_df.columns:
+        # TODO: why use "Unnamed:"
+        if "Unnamed:" in column:
+            continue
+
+        feature = extract_features(table_df[column]).reshape(1, -1)
+        feature_array.append(feature)
+
+    # if not empty, concatenate all features
+    # will make (columns_length, feature_matrix_len)
+    # should be (len(columns), 792)
+    features = np.vstack(feature_array) if feature_array else None
+
+    logging.debug(f"make_self_features_from(): {features.shape}")
+
+    return features
+
+
+# REMINDER: use ONLY data_list as Column
+def extract_features(data_list: list[any]) -> np.ndarray:
+    """
+
+    Args:
+        data_list (list[any]): data can be column or list.
+    Returns:
+        np.array: Extract features from the given data.
+    """
+
+    # Drop outlier columns
+    data_list = [d for d in data_list if d == d and d != "--"]
+
+    data_type = classify_data_type(data_list)
+
+    # TODO: ignored comment, need to fix this
+    # If data is not numeric, give length features
+    length_features = calculate_numeric_features([len(str(d)) for d in data_list])
+
+    # output_features
+    output_features = np.concatenate((
+        get_datatype_feature(data_type),  # 4 cols
+        get_data_numeric_feature(data_list, data_type),  # 6 cols
+        length_features,  # 6 cols
+        get_character_feature(data_list, data_type),  # 8 cols
+        get_deep_embedding_feature(data_list, data_type)  # 768 cols
+    ))
+
+    return output_features
+
+
+def classify_data_type(data_list: list[any]) -> DataTypes:
+    data_type = DataTypes.STRING
+    if is_url(data_list):
+        data_type = DataTypes.URL
+    elif is_date(data_list):
+        data_type = DataTypes.DATE
+    elif is_strict_numeric(data_list):
+        data_type = DataTypes.STRICT_NUMERIC
+    elif is_mainly_numeric(data_list):
+        data_type = DataTypes.MAINLY_NUMERIC
+
+    return data_type
+
+
+def is_url(data_list: list[any]) -> bool:
+    """
+
+    Returns:
+        bool: True if data_list contains url strings than URL_RATIO
+    """
+    cnt = 0
+    url_pattern = r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
+    for data in data_list:
+        if not isinstance(data, str):
+            continue
+        if re.search(url_pattern, data):
+            cnt += 1
+
+    return cnt >= Constants.URL_RATIO * len(data_list)
+
+
+def is_date(data_list: list[any]) -> bool:
+    """
+
+    Returns:
+        bool: True if data_list contains date strings than DATE_RATIO
+    """
+    cnt = 0
+    for data in data_list:
+        if not isinstance(data, str):
+            continue
+
+        if any(date in data for date in DATE_DICT):
+            cnt += 1
+
+        try:
+            date = parse_date(data)
+            # check if the date is near to today
+            # TODO: 왜 2000 년 전, 2030 년 이후 데이터 drop?
+            if date.year < 2000 or date.year > 2030:
+                continue
+            cnt += 1
+        except Exception as _:
+            continue
+
+    return cnt >= Constants.DATE_RATIO * len(data_list)
+
+
 def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
     """
 
@@ -99,7 +213,7 @@ def is_mainly_numeric(data_list: list[any]) -> bool:
 def extract_numeric(data_list: list[any]) -> list[float]:
     """
 
-    Note:
+    Notes:
         unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万가 사용되어 원본 값과 크게 차이 날 수 있음.
         unit 이 존재한다면 이후의 값이 유실됨, "3万5"의 경우 30000.0 으로 변환됨.
         한글에서 "1억 5천만"과 같이 숫자 내 whitespace를 사용하는 경우 drop 됨.
@@ -147,7 +261,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
     return numeric_list
 
 
-def numeric_features(data_list: list[any]) -> np.array:
+def calculate_numeric_features(data_list: list[any]) -> np.array:
     """
 
     Returns:
@@ -164,51 +278,7 @@ def numeric_features(data_list: list[any]) -> np.array:
     return np.array([mean, min, max, variance, cv, unique / len(data_list)])
 
 
-def is_url(data_list: list[any]) -> bool:
-    """
-
-    Returns:
-        bool: True if data_list contains url strings than URL_RATIO
-    """
-    cnt = 0
-    url_pattern = r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
-    for data in data_list:
-        if not isinstance(data, str):
-            continue
-        if re.search(url_pattern, data):
-            cnt += 1
-
-    return cnt >= Constants.URL_RATIO * len(data_list)
-
-
-def is_date(data_list: list[any]) -> bool:
-    """
-
-    Returns:
-        bool: True if data_list contains date strings than DATE_RATIO
-    """
-    cnt = 0
-    for data in data_list:
-        if not isinstance(data, str):
-            continue
-
-        if any(date in data for date in DATE_DICT):
-            cnt += 1
-
-        try:
-            date = parse_date(data)
-            # check if the date is near to today
-            # TODO: 왜 2000 년 전, 2030 년 이후 데이터 drop?
-            if date.year < 2000 or date.year > 2030:
-                continue
-            cnt += 1
-        except Exception as _:
-            continue
-
-    return cnt >= Constants.DATE_RATIO * len(data_list)
-
-
-def character_features(data_list: list[any]) -> np.array:
+def calculate_character_features(data_list: list[any]) -> np.array:
     """
 
     Returns:
@@ -258,8 +328,9 @@ def character_features(data_list: list[any]) -> np.array:
 def deep_embedding(data_list: list[any]) -> np.ndarray:
     """
 
-    Note:
+    Notes:
         Deep Embedding Feature 는 data 를 SentenceTransformer 로 encoding 후 값들의 mean 을 취함.
+        사용하는 Matching Model이 20 개의 데이터를 가지고 훈련되어, 20 개의 데이터를 Sampling 하여 사용.
 
     Returns:
         np.ndarray: Extracts deep embedding features from the given data using sentence-transformers.
@@ -276,80 +347,61 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
     return np.mean(embeddings, axis=0)
 
 
-def classify_data_type(data_list: list[any]) -> DataTypes:
-    data_type = DataTypes.STRING
-    if is_url(data_list):
-        data_type = DataTypes.URL
-    elif is_date(data_list):
-        data_type = DataTypes.DATE
-    elif is_strict_numeric(data_list):
-        data_type = DataTypes.STRICT_NUMERIC
-    elif is_mainly_numeric(data_list):
-        data_type = DataTypes.MAINLY_NUMERIC
-
-    return data_type
-
-
-def extract_features(data_list: list[any]) -> np.ndarray:
-    """
-    Args:
-        data_list (list[any]): data can be column or list.
-    Returns:
-        np.array: Extract some features from the given data
+def get_datatype_feature(data_type: DataTypes) -> np.ndarray:
     """
 
-    # Drop outlier columns
-    data_list = [d for d in data_list if d == d and d != "--"]
+    Returns:  Make data type feature one hot encoding
+    """
 
-    data_type = classify_data_type(data_list)
-
-    # Make data type feature one hot encoding
     # TODO: rely on enum len. when datatypes changes make XGBoost Length err.
     data_type_feature = np.zeros(len(DataTypes) - 1)
     data_type_feature[data_type.value] = 1
 
-    # Give numeric features if the data is MAINLY_NUMERIC or STRICT_NUMERIC
-    if data_type == DataTypes.MAINLY_NUMERIC or data_type == DataTypes.STRICT_NUMERIC:
-        data_numeric = extract_numeric(data_list)
-        num_fts = numeric_features(data_numeric)
-    else:
-        # dont use numeric features, give default values
-        num_fts = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.NUMERIC_FEATURES_DIMENSION)
-
-    # TODO: ignored comment, need to fix this
-    # If data is not numeric, give length features
-    length_fts = numeric_features([len(str(d)) for d in data_list])
-
-    # Give character features and deep embeddings if the data is string or MAINLY_NUMERIC
-    if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
-        char_fts = character_features(data_list)
-        deep_fts = deep_embedding(data_list)
-    else:
-        # dont use character and deep embedding features, give default values
-        char_fts = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.CHARACTER_FEATURES_DIMENSION)
-        deep_fts = np.array([Constants.DEEP_FEATURE_INVALID_VALUE] * Constants.DEEP_EMBEDDING_FEATURES_DIMENSION)
-
-    output_features = np.concatenate((data_type_feature, num_fts, length_fts, char_fts, deep_fts))
-
-    return output_features
+    return data_type_feature
 
 
-def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
+def get_data_numeric_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
     """
 
     Returns:
-         np.ndarray: Extracts features from the given table path and returns a feature table.
+        np.ndarray: Get numeric features if the data MAINLY_NUMERIC or STRICT_NUMERIC, else invalid values matrix.
     """
-    feature_array = []
-    for column in table_df.columns:
-        # TODO: why use "Unnamed:"
-        if "Unnamed:" in column:
-            continue
 
-        feature = extract_features(table_df[column]).reshape(1, -1)
-        feature_array.append(feature)
+    if data_type == DataTypes.MAINLY_NUMERIC or data_type == DataTypes.STRICT_NUMERIC:
+        data_numeric = extract_numeric(data_list)
+        numeric_features = calculate_numeric_features(data_numeric)
+    else:
+        # dont use numeric features, give default  invalid values
+        numeric_features = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.NUMERIC_FEATURES_DIMENSION)
 
-    # if not empty, concatenate all features
-    features = np.vstack(feature_array) if feature_array else None
+    return numeric_features
 
-    return features
+
+def get_character_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
+    """
+
+    Returns:
+        np.ndarray: Give character features if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
+    """
+    if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
+        character_feature = calculate_character_features(data_list)
+    else:
+        character_feature = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.CHARACTER_FEATURES_DIMENSION)
+
+    return character_feature
+
+
+def get_deep_embedding_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
+    """
+
+    Returns:
+        np.ndarray: Give deep embeddings if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
+    """
+
+    if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
+        deep_embedding_feature = deep_embedding(data_list)
+    else:
+        deep_embedding_feature = np.array([Constants.DEEP_FEATURE_INVALID_VALUE]
+                                          * Constants.DEEP_EMBEDDING_FEATURES_DIMENSION)
+
+    return deep_embedding_feature
