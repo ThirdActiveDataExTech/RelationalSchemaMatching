@@ -232,7 +232,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
     try:
         data_list = [float(d) for d in data_list]
     except ValueError as _:
-        logging.warning(f"{__name__}: {data_list} can not conversion to float list")
+        logging.warning(f"{__name__}: data_list can not conversion to float list")
         pass
 
     numeric_list = []
@@ -245,7 +245,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
         matched = re.findall(r'(-?(\d*[.])?\d+)', data)
 
         if len(matched) <= 0:
-            logging.warning(f"{__name__}: {data} does not contain any numeric part.")
+            logging.warning(f"{__name__}: data does not contain any numeric part.")
             continue
 
         # use first part only
