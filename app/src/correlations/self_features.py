@@ -63,10 +63,13 @@ def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
         feature = extract_features(table_df[column]).reshape(1, -1)
         feature_array.append(feature)
 
-    # if not empty, concatenate all features
+    if len(feature_array) == 0:
+        raise ValueError(f"No features extracted. Check your table: {table_df}.")
+
+    # get each columns features and concatenate all features
     # will make (columns_length, feature_matrix_len)
     # should be (len(columns), 792)
-    features = np.vstack(feature_array) if feature_array else None
+    features = np.vstack(feature_array)
 
     logging.debug(f"make_self_features_from(): {features.shape}")
 
