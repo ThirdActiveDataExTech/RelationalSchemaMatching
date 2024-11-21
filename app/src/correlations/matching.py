@@ -1,16 +1,13 @@
 import logging
 import os
-from typing import Union, Optional, Tuple
+from typing import Optional, Tuple
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import f1_score, precision_score, recall_score
-from xgboost import Booster
 
 from app.src.correlations.data_preprocessor import read_table, drop_na_columns
-from app.src.correlations.enums import Strategy, MatchingModel, TestType
+from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.relation_features import create_feature_matrix_inference
 
 
@@ -93,65 +90,6 @@ def predict_inference(
         del bst
 
     return preds, pred_labels_list
-
-
-def predicts(
-        features: np.ndarray,
-        model: MatchingModel,
-        threshold: Optional[float] = None
-) -> Tuple[list[np.ndarray], list[np.ndarray]]:
-    """
-    load model and predict on features
-    """
-    preds = []
-    pred_labels_list = []
-
-    model_files = os.listdir(model.path)
-    model_cnt = len(model_files) // 2
-    for i in range(model_cnt):
-        bst = xgb.Booster({'nthread': 4})  # init model
-        model_file = os.path.join(model.path, f"{i}.model")
-        bst.load_model(model_file)
-
-        # use specified threshold or model best threshold
-        if threshold is not None:
-            best_threshold = float(threshold)
-        else:
-            threshold_file = os.path.join(model.path, f"{i}.threshold")
-            with open(threshold_file, "r") as f:
-                best_threshold = float(f.read())
-
-        pred, pred_labels = test(bst, best_threshold, features, test_labels=np.ones(len(features)),
-                                 test_type=TestType.INFERENCE)
-        preds.append(pred)
-        pred_labels_list.append(pred_labels)
-        del bst
-
-    return preds, pred_labels_list
-
-
-def test(
-        bst: Booster,
-        best_threshold: float,
-        test_features: np.ndarray,
-        test_labels: np.ndarray,
-        test_type: TestType = TestType.EVALUATION
-) -> Union[Tuple[np.ndarray, np.ndarray], Tuple[float, float, float, any]]:
-    dtest = xgb.DMatrix(test_features, label=test_labels)
-    pred = bst.predict(dtest)
-
-    # TODO: Full metrics
-    if test_type == TestType.INFERENCE:
-        pred_labels = np.where(pred > best_threshold, 1, 0)
-        return pred, pred_labels
-
-    # compute precision, recall, and F1 score
-    pred_labels = np.where(pred > best_threshold, 1, 0)
-    precision = precision_score(test_labels, pred_labels, average="binary", pos_label=1)
-    recall = recall_score(test_labels, pred_labels, average="binary", pos_label=1)
-    f1 = f1_score(test_labels, pred_labels, average="binary", pos_label=1)
-    c_matrix = confusion_matrix(test_labels, pred_labels)
-    return precision, recall, f1, c_matrix
 
 
 def create_similarity_matrix(
