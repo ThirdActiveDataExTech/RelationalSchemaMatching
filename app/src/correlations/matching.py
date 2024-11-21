@@ -124,7 +124,10 @@ def create_similarity_matrix(
     preds_matrix = np.array(preds).reshape(len(df1_cols), len(df2_cols))
 
     # create similarity matrix for pred labels
-    # ManyToMany 와 타 strategy가 동일한 로직을 사용 하는 것으로 보임
+    # ManyToMany 는 predict 에서 생성된 pred_label 유지
+    # OneToMany 는 row 에서 preds 의 최댓값을 취함
+    # OneToOne 는 col, row 에서의 최댓값을 취함
+    # TODO: move to user select
     if strategy == Strategy.MANY_TO_MANY:
         pred_labels_matrix = np.array(pred_labels).reshape(len(df1_cols), len(df2_cols))
     else:
