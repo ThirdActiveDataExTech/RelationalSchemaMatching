@@ -33,10 +33,9 @@ def schema_matching(
         schema matching result
     """
 
-    # filter columns
-    logging.debug(f"trying to read {l_table_path}")
-    l_df = read_table(l_table_path)
-    l_df = drop_na_columns(l_df)
+    # read tables.
+    l_df = preprocess_table(l_table_path)
+    r_df = preprocess_table(r_table_path)
 
     logging.debug(f"trying to read {r_table_path}")
     r_df = read_table(r_table_path)
@@ -54,6 +53,13 @@ def schema_matching(
     predicted_tuples = get_predicted_tuples(df_pred, df_pred_labels)
 
     return df_pred, df_pred_labels, predicted_tuples
+
+
+def preprocess_table(table_path: str) -> pd.DataFrame:
+    logging.debug(f"trying to read {table_path}")
+    df = read_table(table_path)
+    df = drop_na_columns(df)
+    return df
 
 
 def predict_inference(
