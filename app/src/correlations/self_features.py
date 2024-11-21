@@ -333,11 +333,12 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
 
     Notes:
         Deep Embedding Feature 는 data 를 SentenceTransformer 로 encoding 후 값들의 mean 을 취함.
-        사용하는 Matching Model이 20 개의 데이터를 가지고 훈련되어, 20 개의 데이터를 Sampling 하여 사용.
+        20 개의 데이터를 Sampling 하여 사용.
 
     Returns:
         np.ndarray: Extracts deep embedding features from the given data using sentence-transformers.
     """
+    # TODO: 20개 이외의 값, 20개 미만일 떄 dimension 유지되는지?
     if len(data_list) >= 20:
         data_list = random.sample(data_list, 20)
 
