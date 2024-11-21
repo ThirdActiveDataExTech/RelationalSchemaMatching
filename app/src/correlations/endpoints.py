@@ -59,7 +59,7 @@ def run(
     if calculate_metrics:
         get_metric(predicted_tuples, truth_json)
 
-    return True
+    return df_pred
 
 
 def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels: pd.DataFrame):

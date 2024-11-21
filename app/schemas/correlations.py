@@ -33,7 +33,7 @@ class DatasetMatchingRequestModel(BaseModel):
 
 
 class DummyCorrelation(BaseModel):
-    response: bool
+    response: bool | str | dict[str, str] | dict[str, float]
 
 
 class SchemaMatchingResponseModel(APIResponseModel):
