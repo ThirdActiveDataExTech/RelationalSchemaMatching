@@ -346,7 +346,8 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
     model = SentenceTransformer.get()
 
     # str encode
-    embeddings = np.array([model.encode(str(data)) for data in data_list])
+    # TODO: check side effect
+    embeddings = np.array(model.encode(data_list))
 
     return np.mean(embeddings, axis=0)
 
