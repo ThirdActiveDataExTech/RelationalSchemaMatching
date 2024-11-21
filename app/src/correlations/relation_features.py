@@ -134,13 +134,13 @@ def make_combinations_labels(
     return labels
 
 
-def get_col_names_features(text1: str, text2: str, column_name_embeddings: dict[str, any]) -> np.ndarray:
+def get_col_names_features(
+        l_col_name: str,
+        r_col_name: str,
+        l_col__name_embedding: np.ndarray,
+        r_col__name_embedding: np.ndarray,
+) -> np.ndarray:
     """
-
-    Args:
-        text1 (str): text 1
-        text2 (str): text 2
-        column_name_embeddings (dict[str, any]): key: column_name, value: sentence embedding
 
     Returns:
          np.ndarray:
@@ -150,11 +150,11 @@ def get_col_names_features(text1: str, text2: str, column_name_embeddings: dict[
          transformer_score: cosine similarity
          one_in_one: 포함 관계 일 경우 1, 아니면 0
     """
-    bleu_score = bleu([text1], text2, smoothing_function=SMOOTHIE)
-    edit_distance = DAMERAU.distance(text1, text2)
-    lcs = METRIC_LCS.distance(text1, text2)
-    transformer_score = util.cos_sim(column_name_embeddings[text1], column_name_embeddings[text2])
-    one_in_one = text1 in text2 or text2 in text1
+    bleu_score = bleu([l_col_name], r_col_name, smoothing_function=SMOOTHIE)
+    edit_distance = DAMERAU.distance(l_col_name, r_col_name)
+    lcs = METRIC_LCS.distance(l_col_name, r_col_name)
+    transformer_score = util.cos_sim(l_col__name_embedding, r_col__name_embedding)
+    one_in_one = l_col_name in r_col_name or r_col_name in l_col_name
 
     col_names_features = np.array(
         [bleu_score, edit_distance, lcs, transformer_score, one_in_one],
@@ -164,8 +164,7 @@ def get_col_names_features(text1: str, text2: str, column_name_embeddings: dict[
     return col_names_features
 
 
-# TODO: embedding types
-def calculate_embedding_cosine_similarity(embeddings1, embeddings2) -> np.ndarray:
+def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: np.ndarray) -> np.ndarray:
     """
     Returns:
          np.ndarray: cosine similarity between two sentences embeddings.
@@ -174,7 +173,36 @@ def calculate_embedding_cosine_similarity(embeddings1, embeddings2) -> np.ndarra
     return np.array([cosine_similarity])
 
 
-def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
+def get_output_feature_from_row(
+        l_col_name: str,
+        l_feature: np.ndarray,
+        l_col_name_embedding: np.ndarray,
+        r_col_name: str,
+        r_feature: np.ndarray,
+        r_col_name_embedding: np.ndarray
+) -> np.ndarray:
+    # (feature 의 차의 abs) / (feature 의 합 + EPSILON)
+    difference_features_percent = np.abs(l_feature - r_feature) / (l_feature + r_feature + Constants.EPSILON)
+
+    # for col_name additional features
+    col_names_features = get_col_names_features(l_col_name, r_col_name, l_col_name_embedding, r_col_name_embedding)
+
+    # select only DEEP_EMBEDDING_FEATURES to calculate embedding_cos_sim
+    embedding_cos_sim = calculate_embedding_cosine_similarity(
+        l_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:],
+        r_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:]
+    )
+
+    output_feature = np.concatenate((
+        difference_features_percent[:-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION],
+        col_names_features,
+        embedding_cos_sim
+    ))
+
+    return output_feature
+
+
+def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> np.ndarray:
     """
 
     Notes:
@@ -192,13 +220,15 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
 
     combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 
-    # TODO: Depends
+    # TODO: Model Depends, or Logic
     model = SentenceTransformer.get()
 
     column_name_embeddings: dict[str, any] = {c: model.encode(c) for c in l_columns + r_columns}
+    # END OF MODEL LOGIC
 
     NON_EMBEDDED_DIMENSION = l_table_features.shape[1] - Constants.DEEP_EMBEDDING_FEATURES_DIMENSION
 
+    # TODO: Matrix values, row size are ignored
     output_feature_table = np.zeros(
         (
             # combinations_label len = l_columns * r_columns
@@ -209,32 +239,18 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
         dtype=np.float32
     )
 
-    for i, combination in enumerate(combinations):
-        # columns name preprocess
-        c1, c2 = combination
-        c1_name = l_columns[c1]
-        c2_name = r_columns[c2]
+    for i, (l_col, r_col) in enumerate(combinations):
+        l_col_name = l_columns[l_col]
+        r_col_name = r_columns[r_col]
 
-        l_current_feature = l_table_features[c1]
-        r_current_feature = r_table_features[c2]
-
-        # (feature 의 차의 abs) / (feature 의 합 + EPSILON)
-        difference_features_percent = (np.abs(l_current_feature - r_current_feature)
-                                       / (l_current_feature + r_current_feature + Constants.EPSILON))
-
-        col_names_features = get_col_names_features(c1_name, c2_name, column_name_embeddings)
-
-        # select only DEEP_EMBEDDING_FEATURES to calculate embedding_cos_sim
-        embedding_cos_sim = calculate_embedding_cosine_similarity(
-            l_current_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:],
-            r_current_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:]
+        output_feature_table[i, :] = get_output_feature_from_row(
+            l_col_name,
+            l_table_features[l_col],
+            column_name_embeddings[l_col_name],
+            r_col_name,
+            r_table_features[r_col],
+            column_name_embeddings[r_col_name]
         )
-
-        output_feature_table[i, :] = np.concatenate((
-            difference_features_percent[:-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION],
-            col_names_features,
-            embedding_cos_sim
-        ))
 
     return output_feature_table
 
