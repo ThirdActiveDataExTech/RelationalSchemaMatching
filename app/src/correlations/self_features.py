@@ -340,7 +340,7 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
     """
     # TODO: 20개 이외의 값, 20개 미만일 떄 dimension 유지되는지?
     if len(data_list) >= 20:
-        data_list = random.sample(data_list, 20)
+        data_list = random.sample(data_list, 20)  # safe random checked
 
     # TODO: use Depends
     model = SentenceTransformer.get()
