@@ -184,26 +184,24 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
     r_table_features = make_self_features_from(r_df)
     # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
-    l_columns = list(l_df.columns)
-    r_columns = list(r_df.columns)
+    l_columns = [preprocess_text(c) for c in l_df.columns]
+    r_columns = [preprocess_text(c) for c in r_df.columns]
 
     combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 
     # TODO: Depends
     model = SentenceTransformer.get()
 
-    column_name_embeddings: dict[str, any] = {preprocess_text(k): model.encode(preprocess_text(k)) for k in
-                                              l_columns + r_columns}
+    column_name_embeddings: dict[str, any] = {c: model.encode(c) for c in l_columns + r_columns}
+
+    NON_EMBEDDED_DIMENSION = l_table_features.shape[1] - Constants.DEEP_EMBEDDING_FEATURES_DIMENSION
 
     output_feature_table = np.zeros(
         (
             # combinations_label len = l_columns * r_columns
             len(combinations),
-
-            # l_table_features row count - DEEP_EMBEDDING_FEATURES_DIMENSION + ADDITIONAL_FEATURE_DIMENSION
-            l_table_features.shape[1]
-            - Constants.DEEP_EMBEDDING_FEATURES_DIMENSION
-            + Constants.ADDITIONAL_FEATURE_DIMENSION
+            # NON_EMBEDDED_DIMENSION + ADDITIONAL_FEATURE_DIMENSION
+            NON_EMBEDDED_DIMENSION + Constants.ADDITIONAL_FEATURE_DIMENSION
         ),
         dtype=np.float32
     )
@@ -211,8 +209,8 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
     for i, combination in enumerate(combinations):
         # columns name preprocess
         c1, c2 = combination
-        c1_name = preprocess_text(l_columns[c1])
-        c2_name = preprocess_text(r_columns[c2])
+        c1_name = l_columns[c1]
+        c2_name = r_columns[c2]
 
         l_current_feature = l_table_features[c1]
         r_current_feature = r_table_features[c2]
