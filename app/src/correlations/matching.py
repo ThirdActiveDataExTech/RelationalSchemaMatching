@@ -37,15 +37,16 @@ def schema_matching(
     l_df = preprocess_table(l_table_path)
     r_df = preprocess_table(r_table_path)
 
-    logging.debug(f"trying to read {r_table_path}")
-    r_df = read_table(r_table_path)
-    r_df = drop_na_columns(r_df)
-
-    # extract features
+    # make 2 features.
+    # 1. self features for each tables
+    # 2. relational features
+    # TODO: separate 2 step?
     features = create_feature_matrix_inference(l_df, r_df)
 
+    # exact predict w XGBoost model
     preds, pred_labels_list = predict_inference(features, model, threshold)
 
+    # post process
     df_pred = postprocess_pred(l_df, r_df, preds)
 
     # calculate metrics
