@@ -47,9 +47,12 @@ def schema_matching(
 
     preds, pred_labels_list = predict_inference(features, model, threshold)
 
-    # MAYBE METRIC
-    df_pred, df_pred_labels, predicted_tuples = create_similarity_matrix(l_df, r_df, preds, pred_labels_list,
-                                                                         strategy=strategy)
+    df_pred = postprocess_pred(l_df, r_df, preds)
+
+    # calculate metrics
+    df_pred_labels = get_pred_labels(l_df, r_df, df_pred, pred_labels_list, strategy)
+    predicted_tuples = get_predicted_tuples(df_pred, df_pred_labels)
+
     return df_pred, df_pred_labels, predicted_tuples
 
 
@@ -96,19 +99,35 @@ def predict_inference(
     return preds, pred_labels_list
 
 
-def create_similarity_matrix(
+def postprocess_pred(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
-        preds: list[np.ndarray],
+        preds: list[np.ndarray]
+) -> pd.DataFrame:
+    # do flatten and get mean
+    preds = np.mean(np.array(preds), axis=0)
+
+    # read column names
+    df1_cols = table1_df.columns
+    df2_cols = table2_df.columns
+
+    # create pred_labels_matrix from preds
+    # flatten and reshape to (l_table, r_table)
+    preds_matrix = np.array(preds).reshape(len(df1_cols), len(df2_cols))
+
+    df_pred = pd.DataFrame(preds_matrix, columns=df2_cols, index=df1_cols)
+
+    return df_pred
+
+
+def get_pred_labels(
+        table1_df: pd.DataFrame,
+        table2_df: pd.DataFrame,
+        preds_matrix: pd.DataFrame,
         pred_labels_list: list[np.ndarray],
         strategy: Strategy = Strategy.MANY_TO_MANY
 ):
-    """
-    Create a similarity matrix from the prediction
-    """
-
     # do flatten and get mean
-    preds = np.mean(np.array(preds), axis=0)
     pred_labels = np.mean(np.array(pred_labels_list), axis=0)
 
     # TODO: 0.5?
@@ -118,10 +137,6 @@ def create_similarity_matrix(
     # read column names
     df1_cols = table1_df.columns
     df2_cols = table2_df.columns
-
-    # create pred_labels_matrix from preds
-    # flatten and reshape to (l_table, r_table)
-    preds_matrix = np.array(preds).reshape(len(df1_cols), len(df2_cols))
 
     # create similarity matrix for pred labels
     # ManyToMany 는 predict 에서 생성된 pred_label 유지
@@ -146,13 +161,18 @@ def create_similarity_matrix(
 
             pred_labels_matrix[i, j] = 1
 
-    df_pred = pd.DataFrame(preds_matrix, columns=df2_cols, index=df1_cols)
     df_pred_labels = pd.DataFrame(pred_labels_matrix, columns=df2_cols, index=df1_cols)
 
+    return df_pred_labels
+
+
+def get_predicted_tuples(
+        preds_matrix: pd.DataFrame,
+        pred_labels_matrix: pd.DataFrame
+) -> list[tuple[str, str, float | int]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
-        (df_pred.index[i], df_pred.columns[j], df_pred.iloc[i, j])
-        for i, j in zip(*np.where(df_pred_labels == 1))
+        (pred_labels_matrix.index[i], pred_labels_matrix.columns[j], preds_matrix.iloc[i, j])
+        for i, j in zip(*np.where(pred_labels_matrix == 1))
     ]
-
-    return df_pred, df_pred_labels, predicted_tuples
+    return predicted_tuples
