@@ -8,7 +8,6 @@ from sklearn.metrics import f1_score
 
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.matching import schema_matching
-from app.src.correlations.util import time_logger
 
 logger = logging.getLogger(__name__)
 
@@ -42,7 +41,6 @@ def match_from_test_dataset(dataset_path: str) -> any:
 
 
 # TODO: 이름 구체적으로
-@time_logger
 def run(
         l_table: str,
         r_table: str,
