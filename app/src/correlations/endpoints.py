@@ -28,7 +28,7 @@ def match_from_test_dataset(dataset_path: str) -> any:
     if not os.path.exists(l_table):
         raise FileNotFoundError(f"{l_table} does not exist.")
 
-    r_table = os.path.join(dataset_path, "Table1.csv")
+    r_table = os.path.join(dataset_path, "Table2.csv")
     if not os.path.exists(r_table):
         raise FileNotFoundError(f"{r_table} does not exist.")
 
