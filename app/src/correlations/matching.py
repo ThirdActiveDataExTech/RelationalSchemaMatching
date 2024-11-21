@@ -129,21 +129,19 @@ def create_similarity_matrix(
         pred_labels_matrix = np.array(pred_labels).reshape(len(df1_cols), len(df2_cols))
     else:
         pred_labels_matrix = np.zeros((len(df1_cols), len(df2_cols)))
-        for i in range(len(df1_cols)):
-            for j in range(len(df2_cols)):
-                if pred_labels[i * len(df2_cols) + j] != 1:
-                    continue
 
-                max_row = max(preds_matrix[i, :])
-                if max_row != preds_matrix[i, j]:
-                    continue
+        # pred_labels 가 1인 index 만 순회
+        for i, j in np.argwhere(pred_labels == 1):
+            max_row = max(preds_matrix[i, :])
+            max_col = max(preds_matrix[:, j])
 
-                if strategy == Strategy.ONE_TO_ONE:
-                    max_col = max(preds_matrix[:, j])
-                    if preds_matrix[i, j] != max_col:
-                        continue
+            if max_row != preds_matrix[i, j]:
+                continue
 
-                pred_labels_matrix[i, j] = 1
+            if strategy == Strategy.ONE_TO_ONE and preds_matrix[i, j] != max_col:
+                continue
+
+            pred_labels_matrix[i, j] = 1
 
     df_pred = pd.DataFrame(preds_matrix, columns=df2_cols, index=df1_cols)
     df_pred_labels = pd.DataFrame(pred_labels_matrix, columns=df2_cols, index=df1_cols)
