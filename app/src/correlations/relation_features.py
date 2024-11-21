@@ -179,8 +179,10 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
     """
 
     l_table_features = make_self_features_from(l_df)
+    # np.savetxt("l_table_features.csv", l_table_features, fmt="%s", delimiter=",")
 
     r_table_features = make_self_features_from(r_df)
+    # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
     l_columns = list(l_df.columns)
     r_columns = list(r_df.columns)
