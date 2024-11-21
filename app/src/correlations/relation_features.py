@@ -47,8 +47,8 @@ def preprocess_text(text: str) -> str:
 def get_col_names_features(
         l_col_name: str,
         r_col_name: str,
-        l_col__name_embedding: np.ndarray,
-        r_col__name_embedding: np.ndarray,
+        l_col_name_embedding: np.ndarray,
+        r_col_name_embedding: np.ndarray,
 ) -> np.ndarray:
     """
 
@@ -63,7 +63,7 @@ def get_col_names_features(
     bleu_score = bleu([l_col_name], r_col_name, smoothing_function=SMOOTHIE)
     edit_distance = DAMERAU.distance(l_col_name, r_col_name)
     lcs = METRIC_LCS.distance(l_col_name, r_col_name)
-    transformer_score = util.cos_sim(l_col__name_embedding, r_col__name_embedding)
+    transformer_score = util.cos_sim(l_col_name_embedding, r_col_name_embedding)
     one_in_one = l_col_name in r_col_name or r_col_name in l_col_name
 
     col_names_features = np.array(
