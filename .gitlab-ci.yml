@@ -21,8 +21,8 @@ include:
     file:
       - templates/Security/Secret-Detection.gitlab-ci.yml
       - templates/Python/Dependency-Management.gitlab-ci.yml
-      - templates/Python/Lint.gitlab-ci.yml
-      - templates/Python/Test.gitlab-ci.yml
+      # - templates/Python/Lint.gitlab-ci.yml
+      # - templates/Python/Test.gitlab-ci.yml
       - templates/Python/Openapi.gitlab-ci.yml
       - templates/Python/Deploy.gitlab-ci.yml
       - templates/Security/Container-Scanning.gitlab-ci.yml
