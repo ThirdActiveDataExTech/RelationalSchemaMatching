@@ -107,18 +107,20 @@ def create_similarity_matrix(
     Create a similarity matrix from the prediction
     """
 
-    predicted_pairs = []
-    preds = np.array(preds)
-    preds = np.mean(preds, axis=0)
-    pred_labels_list = np.array(pred_labels_list)
-    pred_labels = np.mean(pred_labels_list, axis=0)
+    # do flatten and get mean
+    preds = np.mean(np.array(preds), axis=0)
+    pred_labels = np.mean(np.array(pred_labels_list), axis=0)
+
+    # TODO: 0.5?
+    # (pred_labels > 0.5) ? 1 : 0
     pred_labels = np.where(pred_labels > 0.5, 1, 0)
 
     # read column names
     df1_cols = table1_df.columns
     df2_cols = table2_df.columns
 
-    # create similarity matrix for pred values
+    # create pred_labels_matrix from preds
+    # flatten and reshape to (l_table, r_table)
     preds_matrix = np.array(preds).reshape(len(df1_cols), len(df2_cols))
 
     # create similarity matrix for pred labels
