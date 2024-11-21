@@ -92,24 +92,22 @@ def get_output_feature_from_row(
         r_feature: np.ndarray,
         r_col_name_embedding: np.ndarray
 ) -> np.ndarray:
-    # (feature 의 차의 abs) / (feature 의 합 + EPSILON)
-    difference_features_percent = np.abs(l_feature - r_feature) / (l_feature + r_feature + Constants.EPSILON)
+    l_non_embed_feature, l_embed_feature = np.split(l_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+    r_non_embed_feature, r_embed_feature = np.split(r_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+
     # TODO: 정확히 무슨 계산인지?
+    # (non_embed_feature 의 차의 abs) / (non_embed_feature 의 합 + EPSILON)
+    difference_features_percent = (np.abs(l_non_embed_feature - r_non_embed_feature)
+                                   / (l_non_embed_feature + r_non_embed_feature + Constants.EPSILON))
 
     # for col_name additional features
     col_names_features = get_col_names_features(l_col_name, r_col_name, l_col_name_embedding, r_col_name_embedding)
 
     # select only DEEP_EMBEDDING_FEATURES to calculate embedding_cos_sim
-    embedding_cos_sim = calculate_embedding_cosine_similarity(
-        l_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:],
-        r_feature[-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION:]
-    )
+    embedding_cos_sim = calculate_embedding_cosine_similarity(l_embed_feature, r_embed_feature)
 
-    output_feature = np.concatenate((
-        difference_features_percent[:-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION],
-        col_names_features,
-        embedding_cos_sim
-    ))
+    # non_embed(24) + col_name(5) + cos_sim(1) = 30 features
+    output_feature = np.concatenate((difference_features_percent, col_names_features, embedding_cos_sim))
 
     return output_feature
 
