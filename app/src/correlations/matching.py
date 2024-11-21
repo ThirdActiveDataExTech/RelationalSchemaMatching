@@ -46,10 +46,53 @@ def schema_matching(
     # extract features
     features = create_feature_matrix_inference(l_df, r_df)
 
-    preds, pred_labels_list = predicts(features, model, threshold)
+    preds, pred_labels_list = predict_inference(features, model, threshold)
+
+    # MAYBE METRIC
     df_pred, df_pred_labels, predicted_pairs = create_similarity_matrix(l_df, r_df, preds, pred_labels_list,
                                                                         strategy=strategy)
     return df_pred, df_pred_labels, predicted_pairs
+
+
+def predict_inference(
+        features: np.ndarray,
+        model: MatchingModel,
+        threshold: Optional[float] = None
+) -> Tuple[list[np.ndarray], list[np.ndarray]]:
+    """
+    load model and predict on features
+    """
+    preds = []
+    pred_labels_list = []
+
+    model_files = os.listdir(model.path)
+    model_cnt = len(model_files) // 2
+    for i in range(model_cnt):
+        bst = xgb.Booster({'nthread': 4})  # init model
+        model_file = os.path.join(model.path, f"{i}.model")
+        bst.load_model(model_file)
+
+        # use specified threshold or model best threshold
+        if threshold is not None:
+            best_threshold = float(threshold)
+        else:
+            threshold_file = os.path.join(model.path, f"{i}.threshold")
+            with open(threshold_file, "r") as f:
+                best_threshold = float(f.read())
+
+        # TODO: UNCHECKED CODE
+        labels = np.ones(len(features))
+        dtest = xgb.DMatrix(features, label=labels)
+        pred = bst.predict(dtest)
+
+        pred_labels = np.where(pred > best_threshold, 1, 0)
+        # UNCHECKED CODE
+
+        preds.append(pred)
+        pred_labels_list.append(pred_labels)
+        del bst
+
+    return preds, pred_labels_list
 
 
 def predicts(
