@@ -2,6 +2,7 @@ import logging
 import os
 import random
 import re
+from itertools import product
 from typing import Optional
 
 import numpy as np
@@ -87,29 +88,6 @@ def read_mapping(mapping_file: Optional[str] = None) -> set:
         mapping.add(tuple(m))
 
     return mapping
-
-
-def make_combinations_labels_inference(l_columns: list[pd.Index], r_columns: list[pd.Index]):
-    """
-
-    Notes:
-         combinations from columns1 list and columns2 list. Label them using mapping.
-
-    Args:
-        l_columns (list[pd.Index]): list of l_table columns.
-        r_columns (list[pd.Index]): list of r_table columns.
-
-    Returns:
-        combinations labels
-    """
-
-    # (l_column, r_column) label list
-    labels = {}
-    for i, _ in enumerate(l_columns):
-        for j, _ in enumerate(r_columns):
-            labels[(i, j)] = 0
-
-    return labels
 
 
 def make_combinations_labels(
@@ -199,13 +177,15 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
     Notes:
         Read data from 2 table dataframe, mapping file path and make relational features and labels as a matrix.
     """
-    l_columns = list(l_df.columns)
+
     l_table_features = make_self_features_from(l_df)
 
-    r_columns = list(r_df.columns)
     r_table_features = make_self_features_from(r_df)
 
-    combinations_labels = make_combinations_labels_inference(l_columns, r_columns)
+    l_columns = list(l_df.columns)
+    r_columns = list(r_df.columns)
+
+    combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 
     # TODO: Depends
     model = SentenceTransformer.get()
@@ -216,7 +196,7 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
     output_feature_table = np.zeros(
         (
             # combinations_label len = l_columns * r_columns
-            len(combinations_labels),
+            len(combinations),
 
             # l_table_features row count - DEEP_EMBEDDING_FEATURES_DIMENSION + ADDITIONAL_FEATURE_DIMENSION
             l_table_features.shape[1]
@@ -226,7 +206,7 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame):
         dtype=np.float32
     )
 
-    for i, (combination, label) in enumerate(combinations_labels.items()):
+    for i, combination in enumerate(combinations):
         # columns name preprocess
         c1, c2 = combination
         c1_name = preprocess_text(l_columns[c1])
