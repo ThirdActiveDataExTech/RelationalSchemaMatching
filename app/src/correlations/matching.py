@@ -9,8 +9,10 @@ import xgboost as xgb
 from app.src.correlations.data_preprocessor import read_table, drop_na_columns
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.relation_features import create_feature_matrix_inference
+from app.src.correlations.util import time_logger
 
 
+@time_logger
 def schema_matching(
         l_table_path: str,
         r_table_path: str,
