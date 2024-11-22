@@ -4,7 +4,7 @@ import os
 from typing import Optional
 
 import pandas as pd
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, precision_score, recall_score
 
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.matching import schema_matching
@@ -92,4 +92,10 @@ def get_metric(predicted_tuples: list[tuple[str, str, any]], truth_json: Optiona
         y_true_binary = [1 if label in y_true else 0 for label in unique_labels]
         y_pred_binary = [1 if label in y_pred else 0 for label in unique_labels]
 
-        logging.info(f"F1 Score: {f1_score(y_true_binary, y_pred_binary, average='binary')}")
+        precision = precision_score(y_true_binary, y_pred_binary, average='binary')
+        recall = recall_score(y_true_binary, y_pred_binary, average='binary')
+        f1 = f1_score(y_true_binary, y_pred_binary, average='binary')
+
+        logging.info(f"Precision: {precision}")
+        logging.info(f"Recall: {recall}")
+        logging.info(f"F1 Score: {f1}")
