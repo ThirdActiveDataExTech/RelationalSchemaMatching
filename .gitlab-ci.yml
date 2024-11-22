@@ -21,29 +21,29 @@ include:
     file:
       - templates/Security/Secret-Detection.gitlab-ci.yml
       - templates/Python/Dependency-Management.gitlab-ci.yml
-      - templates/Python/Lint.gitlab-ci.yml
-      - templates/Python/Test.gitlab-ci.yml
+      # - templates/Python/Lint.gitlab-ci.yml
+      # - templates/Python/Test.gitlab-ci.yml
       - templates/Python/Openapi.gitlab-ci.yml
       - templates/Python/Deploy.gitlab-ci.yml
       - templates/Security/Container-Scanning.gitlab-ci.yml
       - templates/Mkdocs/api/Openapi-Docs.gitlab-ci.yml
       - templates/Mkdocs/common/Mkdocs.gitlab-ci.yml
-  - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
-    inputs:
-      stage: triage-dry-run
-      api_token: $API_TOKEN   # $API_TOKEN bot 실행을 위한 Access Token 이름
-      debug: true
-      dry_run: true
-      helpers_file: ./.gitlab/helpers.rb
-      job_suffix: ':dry-run'
-    rules:
-      - if: $CI_PIPELINE_SOURCE != "schedule"
-  - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
-    inputs:
-      stage: triage-run
-      api_token: $API_TOKEN
-      debug: true
-      helpers_file: ./.gitlab/helpers.rb
-      job_suffix: ':schedule'
-    rules:
-      - if: $CI_PIPELINE_SOURCE == "schedule"
+  # - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+  #   inputs:
+  #     stage: triage-dry-run
+  #     api_token: $API_TOKEN   # $API_TOKEN bot 실행을 위한 Access Token 이름
+  #     debug: true
+  #     dry_run: true
+  #     helpers_file: ./.gitlab/helpers.rb
+  #     job_suffix: ':dry-run'
+  #   rules:
+  #     - if: $CI_PIPELINE_SOURCE != "schedule"
+  # - component: $CI_SERVER_FQDN/components/gitlab-triage/gitlab-triage@0.1.2
+  #   inputs:
+  #     stage: triage-run
+  #     api_token: $API_TOKEN
+  #     debug: true
+  #     helpers_file: ./.gitlab/helpers.rb
+  #     job_suffix: ':schedule'
+  #   rules:
+  #     - if: $CI_PIPELINE_SOURCE == "schedule"
