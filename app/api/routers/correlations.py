@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, Body
 from fastapi.responses import JSONResponse
 
 from app.dependencies import get_token_header
-from app.schemas.correlations import DummyCorrelation, SchemaMatchingResponseModel, SchemaMatchingRequestModel, \
+from app.schemas.correlations import SchemaMatchingResponseModel, SchemaMatchingRequestModel, \
     DatasetMatchingRequestModel
 from app.src.correlations.endpoints import run, match_from_test_dataset
 from app.src.correlations.enums import MatchingModel, Strategy
@@ -42,7 +42,7 @@ async def schema_matching(
     truth_json = request_body.truth_json
     threshold = request_body.threshold
     response = run(l_table, r_table, result_path, truth_json, model, strategy, threshold)
-    return SchemaMatchingResponseModel(result=DummyCorrelation(response=response), description="스키마 매칭 성공")
+    return SchemaMatchingResponseModel(result=response, description="스키마 매칭 성공")
 
 
 @router.get("/dataset",
