@@ -1,6 +1,6 @@
 # Python FastAPI Template
 
-[![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/downloads/)
+[![Python Version](https://img.shields.io/badge/python-3.10-blue)](https://www.python.org/downloads/)
 [![FastAPI Version](https://img.shields.io/badge/fastapi-0.114.1-yellowgreen)](https://fastapi.tiangolo.com/release-notes/#01110)
 [![Loguru Version](https://img.shields.io/badge/loguru-0.7.2-orange)](https://loguru.readthedocs.io/en/stable/project/changelog.html)
 [![Gunicorn Version](https://img.shields.io/badge/gunicorn-23.0.0-red)](https://gunicorn.readthedocs.io/en/stable/project/changelog.html)
@@ -8,58 +8,20 @@
 [![Coverage](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/coverage.svg?job=coverage)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/-/graphs/main/charts)
 [![Pipeline Status](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/badges/main/pipeline.svg)](https://gitlab.com/wisenut-research/lab/starter/python-fastapi-template/commits/main)
 
-> **빠르고 쉽게 파이썬 기반의 HTTP API 웹 서버를 개발하기 위한 템플릿**  
-> (API 명세는 와이즈넛 [Restful API 디자인 가이드](https://docs.google.com/document/d/1tSniwfrVaTIaTT4MxhBRAmv-S_ECcoSFAXlYrsg4K0Y/edit#heading=h.60fu2rc04bck)를 따른다)
-
-<hr>
-
-**Documentation** : https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/    
-**Source Code**: https://gitlab.com/wisenut-research/starter/python-fastapi-template
-
-<hr>
-
-Python FastAPI Template 은 아래와 같은 특징을 갖고 있다.
-
-1. **Python 3.9, 3.10, 3.11, 3.12**: 높은 호환성
-2. **MSA 환경을 고려한 Cloud Native Application 설계**: [THE TWELVE-FACTOR APP](https://12factor.net/)
-3. **간편한 Logging 설정**: [loguru](https://github.com/Delgan/loguru)
-4. **최신 의존성 관리 툴 Poetry**: `pyproject.toml`으로 한 번에 관리
-5. **App Properties Management**: 환경 변수를 통한 전체적인 프로젝트 변수를 간단하게 관리 ([.env](./.env))
-6. **Containerizing with Gitlab CI**:
-    - (Cloud Environment) 배포에 사용할 `Dockerfile`
-    - (Non-Cloud environment) 분산 처리를 위한 Gunicorn 프리셋 구성을 위한 `gunicorn.Dockerfile`
-    - 로컬에서 빠른 개발 환경 구동을 위한 `dev.Dockerfile`
-7. **Gunicorn**: multi process 환경 구성
-8. **파이썬 앱 개발부터 배포까지 필요한 GitOps와 문서 템플릿 제공**: secret detection, lint test(ruff, pyright, hadolint), unit test(pytest, SAST), deploy, container scanning, triage, mkdocs
+> <b>Sentence Transformer와 XGBoost 기반의 스키마 매칭</b>
+> 테이블을 문장 기반으로 임베딩하고 feature를 추출합니다.
+> 추출된 feature와 사전 훈련된 XGBoost를 사용하여, 두 테이블 간 어떤 컬럼이 가장 유사한지 계산합니다.
 
 ### Requirements
 
-- [Python](https://www.python.org/) `>=3.9,<=3.12`
+- [Python](https://www.python.org/) `3.10`
 - [Poetry](https://python-poetry.org/) `>= 1.4`
 - [FastAPI Web Framework](https://fastapi.tiangolo.com/ko/)
-
-## Quick start
-
-![quick start guide gif](docs/docs/images/quick-start-guide.gif "quick start guide gif")
-
-### 0. Create Project from template
-
-> 빠른 프로젝트 생성을 위한 GitLab Template 사용법
-> 
-
-1. GitLab `Create new project` 을 통해 새로운 프로젝트 생성
-2. `Create from template` 선택    
-   <img src="docs/docs/images/create-from-template.png" alt="create from template png" width="800" />
-3. `Group` 선택
-4. **FastAPI**에서 `Use template` 선택    
-   <img src="docs/docs/images/fastapi-use-template.png" alt="fastapi use template png" width="800" />
-5. _Project name, Project description (optional)_ 등을 작성하고 `Create project` 선택
-
 
 ### 1. Install Requirements
 
 ```bash
-$ apt-get install -y python39 && python3 --version && pip3 --version
+$ apt-get install -y python310 && python3 --version && pip3 --version
 $ pip3 isntall -U poetry
 ```
 
@@ -92,9 +54,62 @@ $ docker build -t python-fastapi-template:dev -f dev.Dockerfile .
 $ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:dev
 ```
 
----
+### 4. Schema Matching
 
-## Project Description
+[방법 1] 웹페이지에서 진행
 
-> 프로젝트 생성, 환경 세팅, 실행방법, 앱 구조, GitLab CI/CD 파이프라인, Gunicorn 및 내부망 환경에 대해  
-> 더 자세히 알고싶으면 [Python FastAPI 문서](https://labs.wisenut.kr/clusters/local/namespaces/mkdocs/services/pft-mkdocs/public/latest/)를 확인하세요.
+- 자체 제공되는 [swagger 페이지](http://localhost:8000/docs) 확인
+
+[방법 2] CLI 에서 진행
+
+1. 전체 확률 테이블
+
+```shell
+curl -X 'GET' \
+  'http://localhost:8000/correlations/dataset' \
+  -H 'accept: application/json' \
+  -H 'x-token: wisenut' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "dataset": "./test_data/movies1/"
+}'
+```
+
+2. 왼쪽 테이블 특정 컬럼 확률 테이블
+
+```shell
+curl -X 'GET' \
+  'http://localhost:8000/correlations/dataset?l_column=Cast' \
+  -H 'accept: application/json' \
+  -H 'x-token: wisenut' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "dataset": "./test_data/movies1/"
+}'
+```
+
+3. 오른쪽 테이블 특정 컬럼 확률 테이블
+
+```shell
+curl -X 'GET' \
+  'http://localhost:8000/correlations/dataset?r_column=Country' \
+  -H 'accept: application/json' \
+  -H 'x-token: wisenut' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "dataset": "./test_data/movies1/"
+}'
+```
+
+4. 양 테이블 특정 컬럼 확률
+
+```shell
+curl -X 'GET' \
+  'http://localhost:8000/correlations/dataset?l_column=RatingCount&r_column=RatingValue' \
+  -H 'accept: application/json' \
+  -H 'x-token: wisenut' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "dataset": "./test_data/movies1/"
+}'
+```
