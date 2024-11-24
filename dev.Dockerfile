@@ -42,6 +42,8 @@ COPY version_info.py .env ./
 COPY ./static ./static/
 COPY ./tests ./tests/
 COPY ./app ./app/
+COPY ./model ./model/
+COPY ./test_data ./test_data/
 
 # Expose the port
 EXPOSE 8000

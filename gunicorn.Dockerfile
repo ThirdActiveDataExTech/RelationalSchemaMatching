@@ -49,6 +49,8 @@ USER $APP_USER
 COPY pyproject.toml version_info.py .env gunicorn.conf.py ./
 COPY ./static ./static/
 COPY ./app ./app/
+COPY ./model ./model/
+COPY ./test_data ./test_data/
 
 # Expose the port
 EXPOSE 8000

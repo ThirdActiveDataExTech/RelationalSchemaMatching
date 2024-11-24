@@ -46,6 +46,8 @@ COPY --from=build /usr/local/bin /usr/local/bin
 COPY pyproject.toml version_info.py .env ./
 COPY ./static ./static/
 COPY ./app ./app/
+COPY ./model ./model/
+COPY ./test_data ./test_data/
 
 # Expose the port
 EXPOSE 8000
