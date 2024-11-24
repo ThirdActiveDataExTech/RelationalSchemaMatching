@@ -1,1 +1,0 @@
-http://pages.cs.wisc.edu/~anhai/data/784_data/citations.tar.gz
