@@ -44,14 +44,14 @@ $ poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```bash
 # 가상환경 활성화 후 FastAPI uvicorn 실행
 $ poetry shell
-(python-fastapi-template-py3.9) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
+(python-fastapi-template-py3.10) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
 
 ## Quick start with Docker
 
 ```bash
-$ docker build -t python-fastapi-template:dev -f dev.Dockerfile .
-$ docker run -d --rm --name python-fastapi-template -p 8000:8000 -e X_TOKEN=wisenut python-fastapi-template:dev
+$ docker build -t correlation-analysis:dev -f dev.Dockerfile .
+$ docker run -d --rm --name correlation-analysis -p 8000:8000 -e X_TOKEN=wisenut correlation-analysis:dev
 ```
 
 ### 4. Schema Matching
