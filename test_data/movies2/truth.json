@@ -5,15 +5,21 @@
   },
   "matches": [
     {
+      "source_table": "imdb",
       "source_column": "ID",
+      "target_table": "tmd",
       "target_column": "ID"
     },
     {
+      "source_table": "imdb",
       "source_column": "title",
+      "target_table": "tmd",
       "target_column": "title"
     },
     {
+      "source_table": "imdb",
       "source_column": "year",
+      "target_table": "tmd",
       "target_column": "year"
     }
   ]
