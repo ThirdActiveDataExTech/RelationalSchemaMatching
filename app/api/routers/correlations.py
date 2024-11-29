@@ -26,8 +26,8 @@ router = APIRouter(
             response_class=JSONResponse)
 async def schema_matching(
         request_body: Annotated[SchemaMatchingRequestModel, Body(
-            title="아이템 업데이트를 위한 아이템명 설정",
-            description="아이템 이름, 상태, 재고 입력",
+            title="상관관계 분석 기반 스키마 매칭",
+            description="상관관계 분석 & 스키마 매칭 실행",
             media_type="application/json"
         )]
 ):
@@ -50,8 +50,8 @@ async def schema_matching(
             response_class=JSONResponse)
 async def dataset_schema_matching(
         request_body: Annotated[DatasetMatchingRequestModel, Body(
-            title="아이템 업데이트를 위한 아이템명 설정",
-            description="아이템 이름, 상태, 재고 입력",
+            title="상관관계 분석 기반 스키마 매칭 - left,right 컬럼 지정",
+            description="상관관계 분석 & 스키마 매칭 실행",
             media_type="application/json"
         )],
         l_column: Optional[str] = None,
