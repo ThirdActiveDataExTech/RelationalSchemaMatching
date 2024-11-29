@@ -1,5 +1,7 @@
 ARG PYTHON_VERSION=3.10.0
 
+LABEL authors="wisenut"
+
 FROM python:${PYTHON_VERSION}-slim as requirements
 
 # Make requirements.txt file from poetry dependencies
