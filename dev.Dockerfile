@@ -49,4 +49,4 @@ COPY ./test_data ./test_data/
 EXPOSE 8000
 
 # Run the app
-CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/home/wisenut/app", "--reload-exclude", "*.log"]
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/home/wisenut/app", "--reload-exclude", "'*.log,'/home/wisenut/app/test_data/**/*"]
