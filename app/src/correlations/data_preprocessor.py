@@ -1,4 +1,5 @@
 import logging
+import re
 
 import pandas as pd
 
@@ -25,3 +26,16 @@ def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
         logging.info(f"Removed columns: {remove_columns}")
 
     return table_df
+
+
+def normalize_and_flatten_text(text: str) -> str:
+    """Normalizes and flattens the input text.
+
+    Returns:
+        str: lowercased, replace whitespace, line break, "." to " "
+    """
+    text = text.lower()
+    text = re.split(r'[\s\_\.]', text)
+    text = " ".join(text).strip()
+
+    return text

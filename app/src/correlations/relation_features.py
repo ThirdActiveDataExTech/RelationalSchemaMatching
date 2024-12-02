@@ -1,5 +1,4 @@
 import random
-import re
 from itertools import product
 
 import numpy as np
@@ -11,6 +10,7 @@ from sentence_transformers import util
 from strsimpy.damerau import Damerau
 from strsimpy.metric_lcs import MetricLCS
 
+from app.src.correlations.data_preprocessor import normalize_and_flatten_text
 from app.src.correlations.model import SentenceTransformer
 from app.src.correlations.self_features import make_self_features_from
 
@@ -28,20 +28,6 @@ class Constants:
     ADDITIONAL_FEATURE_DIMENSION = 6  # not sure
     DEEP_EMBEDDING_FEATURES_DIMENSION = 768
     EPSILON = 1e-8  # prevent div by zero
-
-
-def preprocess_text(text: str) -> str:
-    """
-
-    Returns:
-        str: lowercased, replace whitespace, line break, "." to " "
-    """
-    text = text.lower()
-
-    text = re.split(r'[\s\_\.]', text)
-    text = " ".join(text).strip()
-
-    return text
 
 
 def get_col_names_features(
@@ -125,8 +111,8 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> n
     r_table_features = make_self_features_from(r_df)
     # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
-    l_columns = [preprocess_text(c) for c in l_df.columns]
-    r_columns = [preprocess_text(c) for c in r_df.columns]
+    l_columns = [normalize_and_flatten_text(c) for c in l_df.columns]
+    r_columns = [normalize_and_flatten_text(c) for c in r_df.columns]
 
     combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 
