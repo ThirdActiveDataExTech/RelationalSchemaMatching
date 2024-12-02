@@ -2,15 +2,17 @@ import logging
 
 from sentence_transformers import SentenceTransformer as ST
 
+from app.config import settings
+
 
 class SentenceTransformer:
     _instance = None
 
     @classmethod
     def load(cls):
-        logging.info("Correlation-Analysis|Loading sentence transformer, this will take a while...")
+        logging.info(f"{settings.SERVICE_NAME}|Loading sentence transformer, this will take a while...")
         cls._instance = ST("paraphrase-multilingual-mpnet-base-v2")
-        logging.info("Correlation-Analysis|Done loading sentence transformer")
+        logging.info(f"{settings.SERVICE_NAME}|Done loading sentence transformer")
 
     @classmethod
     def get(cls) -> ST:
