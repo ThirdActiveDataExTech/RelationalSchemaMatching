@@ -8,9 +8,9 @@ class SentenceTransformer:
 
     @classmethod
     def load(cls):
-        logging.info("schema_matching|Loading sentence transformer, this will take a while...")
+        logging.info("Correlation-Analysis|Loading sentence transformer, this will take a while...")
         cls._instance = ST("paraphrase-multilingual-mpnet-base-v2")
-        logging.info("schema_matching|Done loading sentence transformer")
+        logging.info("Correlation-Analysis|Done loading sentence transformer")
 
     @classmethod
     def get(cls) -> ST:

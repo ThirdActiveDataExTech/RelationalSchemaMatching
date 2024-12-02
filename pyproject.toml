@@ -9,18 +9,19 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
-name = "python-fastapi-template"
+name = "Correlation-Analysis"
 version = "v1"
 authors = [
-    "Seoyeon Park <sally9476@wisenut.co.kr>"
+    "Youngwoo Choi <uoise@wisenut.co.kr>"
 ]
 maintainers = [
+    "Youngwoo Choi <uoise@wisenut.co.kr>",
     "Chanhyeong Lee <wisnt65@wisenut.co.kr>",
     "Seoyeon Park <sally9476@wisenut.co.kr>",
 ]
-description = "Python FastAPI Template"
+description = "Column to Column Correlation Analysis"
 readme = "README.md"
-keywords = ["python", "fastapi", "template", "pytest", "ruff", "pyright", "docker", "gunicorn", "poetry"]
+keywords = ["python", "fastapi", "pytest", "ruff", "pyright", "docker", "gunicorn", "poetry"]
 license = "LICENSE"
 classifiers = [
     "Development Status :: 4 - Beta",
