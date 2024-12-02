@@ -10,7 +10,7 @@ from app.src.correlations.data_loader import read_table
 from app.src.correlations.data_preprocessor import drop_na_columns
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.relation_features import create_feature_matrix_inference
-from app.src.correlations.util import time_logger
+from app.src.util import time_logger
 
 
 @time_logger
