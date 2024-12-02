@@ -71,7 +71,7 @@ def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
     # should be (len(columns), 792)
     features = np.vstack(feature_array)
 
-    logging.debug(f"make_self_features_from(): {features.shape}")
+    logging.debug(f"{__name__}: {features.shape}")
 
     return features
 
