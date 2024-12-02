@@ -10,7 +10,7 @@ from sentence_transformers import util
 from strsimpy.damerau import Damerau
 from strsimpy.metric_lcs import MetricLCS
 
-from app.src.correlations.data_preprocessor import normalize_and_flatten_text
+from app.src.correlations.data_cleaner import normalize_and_flatten_text
 from app.src.correlations.model import SentenceTransformer
 from app.src.correlations.self_features import make_self_features_from
 

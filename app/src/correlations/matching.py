@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 
+from app.src.correlations.data_cleaner import drop_na_columns
 from app.src.correlations.data_loader import read_table
-from app.src.correlations.data_preprocessor import drop_na_columns
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.relation_features import create_feature_matrix_inference
 from app.src.util import time_logger
