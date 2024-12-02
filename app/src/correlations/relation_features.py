@@ -10,6 +10,7 @@ from sentence_transformers import util
 from strsimpy.damerau import Damerau
 from strsimpy.metric_lcs import MetricLCS
 
+from app.src.correlations.constants import constants
 from app.src.correlations.data_cleaner import normalize_and_flatten_text
 from app.src.correlations.model import SentenceTransformer
 from app.src.correlations.self_features import make_self_features_from
@@ -20,14 +21,8 @@ DAMERAU = Damerau()
 SEED = 200
 random.seed(SEED)
 
-
-class Constants:
-    TRAIN_LABEL_RATIO = 0.1
-
-    # EXPERIMENTAL
-    ADDITIONAL_FEATURE_DIMENSION = 6  # not sure
-    DEEP_EMBEDDING_FEATURES_DIMENSION = 768
-    EPSILON = 1e-8  # prevent div by zero
+TRAIN_LABEL_RATIO = 0.1
+EPSILON = 1e-8  # prevent div by zero
 
 
 def get_col_names_features(
@@ -78,13 +73,13 @@ def get_output_feature_from_row(
         r_feature: np.ndarray,
         r_col_name_embedding: np.ndarray
 ) -> np.ndarray:
-    l_non_embed_feature, l_embed_feature = np.split(l_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
-    r_non_embed_feature, r_embed_feature = np.split(r_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+    l_non_embed_feature, l_embed_feature = np.split(l_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+    r_non_embed_feature, r_embed_feature = np.split(r_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
 
     # TODO: 정확히 무슨 계산인지?
     # (non_embed_feature 의 차의 abs) / (non_embed_feature 의 합 + EPSILON)
     difference_features_percent = (np.abs(l_non_embed_feature - r_non_embed_feature)
-                                   / (l_non_embed_feature + r_non_embed_feature + Constants.EPSILON))
+                                   / (l_non_embed_feature + r_non_embed_feature + EPSILON))
 
     # for col_name additional features
     col_names_features = get_col_names_features(l_col_name, r_col_name, l_col_name_embedding, r_col_name_embedding)
@@ -122,15 +117,15 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> n
     column_name_embeddings: dict[str, any] = {c: model.encode(c) for c in l_columns + r_columns}
     # END OF MODEL LOGIC
 
-    NON_EMBEDDED_DIMENSION = l_table_features.shape[1] - Constants.DEEP_EMBEDDING_FEATURES_DIMENSION
+    non_embedded_dimension = l_table_features.shape[1] - constants.DEEP_EMBEDDING_FEATURES_DIMENSION
 
     # TODO: Matrix values, row size are ignored
     output_feature_table = np.zeros(
         (
             # combinations_label len = l_columns * r_columns
             len(combinations),
-            # NON_EMBEDDED_DIMENSION + ADDITIONAL_FEATURE_DIMENSION
-            NON_EMBEDDED_DIMENSION + Constants.ADDITIONAL_FEATURE_DIMENSION
+            # non_embedded_dimension + ADDITIONAL_FEATURE_DIMENSION
+            non_embedded_dimension + constants.ADDITIONAL_FEATURE_DIMENSION
         ),
         dtype=np.float32
     )

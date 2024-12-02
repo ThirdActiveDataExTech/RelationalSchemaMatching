@@ -1,51 +1,25 @@
 import logging
 import random
 import re
-from enum import Enum
 
 import numpy as np
 import pandas as pd
-from dateutil.parser import parse as parse_date
 
+from app.src.correlations.constants import constants
+from app.src.correlations.data_classifier import DataTypes, classify_data_type
 from app.src.correlations.model import SentenceTransformer
 
-"""
-한자 번체, 신자체, 영어 dataset에서 숫자 단위를 변환하기 위한 dict
-"""
-UNIT_DICT = {"万": 10000, "亿": 100000000, "萬": 10000, "億": 100000000, "K+": 1000, "M+": 1000000, "B+": 1000000000}
-
-DATE_DICT = {"月", "日", "年"}
 PUNCTUATIONS = [",", ".", ";", "!", "?", "，", "。", "；", "！", "？"]
 SPECIAL_CHARACTERS = ["／", "/", "\\", "-", "_", "+", "=", "*", "&", "^", "%", "$", "#", "@", "~", "`", "(", ")",
                       "[", "]", "{", "}", "<", ">", "|", "'", "\""]
 
+# features 에서 -1과 -999는 유효하지 않은 값을 나타내는 것으로 보임
+NON_EMBED_FEATURE_INVALID_VALUE = -1
+EMBED_FEATURE_INVALID_VALUE = -999
 
-class DataTypes(Enum):
-    URL = 0,
-    MAINLY_NUMERIC = 1,
-    DATE = 2,
-    STRING = 3,
-    # TODO: replace 1
-    STRICT_NUMERIC = 1
+DEFAULT_SAMPLING_SIZE = 20
 
-    def __len__(self):
-        return len(self.__class__.__members__)
-
-
-class Constants:
-    DATE_RATIO = 0.9
-    URL_RATIO = 0.9
-    NUMERIC_PART_RATIO = 0.5
-    STRICT_NUMERIC_RATIO = 0.95
-    MAINLY_NUMERIC_RATIO = 0.9
-
-    NUMERIC_FEATURES_DIMENSION = 6
-    CHARACTER_FEATURES_DIMENSION = 8
-    DEEP_EMBEDDING_FEATURES_DIMENSION = 768
-
-    # features 에서 -1과 -999는 유효하지 않은 값을 나타내는 것으로 보임
-    GENERAL_FEATURE_INVALID_VALUE = -1
-    DEEP_FEATURE_INVALID_VALUE = -999
+EPSILON = 1e-12
 
 
 def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
@@ -107,112 +81,6 @@ def extract_features(data_list: list[any]) -> np.ndarray:
     return output_features
 
 
-def classify_data_type(data_list: list[any]) -> DataTypes:
-    data_type = DataTypes.STRING
-    if is_url(data_list):
-        data_type = DataTypes.URL
-    elif is_date(data_list):
-        data_type = DataTypes.DATE
-    elif is_strict_numeric(data_list):
-        data_type = DataTypes.STRICT_NUMERIC
-    elif is_mainly_numeric(data_list):
-        data_type = DataTypes.MAINLY_NUMERIC
-
-    return data_type
-
-
-def is_url(data_list: list[any]) -> bool:
-    """
-
-    Returns:
-        bool: True if data_list contains url strings than URL_RATIO
-    """
-    cnt = 0
-    url_pattern = r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
-    for data in data_list:
-        if not isinstance(data, str):
-            continue
-        if re.search(url_pattern, data):
-            cnt += 1
-
-    return cnt >= Constants.URL_RATIO * len(data_list)
-
-
-def is_date(data_list: list[any]) -> bool:
-    """
-
-    Returns:
-        bool: True if data_list contains date strings than DATE_RATIO
-    """
-    cnt = 0
-    for data in data_list:
-        if not isinstance(data, str):
-            continue
-
-        if any(date in data for date in DATE_DICT):
-            cnt += 1
-
-        try:
-            date = parse_date(data)
-            # check if the date is near to today
-            # TODO: 왜 2000 년 전, 2030 년 이후 데이터 drop?
-            if date.year < 2000 or date.year > 2030:
-                continue
-            cnt += 1
-        except Exception as _:
-            continue
-
-    return cnt >= Constants.DATE_RATIO * len(data_list)
-
-
-def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
-    """
-
-    Args:
-        data_list: 확인할 데이터
-        verbose: for debugging
-
-    Returns: 
-        bool: data_list 내의 numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
-
-    """
-    cnt = 0
-    for x in data_list:
-        try:
-            y = float(x)
-            if verbose:
-                logging.debug(f"is_strict_numeric: src:{x} float{y}")
-            cnt += 1
-        except ValueError as _:
-            continue
-
-    return cnt >= Constants.STRICT_NUMERIC_RATIO * len(data_list)
-
-
-def is_mainly_numeric(data_list: list[any]) -> bool:
-    """data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
-
-    Returns:
-        bool: data_list 내의 mainly_numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
-
-    """
-    cnt = 0
-    for data in data_list:
-        data = str(data)
-        data = data.replace(",", "")
-
-        # 백, 천, 만, K, B등의 단위 제거
-        for unit in UNIT_DICT.keys():
-            data = data.replace(unit, "")
-
-        # data 내 numeric part 가 NUMERIC_PART_RATIO 이상일 경우 True
-        numeric_part = re.findall(r'\d+', data)
-        if len(numeric_part) > 0 and sum(len(x) for x in numeric_part) >= Constants.NUMERIC_PART_RATIO * len(data):
-            cnt += 1
-
-    return cnt >= Constants.MAINLY_NUMERIC_RATIO * len(data_list)
-
-
 def extract_numeric(data_list: list[any]) -> list[float]:
     """
 
@@ -254,9 +122,9 @@ def extract_numeric(data_list: list[any]) -> list[float]:
         # unit_key에 해당하는 부분이 있다면, 숫자로 변환
         # TODO: unit priority
         unit = 1
-        for unit_key in UNIT_DICT.keys():
+        for unit_key in constants.UNIT_DICT.keys():
             if unit_key in data:
-                unit = UNIT_DICT[unit_key]
+                unit = constants.UNIT_DICT[unit_key]
                 break
 
         numeric_list.append(float_part * unit)
@@ -306,8 +174,7 @@ def calculate_character_features(data_list: list[any]) -> np.array:
         numeric_ratio = sum(1 for x in data if x.isdigit()) / len(data)
         numeric_ratios.append(numeric_ratio)
 
-    # TODO: why use 1e-12
-    epsilon = np.array([1e-12] * len(data_list))
+    epsilon = np.array([EPSILON] * len(data_list))
 
     whitespace_ratios = np.array(whitespace_ratios + epsilon)
     punctuation_ratios = np.array(punctuation_ratios + epsilon)
@@ -338,9 +205,9 @@ def deep_embedding(data_list: list[any]) -> np.ndarray:
     Returns:
         np.ndarray: Extracts deep embedding features from the given data using sentence-transformers.
     """
-    # TODO: 20개 이외의 값, 20개 미만일 떄 dimension 유지되는지?
-    if len(data_list) >= 20:
-        data_list = random.sample(data_list, 20)  # safe random checked
+    # TODO: DEFAULT_SAMPLING_SIZE 미만일 떄 dimension 유지되는지?
+    if len(data_list) >= DEFAULT_SAMPLING_SIZE:
+        data_list = random.sample(data_list, DEFAULT_SAMPLING_SIZE)  # safe random checked
 
     # TODO: use Depends
     model = SentenceTransformer.get()
@@ -377,7 +244,7 @@ def get_data_numeric_feature(data_list: list[any], data_type: DataTypes) -> np.n
         numeric_features = calculate_numeric_features(data_numeric)
     else:
         # dont use numeric features, give default  invalid values
-        numeric_features = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.NUMERIC_FEATURES_DIMENSION)
+        numeric_features = np.array([NON_EMBED_FEATURE_INVALID_VALUE] * constants.NUMERIC_FEATURES_DIMENSION)
 
     return numeric_features
 
@@ -391,7 +258,7 @@ def get_character_feature(data_list: list[any], data_type: DataTypes) -> np.ndar
     if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
         character_feature = calculate_character_features(data_list)
     else:
-        character_feature = np.array([Constants.GENERAL_FEATURE_INVALID_VALUE] * Constants.CHARACTER_FEATURES_DIMENSION)
+        character_feature = np.array([NON_EMBED_FEATURE_INVALID_VALUE] * constants.CHARACTER_FEATURES_DIMENSION)
 
     return character_feature
 
@@ -406,7 +273,7 @@ def get_deep_embedding_feature(data_list: list[any], data_type: DataTypes) -> np
     if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
         deep_embedding_feature = deep_embedding(data_list)
     else:
-        deep_embedding_feature = np.array([Constants.DEEP_FEATURE_INVALID_VALUE]
-                                          * Constants.DEEP_EMBEDDING_FEATURES_DIMENSION)
+        deep_embedding_feature = np.array([EMBED_FEATURE_INVALID_VALUE]
+                                          * constants.DEEP_EMBEDDING_FEATURES_DIMENSION)
 
     return deep_embedding_feature
