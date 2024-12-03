@@ -31,12 +31,6 @@ INVALID_URLS = [u for u, v in URL_DICT.items() if v is False]
 
 
 class ClassifierTestCase(unittest.TestCase):
-    classify_url_test_cases = [
-        TestCase("Valid Url List", VALID_URLS, DataTypes.URL),
-        TestCase("Invalid Url List", INVALID_URLS, DataTypes.STRING),
-        TestCase("Valid Ratio 50% List", [VALID_URLS[0]] * 5 + [INVALID_URLS[0]] * 5, DataTypes.STRING),
-        TestCase("Valid Ratio 90% List", [VALID_URLS[0]] * 9 + [INVALID_URLS[0]] * 1, DataTypes.URL),
-    ]
 
     def test_is_url(self):
         for url, valid in URL_DICT.items():
@@ -44,7 +38,14 @@ class ClassifierTestCase(unittest.TestCase):
             self.assertEqual(actual, valid, f"{url}: expected: {valid}, actual: {actual}")
 
     def test_classify_url(self):
-        for c in self.classify_url_test_cases:
+        classify_url_test_cases = [
+            TestCase("Valid Url List", VALID_URLS, DataTypes.URL),
+            TestCase("Invalid Url List", INVALID_URLS, DataTypes.STRING),
+            TestCase("Valid Ratio 50% List", [VALID_URLS[0]] * 5 + [INVALID_URLS[0]] * 5, DataTypes.STRING),
+            TestCase("Valid Ratio 90% List", [VALID_URLS[0]] * 9 + [INVALID_URLS[0]] * 1, DataTypes.URL),
+        ]
+
+        for c in classify_url_test_cases:
             actual = classify_data_type(c.data)
             self.assertEqual(actual, c.expect, f"{c.name}: expected: {c.expect}, actual: {actual}")
 
