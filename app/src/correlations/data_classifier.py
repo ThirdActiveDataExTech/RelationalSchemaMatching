@@ -2,6 +2,7 @@ import logging
 import re
 from enum import Enum
 
+import validators
 from dateutil.parser import parse as parse_date
 
 from app.src.correlations.constants import constants
@@ -48,11 +49,10 @@ def is_url(data_list: list[any]) -> bool:
         bool: True if data_list contains url strings than URL_RATIO
     """
     cnt = 0
-    url_pattern = r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)'
     for data in data_list:
         if not isinstance(data, str):
             continue
-        if re.search(url_pattern, data):
+        if validators.url(data, simple_host=True):
             cnt += 1
 
     return cnt >= URL_RATIO * len(data_list)
