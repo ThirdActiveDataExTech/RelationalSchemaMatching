@@ -10,7 +10,7 @@ def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
     """
     original_columns = table_df.columns
     for column in table_df.columns:
-        column_data = [d for d in list(table_df[column]) if d == d and d != "--"]
+        column_data = [d for d in table_df[column] if pd.notna(d) and d != "--"]
 
         if len(column_data) <= 1:
             table_df = table_df.drop(column, axis=1)
