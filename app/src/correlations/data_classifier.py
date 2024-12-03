@@ -78,11 +78,11 @@ def is_date(data_list: list[any]) -> bool:
             continue
 
         try:
-            date = parse_date(data)
+            parse_date(data)
             # check if the date is near to today
-            # TODO: 왜 2000 년 전, 2030 년 이후 데이터 drop?
-            if date.year < 2000 or date.year > 2030:
-                continue
+            # REMINDER: WHY THIS CONDITION IS EXIST?
+            # if date.year < 2000 or date.year > 2030:
+            #     continue
             cnt += 1
         except Exception as _:
             continue
