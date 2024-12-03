@@ -61,6 +61,10 @@ def is_url(data_list: list[any]) -> bool:
 def is_date(data_list: list[any]) -> bool:
     """
 
+    Notes:
+        단순히 문자열 내 DATE_DICT 가 있다면 체크됨.
+        중국어 데이터 이외에 검출되지 않을 가능성 있음.
+
     Returns:
         bool: True if data_list contains date strings than DATE_RATIO
     """
@@ -71,6 +75,7 @@ def is_date(data_list: list[any]) -> bool:
 
         if any(date in data for date in DATE_DICT):
             cnt += 1
+            continue
 
         try:
             date = parse_date(data)
