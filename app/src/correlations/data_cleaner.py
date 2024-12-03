@@ -5,14 +5,13 @@ import pandas as pd
 
 
 def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Drop columns that have zero instances or all columns are "--"
+    """Drop columns that have zero instances or all columns are "--".
     """
     original_columns = table_df.columns
     for column in table_df.columns:
         column_data = [d for d in table_df[column] if pd.notna(d) and d != "--"]
 
-        if len(column_data) <= 1:
+        if len(column_data) < 1:
             table_df = table_df.drop(column, axis=1)
             continue
 
