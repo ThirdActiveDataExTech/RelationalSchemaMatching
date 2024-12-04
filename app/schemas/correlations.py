@@ -16,19 +16,19 @@ from app.version import VERSION
 
 
 class SchemaMatchingRequestModel(BaseModel):
-    l_table: str = Field(description="ltable path"),
-    r_table: str = Field(description="rtable path"),
-    result_path: str = Field(description="result path"),
-    truth_json: Optional[str] = Field(description="truth json"),
-    model: str = Field(description="model path", default="initial"),
-    strategy: str = Field(description="strategy", default="many_to_many"),
+    l_table: str = Field(description="ltable path")
+    r_table: str = Field(description="rtable path")
+    result_path: str = Field(description="result path")
+    truth_json: Optional[str] = Field(description="truth json")
+    model: str = Field(description="model path", default="initial")
+    strategy: str = Field(description="strategy", default="many_to_many")
     threshold: Optional[float] = Field(description="threshold", default=None)
 
 
 class DatasetMatchingRequestModel(BaseModel):
     dataset: str = Field(description="dataset path")
-    model: str = Field(description="model path", default="initial"),
-    strategy: str = Field(description="strategy", default="many_to_many"),
+    model: str = Field(description="model path", default="initial")
+    strategy: str = Field(description="strategy", default="many_to_many")
     threshold: Optional[float] = Field(description="threshold", default=None)
 
 
