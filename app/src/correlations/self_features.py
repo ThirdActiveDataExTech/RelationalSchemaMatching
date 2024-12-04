@@ -1,6 +1,7 @@
 import logging
 import random
 import re
+from typing import Any, List
 
 import numpy as np
 import pandas as pd
@@ -51,11 +52,11 @@ def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
 
 
 # REMINDER: use ONLY data_list as Column
-def extract_features(data_list: list[any]) -> np.ndarray:
+def extract_features(data_list: List[Any]) -> np.ndarray:
     """
 
     Args:
-        data_list (list[any]): data can be column or list.
+        data_list (List[Any]): data can be column or list.
     Returns:
         np.array: Extract features from the given data.
     """
@@ -81,7 +82,7 @@ def extract_features(data_list: list[any]) -> np.ndarray:
     return output_features
 
 
-def extract_numeric(data_list: list[any]) -> list[float]:
+def extract_numeric(data_list: List[Any]) -> List[float]:
     """
 
     Notes:
@@ -94,7 +95,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
         data_list: DataType.NUMERIC 이 검증된 데이터
 
     Returns:
-        list[float]: Extracts numeric part(including float) from string list
+        List[float]: Extracts numeric part(including float) from string list
 
     """
     try:
@@ -108,7 +109,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
         data = str(data)
         data = data.replace(",", "")
 
-        # find all numeric parts as [list[tuple[str, str]]
+        # find all numeric parts as [List[tuple[str, str]]
         # TODO: use only first index value, replace re.findall()
         matched = re.findall(r'(-?(\d*[.])?\d+)', data)
 
@@ -132,7 +133,7 @@ def extract_numeric(data_list: list[any]) -> list[float]:
     return numeric_list
 
 
-def calculate_numeric_features(data_list: list[any]) -> np.array:
+def calculate_numeric_features(data_list: List[Any]) -> np.array:
     """
 
     Returns:
@@ -149,7 +150,7 @@ def calculate_numeric_features(data_list: list[any]) -> np.array:
     return np.array([mean, min, max, variance, cv, unique / len(data_list)])
 
 
-def calculate_character_features(data_list: list[any]) -> np.array:
+def calculate_character_features(data_list: List[Any]) -> np.array:
     """
 
     Returns:
@@ -195,7 +196,7 @@ def calculate_character_features(data_list: list[any]) -> np.array:
     ])
 
 
-def deep_embedding(data_list: list[any]) -> np.ndarray:
+def deep_embedding(data_list: List[Any]) -> np.ndarray:
     """
 
     Notes:
@@ -232,7 +233,7 @@ def get_datatype_feature(data_type: DataTypes) -> np.ndarray:
     return data_type_feature
 
 
-def get_data_numeric_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
+def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
     """
 
     Returns:
@@ -249,7 +250,7 @@ def get_data_numeric_feature(data_list: list[any], data_type: DataTypes) -> np.n
     return numeric_features
 
 
-def get_character_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
+def get_character_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
     """
 
     Returns:
@@ -263,7 +264,7 @@ def get_character_feature(data_list: list[any], data_type: DataTypes) -> np.ndar
     return character_feature
 
 
-def get_deep_embedding_feature(data_list: list[any], data_type: DataTypes) -> np.ndarray:
+def get_deep_embedding_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
     """
 
     Returns:

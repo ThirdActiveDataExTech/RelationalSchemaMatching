@@ -1,5 +1,8 @@
+from typing import Any
+
+
 class TestCase:
-    def __init__(self, name: str, data: any, expect: any):
+    def __init__(self, name: str, data: Any, expect: Any):
         self.name = name
         self.data = data
         self.expect = expect

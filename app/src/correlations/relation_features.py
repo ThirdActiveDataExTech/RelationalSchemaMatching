@@ -1,5 +1,6 @@
 import random
 from itertools import product
+from typing import Any, Dict
 
 import numpy as np
 import pandas as pd
@@ -114,7 +115,7 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> n
     # TODO: Model Depends, or Logic
     model = SentenceTransformer.get()
 
-    column_name_embeddings: dict[str, any] = {c: model.encode(c) for c in l_columns + r_columns}
+    column_name_embeddings: Dict[str, Any] = {c: model.encode(c) for c in l_columns + r_columns}
     # END OF MODEL LOGIC
 
     non_embedded_dimension = l_table_features.shape[1] - constants.DEEP_EMBEDDING_FEATURES_DIMENSION

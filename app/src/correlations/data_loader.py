@@ -1,6 +1,7 @@
 import json
 import re
 from collections import defaultdict
+from typing import Any
 
 import pandas as pd
 
@@ -56,7 +57,7 @@ def csv_from_jsonl(jsonl_path: str) -> pd.DataFrame:
     return df
 
 
-def find_all_keys_values(json_data: any, parent_key: str) -> defaultdict[any, list]:
+def find_all_keys_values(json_data: Any, parent_key: str) -> defaultdict[Any, list]:
     """
     모든 key, value recursive 하게 순회
 

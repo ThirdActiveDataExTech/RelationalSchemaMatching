@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List
 
 import numpy as np
 import pandas as pd
@@ -68,7 +68,7 @@ def predict_inference(
         features: np.ndarray,
         model: MatchingModel,
         threshold: Optional[float] = None
-) -> Tuple[list[np.ndarray], list[np.ndarray]]:
+) -> Tuple[List[np.ndarray], List[np.ndarray]]:
     """
     load model and predict on features
     """
@@ -110,7 +110,7 @@ def predict_inference(
 def postprocess_pred(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
-        preds: list[np.ndarray]
+        preds: List[np.ndarray]
 ) -> pd.DataFrame:
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
@@ -132,7 +132,7 @@ def get_pred_labels(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
         preds_matrix: pd.DataFrame,
-        pred_labels_list: list[np.ndarray],
+        pred_labels_list: List[np.ndarray],
         strategy: Strategy = Strategy.MANY_TO_MANY
 ):
     # do flatten and get mean
@@ -177,7 +177,7 @@ def get_pred_labels(
 def get_predicted_tuples(
         preds_matrix: pd.DataFrame,
         pred_labels_matrix: pd.DataFrame
-) -> list[tuple[str, str, float | int]]:
+) -> List[Tuple[str, str, float | int]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
         (pred_labels_matrix.index[i], pred_labels_matrix.columns[j], preds_matrix.iloc[i, j])

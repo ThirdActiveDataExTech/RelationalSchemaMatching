@@ -1,6 +1,7 @@
 import logging
 import re
 from enum import Enum
+from typing import Any
 
 import validators
 from dateutil.parser import parse as parse_date
@@ -28,7 +29,7 @@ class DataTypes(Enum):
         return len(self.__class__.__members__)
 
 
-def classify_data_type(data_list: list[any]) -> DataTypes:
+def classify_data_type(data_list: list[Any]) -> DataTypes:
     data_type = DataTypes.STRING
     if is_url(data_list):
         data_type = DataTypes.URL
@@ -42,7 +43,7 @@ def classify_data_type(data_list: list[any]) -> DataTypes:
     return data_type
 
 
-def is_url(data_list: list[any]) -> bool:
+def is_url(data_list: list[Any]) -> bool:
     """
 
     Returns:
@@ -58,7 +59,7 @@ def is_url(data_list: list[any]) -> bool:
     return cnt >= URL_RATIO * len(data_list)
 
 
-def is_date(data_list: list[any]) -> bool:
+def is_date(data_list: list[Any]) -> bool:
     """
 
     Notes:
@@ -90,7 +91,7 @@ def is_date(data_list: list[any]) -> bool:
     return cnt >= DATE_RATIO * len(data_list)
 
 
-def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
+def is_strict_numeric(data_list: list[Any], verbose: bool = False) -> bool:
     """
 
     Args:
@@ -114,7 +115,7 @@ def is_strict_numeric(data_list: list[any], verbose: bool = False) -> bool:
     return cnt >= STRICT_NUMERIC_RATIO * len(data_list)
 
 
-def is_mainly_numeric(data_list: list[any]) -> bool:
+def is_mainly_numeric(data_list: list[Any]) -> bool:
     """data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
 
     Returns:
