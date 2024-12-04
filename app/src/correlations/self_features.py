@@ -5,6 +5,7 @@ from typing import Any, List
 
 import numpy as np
 import pandas as pd
+from numpy.typing import NDArray
 
 from app.src.correlations.constants import constants
 from app.src.correlations.data_classifier import DataTypes, classify_data_type
@@ -23,7 +24,7 @@ DEFAULT_SAMPLING_SIZE = 20
 EPSILON = 1e-12
 
 
-def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
+def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
     """
 
     Returns:
@@ -52,7 +53,7 @@ def make_self_features_from(table_df: pd.DataFrame) -> np.ndarray:
 
 
 # REMINDER: use ONLY data_list as Column
-def extract_features(data_list: List[Any]) -> np.ndarray:
+def extract_features(data_list: List[Any]) -> NDArray[Any]:
     """
 
     Args:
@@ -133,7 +134,7 @@ def extract_numeric(data_list: List[Any]) -> List[float]:
     return numeric_list
 
 
-def calculate_numeric_features(data_list: List[Any]) -> np.array:
+def calculate_numeric_features(data_list: List[float]) -> NDArray[Any]:
     """
 
     Returns:
@@ -150,7 +151,7 @@ def calculate_numeric_features(data_list: List[Any]) -> np.array:
     return np.array([mean, min, max, variance, cv, unique / len(data_list)])
 
 
-def calculate_character_features(data_list: List[Any]) -> np.array:
+def calculate_character_features(data_list: List[Any]) -> NDArray[Any]:
     """
 
     Returns:
@@ -196,7 +197,7 @@ def calculate_character_features(data_list: List[Any]) -> np.array:
     ])
 
 
-def deep_embedding(data_list: List[Any]) -> np.ndarray:
+def deep_embedding(data_list: List[Any]) -> NDArray[Any]:
     """
 
     Notes:
@@ -220,7 +221,7 @@ def deep_embedding(data_list: List[Any]) -> np.ndarray:
     return np.mean(embeddings, axis=0)
 
 
-def get_datatype_feature(data_type: DataTypes) -> np.ndarray:
+def get_datatype_feature(data_type: DataTypes) -> NDArray[Any]:
     """
 
     Returns:  Make data type feature one hot encoding
@@ -233,7 +234,7 @@ def get_datatype_feature(data_type: DataTypes) -> np.ndarray:
     return data_type_feature
 
 
-def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
+def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
     """
 
     Returns:
@@ -250,7 +251,7 @@ def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> np.n
     return numeric_features
 
 
-def get_character_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
+def get_character_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
     """
 
     Returns:
@@ -264,7 +265,7 @@ def get_character_feature(data_list: List[Any], data_type: DataTypes) -> np.ndar
     return character_feature
 
 
-def get_deep_embedding_feature(data_list: List[Any], data_type: DataTypes) -> np.ndarray:
+def get_deep_embedding_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
     """
 
     Returns:
