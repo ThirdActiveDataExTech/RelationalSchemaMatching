@@ -15,6 +15,7 @@ def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
     Return:
         pd.DataFrame
     """
+    df: pd.DataFrame
     if path.endswith(".csv"):
         df = pd.read_csv(path)
     elif path.endswith(".json"):
