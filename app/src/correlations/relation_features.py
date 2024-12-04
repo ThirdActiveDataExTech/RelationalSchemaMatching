@@ -1,16 +1,19 @@
 import random
-import re
 from itertools import product
+from typing import Any, Dict
 
 import numpy as np
 import pandas as pd
 from nltk.translate import bleu
 from nltk.translate.bleu_score import SmoothingFunction
 from numpy.linalg import norm
+from numpy.typing import NDArray
 from sentence_transformers import util
 from strsimpy.damerau import Damerau
 from strsimpy.metric_lcs import MetricLCS
 
+from app.src.correlations.constants import constants
+from app.src.correlations.data_cleaner import normalize_and_flatten_text
 from app.src.correlations.model import SentenceTransformer
 from app.src.correlations.self_features import make_self_features_from
 
@@ -20,40 +23,20 @@ DAMERAU = Damerau()
 SEED = 200
 random.seed(SEED)
 
-
-class Constants:
-    TRAIN_LABEL_RATIO = 0.1
-
-    # EXPERIMENTAL
-    ADDITIONAL_FEATURE_DIMENSION = 6  # not sure
-    DEEP_EMBEDDING_FEATURES_DIMENSION = 768
-    EPSILON = 1e-8  # prevent div by zero
-
-
-def preprocess_text(text: str) -> str:
-    """
-
-    Returns:
-        str: lowercased, replace whitespace, line break, "." to " "
-    """
-    text = text.lower()
-
-    text = re.split(r'[\s\_\.]', text)
-    text = " ".join(text).strip()
-
-    return text
+TRAIN_LABEL_RATIO = 0.1
+EPSILON = 1e-8  # prevent div by zero
 
 
 def get_col_names_features(
         l_col_name: str,
         r_col_name: str,
-        l_col_name_embedding: np.ndarray,
-        r_col_name_embedding: np.ndarray,
-) -> np.ndarray:
+        l_col_name_embedding: NDArray[Any],
+        r_col_name_embedding: NDArray[Any],
+) -> NDArray[Any]:
     """
 
     Returns:
-         np.ndarray:
+         NDArray[Any]:
          bleu_score: used SmoothingFunction().method4
          edit_distance: Damerau Distance
          lcs: MetricLCS Distance
@@ -63,8 +46,8 @@ def get_col_names_features(
     bleu_score = bleu([l_col_name], r_col_name, smoothing_function=SMOOTHIE)
     edit_distance = DAMERAU.distance(l_col_name, r_col_name)
     lcs = METRIC_LCS.distance(l_col_name, r_col_name)
-    transformer_score = util.cos_sim(l_col_name_embedding, r_col_name_embedding)
-    one_in_one = l_col_name in r_col_name or r_col_name in l_col_name
+    transformer_score = util.cos_sim(l_col_name_embedding, r_col_name_embedding).item()
+    one_in_one = int(l_col_name in r_col_name or r_col_name in l_col_name)
 
     col_names_features = np.array(
         [bleu_score, edit_distance, lcs, transformer_score, one_in_one],
@@ -74,11 +57,11 @@ def get_col_names_features(
     return col_names_features
 
 
-def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: np.ndarray) -> np.ndarray:
+def calculate_embedding_cosine_similarity(embeddings1: NDArray[Any], embeddings2: NDArray[Any]) -> NDArray[Any]:
     """
 
     Returns:
-         np.ndarray: cosine similarity between two sentences embeddings.
+         NDArray[Any]: cosine similarity between two sentences embeddings.
     """
     cosine_similarity = np.inner(embeddings1, embeddings2) / (norm(embeddings1) * norm(embeddings2))
     return np.array([cosine_similarity])
@@ -86,19 +69,19 @@ def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: 
 
 def get_output_feature_from_row(
         l_col_name: str,
-        l_feature: np.ndarray,
-        l_col_name_embedding: np.ndarray,
+        l_feature: NDArray[Any],
+        l_col_name_embedding: NDArray[Any],
         r_col_name: str,
-        r_feature: np.ndarray,
-        r_col_name_embedding: np.ndarray
-) -> np.ndarray:
-    l_non_embed_feature, l_embed_feature = np.split(l_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
-    r_non_embed_feature, r_embed_feature = np.split(r_feature, [-Constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+        r_feature: NDArray[Any],
+        r_col_name_embedding: NDArray[Any]
+) -> NDArray[Any]:
+    l_non_embed_feature, l_embed_feature = np.split(l_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
+    r_non_embed_feature, r_embed_feature = np.split(r_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
 
     # TODO: 정확히 무슨 계산인지?
     # (non_embed_feature 의 차의 abs) / (non_embed_feature 의 합 + EPSILON)
     difference_features_percent = (np.abs(l_non_embed_feature - r_non_embed_feature)
-                                   / (l_non_embed_feature + r_non_embed_feature + Constants.EPSILON))
+                                   / (l_non_embed_feature + r_non_embed_feature + EPSILON))
 
     # for col_name additional features
     col_names_features = get_col_names_features(l_col_name, r_col_name, l_col_name_embedding, r_col_name_embedding)
@@ -112,7 +95,7 @@ def get_output_feature_from_row(
     return output_feature
 
 
-def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> np.ndarray:
+def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> NDArray[Any]:
     """
 
     Notes:
@@ -125,26 +108,26 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> n
     r_table_features = make_self_features_from(r_df)
     # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
-    l_columns = [preprocess_text(c) for c in l_df.columns]
-    r_columns = [preprocess_text(c) for c in r_df.columns]
+    l_columns = [normalize_and_flatten_text(c) for c in l_df.columns.to_list()]
+    r_columns = [normalize_and_flatten_text(c) for c in r_df.columns.to_list()]
 
     combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 
     # TODO: Model Depends, or Logic
     model = SentenceTransformer.get()
 
-    column_name_embeddings: dict[str, any] = {c: model.encode(c) for c in l_columns + r_columns}
+    column_name_embeddings: Dict[str, Any] = {c: model.encode(c) for c in l_columns + r_columns}
     # END OF MODEL LOGIC
 
-    NON_EMBEDDED_DIMENSION = l_table_features.shape[1] - Constants.DEEP_EMBEDDING_FEATURES_DIMENSION
+    non_embedded_dimension = l_table_features.shape[1] - constants.DEEP_EMBEDDING_FEATURES_DIMENSION
 
     # TODO: Matrix values, row size are ignored
     output_feature_table = np.zeros(
         (
             # combinations_label len = l_columns * r_columns
             len(combinations),
-            # NON_EMBEDDED_DIMENSION + ADDITIONAL_FEATURE_DIMENSION
-            NON_EMBEDDED_DIMENSION + Constants.ADDITIONAL_FEATURE_DIMENSION
+            # non_embedded_dimension + ADDITIONAL_FEATURE_DIMENSION
+            non_embedded_dimension + constants.ADDITIONAL_FEATURE_DIMENSION
         ),
         dtype=np.float32
     )

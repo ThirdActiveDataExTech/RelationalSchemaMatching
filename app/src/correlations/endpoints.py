@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from typing import Optional
+from typing import Optional, Any, List
 
 import pandas as pd
 from sklearn.metrics import f1_score, precision_score, recall_score
@@ -12,7 +12,7 @@ from app.src.correlations.matching import schema_matching
 logger = logging.getLogger(__name__)
 
 
-def match_from_test_dataset(dataset_path: str) -> any:
+def match_from_test_dataset(dataset_path: str) -> Any:
     """  
     @param dataset_path: Dataset 경로는 Table1, Table2 두 개의 파일을 가지고 있어야 함.
     Table 파일의 형식은 csv만 지원.
@@ -46,11 +46,11 @@ def run(
         r_table: str,
         result_path: str,
         truth_json: Optional[str] = None,
-        model: Optional[MatchingModel] = MatchingModel.INITIAL,
-        strategy: Optional[Strategy] = Strategy.MANY_TO_MANY,
+        model: MatchingModel = MatchingModel.INITIAL,
+        strategy: Strategy = Strategy.MANY_TO_MANY,
         threshold: Optional[float] = None,
         calculate_metrics: bool = True
-) -> any:
+) -> Any:
     df_pred, df_pred_labels, predicted_tuples = schema_matching(l_table, r_table, model, strategy, threshold)
 
     if result_path and os.path.exists(result_path):
@@ -73,7 +73,7 @@ def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels
 
 
 # TODO: specify type predicted_tuples
-def get_metric(predicted_tuples: list[tuple[str, str, any]], truth_json: Optional[str] = None):
+def get_metric(predicted_tuples: List[tuple[str, str, Any]], truth_json: Optional[str] = None):
     # 스키마 매칭 결과 log 출력
     logging.info("Predicted Pairs:")
     for pt in predicted_tuples:

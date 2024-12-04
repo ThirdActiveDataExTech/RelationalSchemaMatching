@@ -1,15 +1,18 @@
 import logging
 import os
-from typing import Optional, Tuple
+from typing import Optional, Tuple, List, Any
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from numpy.typing import NDArray
+from pandas._typing import Scalar
 
-from app.src.correlations.data_preprocessor import read_table, drop_na_columns
+from app.src.correlations.data_cleaner import drop_na_columns
+from app.src.correlations.data_loader import read_table
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.relation_features import create_feature_matrix_inference
-from app.src.correlations.util import time_logger
+from app.src.util import time_logger
 
 
 @time_logger
@@ -64,10 +67,10 @@ def preprocess_table(table_path: str) -> pd.DataFrame:
 
 
 def predict_inference(
-        features: np.ndarray,
+        features: NDArray[Any],
         model: MatchingModel,
         threshold: Optional[float] = None
-) -> Tuple[list[np.ndarray], list[np.ndarray]]:
+) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
     """
     load model and predict on features
     """
@@ -109,7 +112,7 @@ def predict_inference(
 def postprocess_pred(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
-        preds: list[np.ndarray]
+        preds: List[NDArray[Any]]
 ) -> pd.DataFrame:
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
@@ -131,7 +134,7 @@ def get_pred_labels(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
         preds_matrix: pd.DataFrame,
-        pred_labels_list: list[np.ndarray],
+        pred_labels_list: List[NDArray[Any]],
         strategy: Strategy = Strategy.MANY_TO_MANY
 ):
     # do flatten and get mean
@@ -157,8 +160,8 @@ def get_pred_labels(
 
         # pred_labels 가 1인 index 만 순회
         for i, j in np.argwhere(pred_labels == 1):
-            max_row = max(preds_matrix[i, :])
-            max_col = max(preds_matrix[:, j])
+            max_row = max(preds_matrix[i, :].to_list())
+            max_col = max(preds_matrix[:, j].to_list())
 
             if max_row != preds_matrix[i, j]:
                 continue
@@ -176,10 +179,10 @@ def get_pred_labels(
 def get_predicted_tuples(
         preds_matrix: pd.DataFrame,
         pred_labels_matrix: pd.DataFrame
-) -> list[tuple[str, str, float | int]]:
+) -> List[Tuple[str, str, Scalar]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
-        (pred_labels_matrix.index[i], pred_labels_matrix.columns[j], preds_matrix.iloc[i, j])
+        (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])
         for i, j in zip(*np.where(pred_labels_matrix == 1))
     ]
     return predicted_tuples

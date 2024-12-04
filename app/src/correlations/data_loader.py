@@ -1,7 +1,7 @@
 import json
-import logging
 import re
 from collections import defaultdict
+from typing import Any
 
 import pandas as pd
 
@@ -15,6 +15,7 @@ def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
     Return:
         pd.DataFrame
     """
+    df: pd.DataFrame
     if path.endswith(".csv"):
         df = pd.read_csv(path)
     elif path.endswith(".json"):
@@ -57,11 +58,11 @@ def csv_from_jsonl(jsonl_path: str) -> pd.DataFrame:
     return df
 
 
-def find_all_keys_values(json_data: any, parent_key: str) -> defaultdict[any, list]:
+def find_all_keys_values(json_data: Any, parent_key: str) -> defaultdict[Any, list]:
     """
     모든 key, value recursive 하게 순회
 
-    Find all keys that don't have list or dictionary values and their values. 
+    Find all keys that don't have list or dictionary values and their values.
     Key should be saved with its parent key like "parent-key.key".
     """
     key_values = defaultdict(list)
@@ -82,27 +83,3 @@ def find_all_keys_values(json_data: any, parent_key: str) -> defaultdict[any, li
             key_values[full_key].append(value)
 
     return key_values
-
-
-def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Drop columns that have zero instances or all columns are "--"
-    """
-    original_columns = table_df.columns
-    for column in table_df.columns:
-        column_data = [d for d in list(table_df[column]) if d == d and d != "--"]
-
-        if len(column_data) <= 1:
-            table_df = table_df.drop(column, axis=1)
-            continue
-
-        # TODO: why use "Unnamed:"
-        if "Unnamed:" in column:
-            table_df = table_df.drop(column, axis=1)
-            continue
-
-    remove_columns = list(set(original_columns) - set(table_df.columns))
-    if len(remove_columns) > 0:
-        logging.info(f"Removed columns: {remove_columns}")
-
-    return table_df

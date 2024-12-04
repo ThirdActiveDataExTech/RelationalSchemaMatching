@@ -2,18 +2,21 @@ import logging
 
 from sentence_transformers import SentenceTransformer as ST
 
+from app.config import settings
+
 
 class SentenceTransformer:
     _instance = None
 
     @classmethod
     def load(cls):
-        logging.info("schema_matching|Loading sentence transformer, this will take a while...")
+        logging.info(f"{settings.SERVICE_NAME}|Loading sentence transformer, this will take a while...")
         cls._instance = ST("paraphrase-multilingual-mpnet-base-v2")
-        logging.info("schema_matching|Done loading sentence transformer")
+        logging.info(f"{settings.SERVICE_NAME}|Done loading sentence transformer")
 
     @classmethod
     def get(cls) -> ST:
         if cls._instance is None:
             cls.load()
+            assert cls._instance is not None
         return cls._instance
