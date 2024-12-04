@@ -180,7 +180,7 @@ def get_predicted_tuples(
 ) -> List[Tuple[str, str, float | int]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
-        (pred_labels_matrix.index[i], pred_labels_matrix.columns[j], preds_matrix.iloc[i, j])
+        (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])
         for i, j in zip(*np.where(pred_labels_matrix == 1))
     ]
     return predicted_tuples
