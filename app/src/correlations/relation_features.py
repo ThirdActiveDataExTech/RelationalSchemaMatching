@@ -7,6 +7,7 @@ import pandas as pd
 from nltk.translate import bleu
 from nltk.translate.bleu_score import SmoothingFunction
 from numpy.linalg import norm
+from numpy.typing import NDArray
 from sentence_transformers import util
 from strsimpy.damerau import Damerau
 from strsimpy.metric_lcs import MetricLCS
@@ -29,13 +30,13 @@ EPSILON = 1e-8  # prevent div by zero
 def get_col_names_features(
         l_col_name: str,
         r_col_name: str,
-        l_col_name_embedding: np.ndarray,
-        r_col_name_embedding: np.ndarray,
-) -> np.ndarray:
+        l_col_name_embedding: NDArray[Any],
+        r_col_name_embedding: NDArray[Any],
+) -> NDArray[Any]:
     """
 
     Returns:
-         np.ndarray:
+         NDArray[Any]:
          bleu_score: used SmoothingFunction().method4
          edit_distance: Damerau Distance
          lcs: MetricLCS Distance
@@ -45,8 +46,8 @@ def get_col_names_features(
     bleu_score = bleu([l_col_name], r_col_name, smoothing_function=SMOOTHIE)
     edit_distance = DAMERAU.distance(l_col_name, r_col_name)
     lcs = METRIC_LCS.distance(l_col_name, r_col_name)
-    transformer_score = util.cos_sim(l_col_name_embedding, r_col_name_embedding)
-    one_in_one = l_col_name in r_col_name or r_col_name in l_col_name
+    transformer_score = util.cos_sim(l_col_name_embedding, r_col_name_embedding).item()
+    one_in_one = int(l_col_name in r_col_name or r_col_name in l_col_name)
 
     col_names_features = np.array(
         [bleu_score, edit_distance, lcs, transformer_score, one_in_one],
@@ -56,11 +57,11 @@ def get_col_names_features(
     return col_names_features
 
 
-def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: np.ndarray) -> np.ndarray:
+def calculate_embedding_cosine_similarity(embeddings1: NDArray[Any], embeddings2: NDArray[Any]) -> NDArray[Any]:
     """
 
     Returns:
-         np.ndarray: cosine similarity between two sentences embeddings.
+         NDArray[Any]: cosine similarity between two sentences embeddings.
     """
     cosine_similarity = np.inner(embeddings1, embeddings2) / (norm(embeddings1) * norm(embeddings2))
     return np.array([cosine_similarity])
@@ -68,12 +69,12 @@ def calculate_embedding_cosine_similarity(embeddings1: np.ndarray, embeddings2: 
 
 def get_output_feature_from_row(
         l_col_name: str,
-        l_feature: np.ndarray,
-        l_col_name_embedding: np.ndarray,
+        l_feature: NDArray[Any],
+        l_col_name_embedding: NDArray[Any],
         r_col_name: str,
-        r_feature: np.ndarray,
-        r_col_name_embedding: np.ndarray
-) -> np.ndarray:
+        r_feature: NDArray[Any],
+        r_col_name_embedding: NDArray[Any]
+) -> NDArray[Any]:
     l_non_embed_feature, l_embed_feature = np.split(l_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
     r_non_embed_feature, r_embed_feature = np.split(r_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
 
@@ -94,7 +95,7 @@ def get_output_feature_from_row(
     return output_feature
 
 
-def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> np.ndarray:
+def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> NDArray[Any]:
     """
 
     Notes:
@@ -107,8 +108,8 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> n
     r_table_features = make_self_features_from(r_df)
     # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
-    l_columns = [normalize_and_flatten_text(c) for c in l_df.columns]
-    r_columns = [normalize_and_flatten_text(c) for c in r_df.columns]
+    l_columns = [normalize_and_flatten_text(c) for c in l_df.columns.to_list()]
+    r_columns = [normalize_and_flatten_text(c) for c in r_df.columns.to_list()]
 
     combinations = list(product(range(len(l_columns)), range(len(r_columns))))
 

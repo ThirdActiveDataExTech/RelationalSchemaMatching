@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 from numpy.typing import NDArray
+from pandas._typing import Scalar
 
 from app.src.correlations.data_cleaner import drop_na_columns
 from app.src.correlations.data_loader import read_table
@@ -159,8 +160,8 @@ def get_pred_labels(
 
         # pred_labels 가 1인 index 만 순회
         for i, j in np.argwhere(pred_labels == 1):
-            max_row = max(preds_matrix[i, :])
-            max_col = max(preds_matrix[:, j])
+            max_row = max(preds_matrix[i, :].to_list())
+            max_col = max(preds_matrix[:, j].to_list())
 
             if max_row != preds_matrix[i, j]:
                 continue
@@ -178,7 +179,7 @@ def get_pred_labels(
 def get_predicted_tuples(
         preds_matrix: pd.DataFrame,
         pred_labels_matrix: pd.DataFrame
-) -> List[Tuple[str, str, float | int]]:
+) -> List[Tuple[str, str, Scalar]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
         (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])

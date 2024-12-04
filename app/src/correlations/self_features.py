@@ -36,7 +36,7 @@ def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
         if "Unnamed:" in column:
             continue
 
-        feature = extract_features(table_df[column]).reshape(1, -1)
+        feature = extract_features(table_df[column].tolist()).reshape(1, -1)
         feature_array.append(feature)
 
     if len(feature_array) == 0:
