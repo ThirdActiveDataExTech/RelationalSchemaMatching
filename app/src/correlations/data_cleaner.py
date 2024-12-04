@@ -8,20 +8,15 @@ def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
     """Drop columns that have zero instances or all columns are "--".
     """
     original_columns = table_df.columns
-    for column in table_df.columns:
-        column_data = [d for d in table_df[column] if pd.notna(d) and d != "--"]
+    for column in original_columns:
+        column_data = table_df[column].replace("--", pd.NA).dropna()
 
-        if len(column_data) < 1:
+        # seems dataframe default column name
+        if len(column_data) < 1 or column.startswith("Unnamed:"):
             table_df = table_df.drop(column, axis=1)
-            continue
-
-        # TODO: why use "Unnamed:"
-        if "Unnamed:" in column:
-            table_df = table_df.drop(column, axis=1)
-            continue
 
     remove_columns = list(set(original_columns) - set(table_df.columns))
-    if len(remove_columns) > 0:
+    if remove_columns:
         logging.info(f"Removed columns: {remove_columns}")
 
     return table_df
