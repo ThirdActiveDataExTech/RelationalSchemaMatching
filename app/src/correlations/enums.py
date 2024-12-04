@@ -8,11 +8,15 @@ class Strategy(str, Enum):
 
 
 class MatchingModel(str, Enum):
-    def __new__(cls, value, path):
+    __slots__ = ('path',)
+
+    def __new__(cls, value: str, path: str):
         obj = str.__new__(cls, value)
         obj._value_ = value
-        obj.path = path
         return obj
+
+    def __init__(self, value: str, path: str):
+        self.path = path
 
     INITIAL = ("initial", "model/initial_model")
 
