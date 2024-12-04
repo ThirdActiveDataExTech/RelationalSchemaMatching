@@ -18,4 +18,5 @@ class SentenceTransformer:
     def get(cls) -> ST:
         if cls._instance is None:
             cls.load()
+            assert cls._instance is not None
         return cls._instance
