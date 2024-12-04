@@ -1,10 +1,11 @@
 import logging
 import os
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Any
 
 import numpy as np
 import pandas as pd
 import xgboost as xgb
+from numpy.typing import NDArray
 
 from app.src.correlations.data_cleaner import drop_na_columns
 from app.src.correlations.data_loader import read_table
@@ -65,10 +66,10 @@ def preprocess_table(table_path: str) -> pd.DataFrame:
 
 
 def predict_inference(
-        features: np.ndarray,
+        features: NDArray[Any],
         model: MatchingModel,
         threshold: Optional[float] = None
-) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
     """
     load model and predict on features
     """
@@ -110,7 +111,7 @@ def predict_inference(
 def postprocess_pred(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
-        preds: List[np.ndarray]
+        preds: List[NDArray[Any]]
 ) -> pd.DataFrame:
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
@@ -132,7 +133,7 @@ def get_pred_labels(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
         preds_matrix: pd.DataFrame,
-        pred_labels_list: List[np.ndarray],
+        pred_labels_list: List[NDArray[Any]],
         strategy: Strategy = Strategy.MANY_TO_MANY
 ):
     # do flatten and get mean
