@@ -46,8 +46,8 @@ def run(
         r_table: str,
         result_path: str,
         truth_json: Optional[str] = None,
-        model: Optional[MatchingModel] = MatchingModel.INITIAL,
-        strategy: Optional[Strategy] = Strategy.MANY_TO_MANY,
+        model: MatchingModel = MatchingModel.INITIAL,
+        strategy: Strategy = Strategy.MANY_TO_MANY,
         threshold: Optional[float] = None,
         calculate_metrics: bool = True
 ) -> Any:
