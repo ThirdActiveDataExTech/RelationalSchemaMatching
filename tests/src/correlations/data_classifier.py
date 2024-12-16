@@ -18,7 +18,7 @@ URL_DICT = {
     "https://.example.com": False,  # Leading dot in domain is not valid
     "http://example..com": False,  # Double dots in domain are not valid
     "https://www.example.com/index.html#top": True,
-    "http://user:password@example.com": True,
+    "http://user:plusplus@example.com": True,
     "https://www.example.com/path/to/file.jpg": True,
     "http://example.com/?q=test&lang=en": True,
     "https://subdomain.example.com:8080/path?query=value#fragment": True,
