@@ -88,7 +88,7 @@ exclude = [
     './app/__init__.py',
     'gunicorn.conf.py'
 ]
-target-version = "py39"
+target-version = "py310"
 [tool.ruff.lint]
 ignore = ['W']
 [tool.ruff.lint.mccabe]
@@ -96,7 +96,7 @@ max-complexity = 10
 
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 defineConstant = { DEBUG = true }
 reportMissingImports = false
 reportMissingTypeStubs = false

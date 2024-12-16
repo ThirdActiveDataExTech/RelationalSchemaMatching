@@ -1,22 +1,55 @@
-ARG PYTHON_VERSION=3.10.0
+FROM python:3.10.16-slim AS poetry-base
 
-LABEL authors="wisenut"
+ENV PYTHONUNBUFFERED=1 \
+    # prevents python creating .pyc files
+    PYTHONDONTWRITEBYTECODE=1 \
+    \
+    # pip
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    \
+    # poetry
+    # https://python-poetry.org/docs/configuration/#using-environment-variables
+    POETRY_VERSION=1.8.3 \
+    # make poetry install to this location
+    POETRY_HOME="/opt/poetry" \
+    # make poetry create the virtual environment in the project's root
+    # it gets named `.venv`
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    # do not ask any interactive question
+    POETRY_NO_INTERACTION=1 \
+    \
+    # paths
+    # this is where our requirements + virtual environment will live
+    PYSETUP_PATH="/opt/pysetup" \
+    VENV_PATH="/opt/pysetup/.venv"
 
-FROM python:${PYTHON_VERSION}-slim as requirements
 
-# Make requirements.txt file from poetry dependencies
-RUN pip install --no-cache-dir poetry==1.8.3
-COPY ./pyproject.toml ./poetry.lock /
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes --without=test,lint,gunicorn
+# Prepend poetry and venv to path
+ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
+ENV APP_HOME=/home/wisenut/app
 
-FROM python:${PYTHON_VERSION}-slim as build
 
-# Copy requirements.txt from requirements stage and install libraries
-WORKDIR /
-COPY --from=requirements /requirements.txt ./requirements.txt
-RUN python3 -m pip install --no-cache-dir --upgrade -r requirements.txt
+# `builder-base` stage is used to build deps + create our virtual environment
+FROM poetry-base AS builder-base
 
-FROM python:${PYTHON_VERSION}-slim as prod-runtime
+# Install libraries
+RUN apt-get update && apt-get install --no-install-recommends -y build-essential
+
+# Install poetry - respects $POETRY_VERSION & $POETRY_HOME
+RUN pip install --no-cache-dir poetry=="${POETRY_VERSION}"
+
+# Copy project requirement files here to ensure they will be cached.
+WORKDIR $PYSETUP_PATH
+COPY poetry.lock pyproject.toml ./
+
+# Install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
+RUN poetry install --no-dev --without test,lint,gunicorn
+
+
+# `production` image used for runtime
+FROM poetry-base AS production
 
 # Setting home directory and user name
 ENV APP_HOME=/home/wisenut/app
@@ -38,21 +71,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Seoul
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf-8
-ENV PYTHONPATH=$APP_HOME:${PYTHONPATH}
 
-# Copy installed Python packages from the build stage
-COPY --from=build /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
-COPY --from=build /usr/local/bin /usr/local/bin
-
-# Copy necessary files and directory
+COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 COPY pyproject.toml version_info.py .env ./
 COPY ./static ./static/
-COPY ./app ./app/
 COPY ./model ./model/
 COPY ./test_data ./test_data/
+COPY ./app ./app/
 
 # Expose the port
 EXPOSE 8000
 
-# Run the app
-CMD ["fastapi", "run", "app/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--reload-dir", "/home/wisenut/app", "--reload-exclude", "*.log"]
