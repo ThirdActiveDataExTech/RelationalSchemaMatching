@@ -10,7 +10,6 @@ stages:
   - build-and-push-app
   - container_test
 
-
 include:
   - project: wisenut-research/starter/gitlab-ci-template
     ref: main
