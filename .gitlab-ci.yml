@@ -24,6 +24,32 @@ include:
       - templates/Python/Build-and-Push-App.gitlab-ci.yml
 
 # Overrides
+.dependency-management:
+  image: python:3.10.16-slim
+
+
 build-and-push-app:
   tags:
     - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
+
+ruff-lint:
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "py310" ]
+
+pyright-lint:
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "3.10" ]
+
+pytest-39:
+  rules:
+    - when: never
+
+pytest-311:
+  rules:
+    - when: never
+
+pytest-312:
+  rules:
+    - when: never
