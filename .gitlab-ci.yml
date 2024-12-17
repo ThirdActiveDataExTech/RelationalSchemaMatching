@@ -29,7 +29,12 @@ include:
 # Overrides
 .dependency-management:
   image: python:3.10.16-slim
-  cache: { }
+  variables:
+    POETRY_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pypoetry"
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIPELINE_SEQUENCE: $CI_PIPELINE_IID
+    TZ: "Asia/Seoul"
+    FF_TIMESTAMPS: true
 
 ruff-lint:
   parallel:
