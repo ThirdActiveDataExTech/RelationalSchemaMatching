@@ -25,7 +25,6 @@ include:
 .dependency-management:
   image: python:3.10.16-slim
 
-
 build-and-push-app:
   tags:
     - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
@@ -41,13 +40,5 @@ pyright-lint:
       - PYTHON_VERSION: [ "3.10" ]
 
 pytest-39:
-  rules:
-    - when: never
-
-pytest-311:
-  rules:
-    - when: never
-
-pytest-312:
   rules:
     - when: never
