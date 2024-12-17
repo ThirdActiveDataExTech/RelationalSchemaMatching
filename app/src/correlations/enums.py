@@ -24,8 +24,3 @@ class MatchingModel(str, Enum):
 class CombinationType(str, Enum):
     TRAIN = "train",
     TEST = "test"
-
-
-class TestType(str, Enum):
-    EVALUATION = "evaluation",
-    INFERENCE = "inference"
