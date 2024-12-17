@@ -30,8 +30,10 @@ include:
 .dependency-management:
   image: python:3.10.16-slim
 
-before_script:
-  - apt install gcc
+.unit-test:
+  before_script:
+    - apt-get update
+    - apt-get install -y gcc
 
 ruff-lint:
   parallel:
