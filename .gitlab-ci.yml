@@ -15,18 +15,6 @@ stages:
   - build-and-push-app
   - container_test
 
-include:
-  - project: wisenut-research/starter/gitlab-ci-template
-    ref: main
-    file:
-      - templates/Security/Secret-Detection.gitlab-ci.yml
-      - templates/Python/Dependency-Management.gitlab-ci.yml
-      - templates/Python/Lint.gitlab-ci.yml
-      - templates/Python/Test.gitlab-ci.yml
-      - templates/Security/Container-Scanning.gitlab-ci.yml
-      - templates/Python/Build-and-Push-App.gitlab-ci.yml
-
-# Overrides
 .dependency-management:
   image: python:3.10.16-slim
   variables:
@@ -36,6 +24,36 @@ include:
     TZ: "Asia/Seoul"
     FF_TIMESTAMPS: true
 
+.pip:
+  extends: .dependency-management
+  before_script:
+    - echo "Running before_script tasks for $CI_JOB_NAME";
+    - python3 -V
+    - pip install --upgrade pip
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+
+.poetry:
+  extends: .dependency-management
+  before_script:
+    - echo "Running before_script tasks for $CI_JOB_NAME";
+    - python3 -V
+    - pip install --upgrade pip && pip install poetry
+    - poetry config virtualenvs.create false --local
+    - poetry install --no-root
+
+include:
+  - project: wisenut-research/starter/gitlab-ci-template
+    ref: main
+    file:
+      - templates/Security/Secret-Detection.gitlab-ci.yml
+      - templates/Python/Lint.gitlab-ci.yml
+      - templates/Python/Test.gitlab-ci.yml
+      - templates/Security/Container-Scanning.gitlab-ci.yml
+      - templates/Python/Build-and-Push-App.gitlab-ci.yml
+
+# Overrides
 ruff-lint:
   parallel:
     matrix:

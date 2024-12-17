@@ -127,7 +127,7 @@ def is_mainly_numeric(data_list: list[Any]) -> bool:
         data = str(data)
         data = data.replace(",", "")
 
-        # 백, 천, 만, K, B 등의 단위 제거
+        # 백, 천, 만, K, B등의 단위 제거
         for unit in constants.UNIT_DICT.keys():
             data = data.replace(unit, "")
 
