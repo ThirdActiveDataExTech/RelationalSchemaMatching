@@ -31,7 +31,7 @@ include:
   image: python:3.10.16-slim
 
 before_script:
-  - apt-get install gcc
+  - apt install gcc
 
 ruff-lint:
   parallel:
