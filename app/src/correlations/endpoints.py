@@ -4,7 +4,7 @@ import os
 from typing import Optional, Any, List
 
 import pandas as pd
-from sklearn.metrics import f1_score, precision_score, recall_score
+from sklearn.metrics import f1_score, precision_score, recall_score  # type: ignore
 
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.matching import schema_matching

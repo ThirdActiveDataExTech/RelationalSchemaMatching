@@ -121,7 +121,7 @@ async def custom_swagger_ui_html():
     )
 
 
-@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # pyright: ignore
+@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # type: ignore
 async def swagger_ui_redirect():
     return get_swagger_ui_oauth2_redirect_html()
 

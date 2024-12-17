@@ -43,7 +43,7 @@ def get_current_datetime(format: str = '%Y-%m-%d %H:%M:%S'):
 
 
 def make_version_info():
-    from config import settings
+    from config import settings  # type: ignore
     # Adding the git rev number needs to be done inside write_version_py(),
     # otherwise the import of numpy.version messes up the build under Python 3.
     work_dir = Path.cwd()

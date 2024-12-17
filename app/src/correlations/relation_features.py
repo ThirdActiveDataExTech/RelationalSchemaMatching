@@ -4,13 +4,13 @@ from typing import Any, Dict
 
 import numpy as np
 import pandas as pd
-from nltk.translate import bleu
-from nltk.translate.bleu_score import SmoothingFunction
+from nltk.translate import bleu  # type: ignore
+from nltk.translate.bleu_score import SmoothingFunction  # type: ignore
 from numpy.linalg import norm
 from numpy.typing import NDArray
 from sentence_transformers import util
-from strsimpy.damerau import Damerau
-from strsimpy.metric_lcs import MetricLCS
+from strsimpy.damerau import Damerau  # type: ignore
+from strsimpy.metric_lcs import MetricLCS  # type: ignore
 
 from app.src.correlations.constants import constants
 from app.src.correlations.data_cleaner import normalize_and_flatten_text
