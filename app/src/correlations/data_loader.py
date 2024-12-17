@@ -51,9 +51,9 @@ def csv_from_jsonl(jsonl_path: str) -> pd.DataFrame:
     key_values = find_all_keys_values({"TOPLEVEL": data}, "TOPLEVEL")
 
     # remove "TOPLEVEL.", but remains ".*"
-    key_values = {k.replace("TOPLEVEL.", ""): v for k, v in key_values.items() if len(v) > 1}
+    clean_kvs = {k.replace("TOPLEVEL.", ""): v for k, v in key_values.items() if len(v) > 1}
 
-    df = pd.DataFrame({k: pd.Series(v) for k, v in key_values.items()})
+    df = pd.DataFrame({k: pd.Series(v) for k, v in clean_kvs.items()})
 
     return df
 

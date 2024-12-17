@@ -178,10 +178,10 @@ def calculate_character_features(data_list: List[Any]) -> NDArray[Any]:
 
     epsilon = np.array([EPSILON] * len(data_list))
 
-    whitespace_ratios = np.array(whitespace_ratios + epsilon)
-    punctuation_ratios = np.array(punctuation_ratios + epsilon)
-    special_character_ratios = np.array(special_character_ratios + epsilon)
-    numeric_ratios = np.array(numeric_ratios + epsilon)
+    whitespace_ratios = np.array(whitespace_ratios) + epsilon
+    punctuation_ratios = np.array(punctuation_ratios) + epsilon
+    special_character_ratios = np.array(special_character_ratios) + epsilon
+    numeric_ratios = np.array(numeric_ratios) + epsilon
 
     return np.array([
         # Means

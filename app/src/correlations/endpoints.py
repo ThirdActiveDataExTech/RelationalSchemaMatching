@@ -33,8 +33,10 @@ def match_from_test_dataset(dataset_path: str) -> Any:
 
     result_path = dataset_path
 
-    truth_json = os.path.join(dataset_path, "truth.json")
-    if not os.path.exists(truth_json):
+    truth_json_path = os.path.join(dataset_path, "truth.json")
+    if os.path.exists(truth_json_path):
+        truth_json = truth_json_path
+    else:
         truth_json = None
 
     return run(l_table, r_table, result_path, truth_json)
