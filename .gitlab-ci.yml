@@ -25,6 +25,14 @@ include:
 .dependency-management:
   image: python:3.10.16-slim
 
+lint:
+  tags:
+    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
+
+test:
+  tags:
+    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
+
 build-and-push-app:
   tags:
     - saas-linux-medium-amd64  # 16GB Memory, 50GB storage

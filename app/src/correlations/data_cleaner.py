@@ -29,7 +29,7 @@ def normalize_and_flatten_text(raw_text: str) -> str:
         str: lowercased, replace whitespace, line break, "." to " "
     """
     raw_text = raw_text.lower()
-    texts = re.split(r'[\s\_\.]', raw_text)
+    texts = re.split(r'[\s_\.]', raw_text)
     text = " ".join(texts).strip()
 
     return text
