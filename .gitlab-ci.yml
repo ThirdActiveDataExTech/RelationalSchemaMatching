@@ -32,12 +32,12 @@ build-and-push-app:
 ruff-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: [ "py310" ]
+      - PYTHON_VERSION: [ "py310", "py311", "py312" ]
 
 pyright-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: [ "3.10" ]
+      - PYTHON_VERSION: [ "3.10", "3.11", "3.12" ]
 
 pytest-39:
   rules:
