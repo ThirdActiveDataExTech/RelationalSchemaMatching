@@ -3,6 +3,11 @@
 # 또한 GitLab CI 파이프라인은 overriding이 가능하기때문에 템플릿을 가져와서 커스텀을 할 수도 있습니다.
 # 참고: https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 
+# Global Config
+default:
+  tags:
+    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
+
 stages:
   - secret_detection
   - lint
@@ -24,18 +29,6 @@ include:
 # Overrides
 .dependency-management:
   image: python:3.10.16-slim
-
-lint:
-  tags:
-    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
-
-test:
-  tags:
-    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
-
-build-and-push-app:
-  tags:
-    - saas-linux-medium-amd64  # 16GB Memory, 50GB storage
 
 ruff-lint:
   parallel:
