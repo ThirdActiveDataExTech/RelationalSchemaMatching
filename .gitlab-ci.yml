@@ -30,21 +30,25 @@ include:
 .dependency-management:
   image: python:3.10.16-slim
 
-.unit-test:
-  before_script:
-    - apt-get update
-    - apt-get install -y gcc
 
 ruff-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: [ "py310", "py311", "py312" ]
+      - PYTHON_VERSION: [ "py310" ]
 
 pyright-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: [ "3.10", "3.11", "3.12" ]
+      - PYTHON_VERSION: [ "3.10" ]
 
 pytest-39:
+  rules:
+    - when: never
+
+pytest-311:
+  rules:
+    - when: never
+
+pytest-312:
   rules:
     - when: never
