@@ -95,7 +95,7 @@ def get_version_info():
     FULL_VERSION, GIT_REVISION, GIT_SHORT_REVISION, GIT_BRANCH = "Unknown", "Unknown", "Unknown", "Unknown"
 
     try:
-        import version_info  # type: ignore
+        import version_info
     except ImportError as ie:
         logging.error(f"Check if 'app.version_info' exists: {ie}")
         return FULL_VERSION, GIT_REVISION, GIT_SHORT_REVISION, GIT_BRANCH, BUILD_DATE
