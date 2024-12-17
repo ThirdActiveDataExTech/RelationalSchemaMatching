@@ -19,8 +19,3 @@ class MatchingModel(str, Enum):
         self.path = path
 
     INITIAL = ("initial", "model/initial_model")
-
-
-class CombinationType(str, Enum):
-    TRAIN = "train",
-    TEST = "test"
