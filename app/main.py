@@ -145,7 +145,7 @@ def health():
 
 @app.get("/info")
 async def info():
-    version: str = VERSION
+    version: str = VERSION  # type: ignore
     if 'Unknown' in version:
         version = version.split('.')[0]
     return {
