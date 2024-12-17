@@ -28,7 +28,7 @@ include:
 
 # Overrides
 .dependency-management:
-  image: python:3.10.16-slim
+  image: python:3.10.16
 
 ruff-lint:
   parallel:
