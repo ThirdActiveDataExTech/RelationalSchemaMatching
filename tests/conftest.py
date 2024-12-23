@@ -4,7 +4,7 @@ conftest.py 라는 이름의 파일을 pytest가 자동으로 인식을 해주�
 또한 테스트파일들이 여러 중첩된 디렉토리 하위에 존재하고 있다면 해당 디렉토리들에 각각의 conftest.py를 작성하여 해당 디렉토리에 대한 scope로만 동작하는 fixture, hook들을 구성해줄 수도 있고, 동일한 이름의 fixture에 대해 over-ride도 가능함
 """
 
-import pytest
+import pytest  # type: ignore
 
 """각 단위테스트 수행시간 측정
 해당 함수의 대체재로 간단하게 `pytest --durations=0` 으로 단위테스트 수행 시간을 측정할 수 있지만 정확한 수행 시간 파악 불가
@@ -30,7 +30,7 @@ Test durations:
 """
 
 from time import time
-from tabulate import tabulate
+from tabulate import tabulate  # type: ignore
 
 test_durations = []
 

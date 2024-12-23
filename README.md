@@ -18,7 +18,7 @@
 
 ### 1. Install Requirements
 
-- [Python](https://www.python.org/) `3.10`
+- [Python](https://www.python.org/) `3.11`
 - [Poetry](https://python-poetry.org/) `>= 1.4`
 - [FastAPI Web Framework](https://fastapi.tiangolo.com/ko/)
 
@@ -37,7 +37,7 @@ $ poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```bash
 # [방법 2] 가상환경 활성화 & 구동
 $ poetry shell
-(python-fastapi-template-py3.10) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
+(python-fastapi-template-py3.11) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
 
 ### 3. Run Analysis
