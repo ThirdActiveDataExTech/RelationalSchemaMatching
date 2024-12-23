@@ -1,4 +1,4 @@
-FROM python:3.10.16-slim AS poetry-base
+FROM python:3.11.11-slim AS poetry-base
 
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
@@ -27,34 +27,33 @@ ENV PYTHONUNBUFFERED=1 \
 
 
 # Prepend poetry and venv to path
-ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
-ENV APP_HOME=/home/wisenut/app
+ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH" \
+    APP_HOME=/home/wisenut/app
 
 
 # `builder-base` stage is used to build deps + create our virtual environment
 FROM poetry-base AS builder-base
 
-# Install libraries
-RUN apt-get update && apt-get install --no-install-recommends -y build-essential
-
-# Install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN pip install --no-cache-dir poetry=="${POETRY_VERSION}"
+# Install libraries, poetry - respects $POETRY_VERSION & $POETRY_HOME
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y build-essential \
+    && pip install --no-cache-dir poetry=="${POETRY_VERSION}"
 
 # Copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
 
 # Install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-RUN poetry install --no-dev --without test,lint,gunicorn
+RUN poetry install --no-dev --without test,lint,gunicorn --no-root
 
 
 # `production` image used for runtime
 FROM poetry-base AS production
 
 # Setting home directory and user name
-ENV APP_HOME=/home/wisenut/app
-ENV GROUP_NAME=wisenut
-ENV APP_USER=wisenut
+ENV APP_HOME=/home/wisenut/app \
+    GROUP_NAME=wisenut \
+    APP_USER=wisenut
 
 # Create a non-root user and group
 RUN groupadd -r $GROUP_NAME && useradd -r -g $GROUP_NAME -d $APP_HOME $APP_USER
@@ -68,15 +67,12 @@ USER $APP_USER
 
 # Set environment variables
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Seoul
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONIOENCODING=utf-8
 
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 COPY pyproject.toml version_info.py .env ./
 COPY ./static ./static/
 COPY ./model ./model/
-COPY ./test_data ./test_data/
+COPY --chown=$APP_USER:$GROUP_NAME ./test_data ./test_data/
 COPY ./app ./app/
 
 # Expose the port
