@@ -7,6 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     VARIANT=$VARIANT
 
 WORKDIR /app
+
 COPY uv.lock pyproject.toml ./
 
 RUN --mount=type=cache,target=/root/.cache/uv \

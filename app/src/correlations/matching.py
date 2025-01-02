@@ -1,6 +1,6 @@
 import logging
 import os
-from typing import Optional, Tuple, List, Any
+from typing import Any, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -10,18 +10,14 @@ from pandas._typing import Scalar
 
 from app.src.correlations.data_cleaner import drop_na_columns
 from app.src.correlations.data_loader import read_table
-from app.src.correlations.enums import Strategy, MatchingModel
+from app.src.correlations.enums import MatchingModel, Strategy
 from app.src.correlations.relation_features import create_feature_matrix_inference
 from app.src.util import time_logger
 
 
 @time_logger
 def schema_matching(
-        l_table_path: str,
-        r_table_path: str,
-        model: MatchingModel,
-        strategy: Strategy,
-        threshold: Optional[float] = None
+    l_table_path: str, r_table_path: str, model: MatchingModel, strategy: Strategy, threshold: Optional[float] = None
 ):
     """
 
@@ -67,22 +63,24 @@ def preprocess_table(table_path: str) -> pd.DataFrame:
 
 
 def predict_inference(
-        features: NDArray[Any],
-        model: MatchingModel,
-        threshold: Optional[float] = None
+    features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
 ) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
     """
-    load model and predict on features
+    load model and predict on features using GPU if available
     """
     preds = []
     pred_labels_list = []
-
     model_files = os.listdir(model.path)
     model_cnt = len(model_files) // 2
+
+    # Check if GPU is available
+    device = "cuda" if xgb.build_info().get("USE_CUDA", False) else "cpu"
+
     for i in range(model_cnt):
-        bst = xgb.Booster({'nthread': 4})  # init model
+        bst = xgb.Booster({"nthread": 4})  # Init model
         model_file = os.path.join(model.path, f"{i}.model")
         bst.load_model(model_file)
+        bst.set_param({"device": device})
 
         # use specified threshold or model best threshold
         if threshold is not None:
@@ -92,28 +90,23 @@ def predict_inference(
             with open(threshold_file, "r") as f:
                 best_threshold = float(f.read())
 
-        # TODO: UNCHECKED CODE
+        # Create DMatrix with GPU support if available
         labels = np.ones(len(features))
         dtest = xgb.DMatrix(features, label=labels)
-        pred = bst.predict(dtest)
 
+        # Predict using GPU if available
+        pred = bst.predict(dtest)
         pred_labels = np.where(pred > best_threshold, 1, 0)
-        # UNCHECKED CODE
 
         # Booster 가 결합된 feature 로 predict, 현재 분리 불가
         preds.append(pred)
-
         pred_labels_list.append(pred_labels)
         del bst
 
     return preds, pred_labels_list
 
 
-def postprocess_pred(
-        table1_df: pd.DataFrame,
-        table2_df: pd.DataFrame,
-        preds: List[NDArray[Any]]
-) -> pd.DataFrame:
+def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: List[NDArray[Any]]) -> pd.DataFrame:
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
 
@@ -131,11 +124,11 @@ def postprocess_pred(
 
 
 def get_pred_labels(
-        table1_df: pd.DataFrame,
-        table2_df: pd.DataFrame,
-        preds_matrix: pd.DataFrame,
-        pred_labels_list: List[NDArray[Any]],
-        strategy: Strategy = Strategy.MANY_TO_MANY
+    table1_df: pd.DataFrame,
+    table2_df: pd.DataFrame,
+    preds_matrix: pd.DataFrame,
+    pred_labels_list: List[NDArray[Any]],
+    strategy: Strategy = Strategy.MANY_TO_MANY,
 ):
     # do flatten and get mean
     pred_labels = np.mean(np.array(pred_labels_list), axis=0)
@@ -176,10 +169,7 @@ def get_pred_labels(
     return df_pred_labels
 
 
-def get_predicted_tuples(
-        preds_matrix: pd.DataFrame,
-        pred_labels_matrix: pd.DataFrame
-) -> List[Tuple[str, str, Scalar]]:
+def get_predicted_tuples(preds_matrix: pd.DataFrame, pred_labels_matrix: pd.DataFrame) -> List[Tuple[str, str, Scalar]]:
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
         (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])

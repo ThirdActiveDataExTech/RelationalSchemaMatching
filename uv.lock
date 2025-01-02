@@ -1,7 +1,11 @@
 version = 1
 requires-python = ">=3.11, <3.13"
 resolution-markers = [
+    "python_full_version >= '3.12' and sys_platform != 'darwin'",
+    "python_full_version >= '3.12' and sys_platform == 'darwin'",
     "python_full_version >= '3.12'",
+    "python_full_version < '3.12' and sys_platform != 'darwin'",
+    "python_full_version < '3.12' and sys_platform == 'darwin'",
     "python_full_version < '3.12'",
 ]
 conflicts = [[
@@ -128,15 +132,18 @@ dependencies = [
     { name = "sentence-transformers" },
     { name = "strsimpy" },
     { name = "validators" },
-    { name = "xgboost" },
 ]
 
 [package.optional-dependencies]
 cpu = [
-    { name = "torch", version = "2.5.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" } },
+    { name = "torch", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
+    { name = "torch", version = "2.5.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform != 'darwin'" },
+    { name = "xgboost-cpu" },
 ]
 cu124 = [
-    { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" } },
+    { name = "torch", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin'" },
+    { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "sys_platform != 'darwin'" },
+    { name = "xgboost" },
 ]
 
 [package.dev-dependencies]
@@ -168,10 +175,13 @@ requires-dist = [
     { name = "scikit-learn", specifier = ">=1.4.0,<2.0.0" },
     { name = "sentence-transformers", specifier = "==3.2.1" },
     { name = "strsimpy", specifier = "==0.2.1" },
-    { name = "torch", marker = "extra == 'cpu'", specifier = ">=2.5.1", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "correlation-analysis", extra = "cpu" } },
-    { name = "torch", marker = "extra == 'cu124'", specifier = ">=2.5.1", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "correlation-analysis", extra = "cu124" } },
+    { name = "torch", marker = "sys_platform == 'darwin' and extra == 'cpu'", specifier = ">=2.5.1" },
+    { name = "torch", marker = "sys_platform == 'darwin' and extra == 'cu124'", specifier = ">=2.5.1" },
+    { name = "torch", marker = "sys_platform != 'darwin' and extra == 'cpu'", specifier = ">=2.5.1", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "correlation-analysis", extra = "cpu" } },
+    { name = "torch", marker = "sys_platform != 'darwin' and extra == 'cu124'", specifier = ">=2.5.1", index = "https://download.pytorch.org/whl/cu124", conflict = { package = "correlation-analysis", extra = "cu124" } },
     { name = "validators", specifier = ">=0.34.0,<1.0.0" },
-    { name = "xgboost", specifier = "==1.7.3" },
+    { name = "xgboost", marker = "extra == 'cu124'", specifier = ">=2.1.0" },
+    { name = "xgboost-cpu", marker = "extra == 'cpu'", specifier = ">=2.1.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -626,7 +636,7 @@ name = "nvidia-cudnn-cu12"
 version = "9.1.0.70"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9f/fd/713452cd72343f682b1c7b9321e23829f00b842ceaedcda96e742ea0b0b3/nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl", hash = "sha256:165764f44ef8c61fcdfdfdbe769d687e06374059fbb388b6c89ecb0e28793a6f", size = 664752741 },
@@ -638,7 +648,7 @@ name = "nvidia-cufft-cu12"
 version = "11.2.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7a/8a/0e728f749baca3fbeffad762738276e5df60851958be7783af121a7221e7/nvidia_cufft_cu12-11.2.1.3-py3-none-manylinux2014_aarch64.whl", hash = "sha256:5dad8008fc7f92f5ddfa2101430917ce2ffacd86824914c82e28990ad7f00399", size = 211422548 },
@@ -661,9 +671,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.6.1.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12" },
-    { name = "nvidia-cusparse-cu12" },
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-cublas-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "nvidia-cusparse-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/46/6b/a5c33cf16af09166845345275c34ad2190944bcc6026797a39f8e0a282e0/nvidia_cusolver_cu12-11.6.1.9-py3-none-manylinux2014_aarch64.whl", hash = "sha256:d338f155f174f90724bbde3758b7ac375a70ce8e706d70b018dd3375545fc84e", size = 127634111 },
@@ -676,7 +686,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.3.1.170"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/96/a9/c0d2f83a53d40a4a41be14cea6a0bf9e668ffcf8b004bd65633f433050c0/nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_aarch64.whl", hash = "sha256:9d32f62896231ebe0480efd8a7f702e143c98cfaa0e8a76df3386c1ba2b54df3", size = 207381987 },
@@ -1204,9 +1214,9 @@ dependencies = [
     { name = "pillow" },
     { name = "scikit-learn" },
     { name = "scipy" },
-    { name = "torch", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
-    { name = "torch", version = "2.5.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "extra == 'extra-20-correlation-analysis-cpu'" },
-    { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "extra == 'extra-20-correlation-analysis-cu124'" },
+    { name = "torch", version = "2.5.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin' or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "torch", version = "2.5.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform != 'darwin' and extra == 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
+    { name = "torch", version = "2.5.1+cu124", source = { registry = "https://download.pytorch.org/whl/cu124" }, marker = "(sys_platform != 'darwin' and extra == 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
     { name = "tqdm" },
     { name = "transformers" },
 ]
@@ -1361,14 +1371,18 @@ name = "torch"
 version = "2.5.1"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
+    "python_full_version >= '3.12' and sys_platform != 'darwin'",
+    "python_full_version >= '3.12' and sys_platform == 'darwin'",
     "python_full_version >= '3.12'",
+    "python_full_version < '3.12' and sys_platform != 'darwin'",
+    "python_full_version < '3.12' and sys_platform == 'darwin'",
     "python_full_version < '3.12'",
 ]
 dependencies = [
-    { name = "filelock", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
-    { name = "fsspec", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
-    { name = "jinja2", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
-    { name = "networkx", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "filelock", marker = "sys_platform == 'darwin'" },
+    { name = "fsspec", marker = "sys_platform == 'darwin'" },
+    { name = "jinja2", marker = "sys_platform == 'darwin'" },
+    { name = "networkx", marker = "sys_platform == 'darwin'" },
     { name = "nvidia-cublas-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
     { name = "nvidia-cuda-cupti-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
     { name = "nvidia-cuda-nvrtc-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
@@ -1381,10 +1395,10 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
     { name = "nvidia-nvjitlink-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
     { name = "nvidia-nvtx-cu12", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
-    { name = "setuptools", marker = "(python_full_version >= '3.12' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
-    { name = "sympy", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "setuptools", marker = "python_full_version >= '3.12' and sys_platform == 'darwin'" },
+    { name = "sympy", marker = "sys_platform == 'darwin'" },
     { name = "triton", marker = "(platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124')" },
-    { name = "typing-extensions", marker = "(extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
+    { name = "typing-extensions", marker = "sys_platform == 'darwin'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/d1/35/e8b2daf02ce933e4518e6f5682c72fd0ed66c15910ea1fb4168f442b71c4/torch-2.5.1-cp311-cp311-manylinux1_x86_64.whl", hash = "sha256:de5b7d6740c4b636ef4db92be922f0edc425b65ed78c5076c43c42d362a45457", size = 906474467 },
@@ -1402,17 +1416,17 @@ name = "torch"
 version = "2.5.1+cpu"
 source = { registry = "https://download.pytorch.org/whl/cpu" }
 resolution-markers = [
-    "python_full_version >= '3.12'",
-    "python_full_version < '3.12'",
+    "python_full_version >= '3.12' and sys_platform != 'darwin'",
+    "python_full_version < '3.12' and sys_platform != 'darwin'",
 ]
 dependencies = [
-    { name = "filelock" },
-    { name = "fsspec" },
-    { name = "jinja2" },
-    { name = "networkx" },
-    { name = "setuptools", marker = "python_full_version >= '3.12'" },
-    { name = "sympy" },
-    { name = "typing-extensions" },
+    { name = "filelock", marker = "sys_platform != 'darwin'" },
+    { name = "fsspec", marker = "sys_platform != 'darwin'" },
+    { name = "jinja2", marker = "sys_platform != 'darwin'" },
+    { name = "networkx", marker = "sys_platform != 'darwin'" },
+    { name = "setuptools", marker = "python_full_version >= '3.12' and sys_platform != 'darwin'" },
+    { name = "sympy", marker = "sys_platform != 'darwin'" },
+    { name = "typing-extensions", marker = "sys_platform != 'darwin'" },
 ]
 wheels = [
     { url = "https://download.pytorch.org/whl/cpu/torch-2.5.1%2Bcpu-cp311-cp311-linux_x86_64.whl", hash = "sha256:07d7c9e069123d5af08b0cf0013d74f680b2d8be7d9e2cf561a52c90c55d9409" },
@@ -1426,14 +1440,14 @@ name = "torch"
 version = "2.5.1+cu124"
 source = { registry = "https://download.pytorch.org/whl/cu124" }
 resolution-markers = [
-    "python_full_version >= '3.12'",
-    "python_full_version < '3.12'",
+    "python_full_version >= '3.12' and sys_platform != 'darwin'",
+    "python_full_version < '3.12' and sys_platform != 'darwin'",
 ]
 dependencies = [
-    { name = "filelock" },
-    { name = "fsspec" },
-    { name = "jinja2" },
-    { name = "networkx" },
+    { name = "filelock", marker = "sys_platform != 'darwin'" },
+    { name = "fsspec", marker = "sys_platform != 'darwin'" },
+    { name = "jinja2", marker = "sys_platform != 'darwin'" },
+    { name = "networkx", marker = "sys_platform != 'darwin'" },
     { name = "nvidia-cublas-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
     { name = "nvidia-cuda-cupti-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
     { name = "nvidia-cuda-nvrtc-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
@@ -1446,10 +1460,10 @@ dependencies = [
     { name = "nvidia-nccl-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
     { name = "nvidia-nvjitlink-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
     { name = "nvidia-nvtx-cu12", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
-    { name = "setuptools", marker = "python_full_version >= '3.12'" },
-    { name = "sympy" },
+    { name = "setuptools", marker = "python_full_version >= '3.12' and sys_platform != 'darwin'" },
+    { name = "sympy", marker = "sys_platform != 'darwin'" },
     { name = "triton", marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "sys_platform != 'darwin'" },
 ]
 wheels = [
     { url = "https://download.pytorch.org/whl/cu124/torch-2.5.1%2Bcu124-cp311-cp311-linux_x86_64.whl", hash = "sha256:6b2966ede9affe2fd69e0765691ca723ec870e0c34c7761f4d5b8e318383fdaf" },
@@ -1496,7 +1510,7 @@ name = "triton"
 version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "filelock" },
+    { name = "filelock", marker = "(sys_platform != 'darwin' and extra != 'extra-20-correlation-analysis-cpu') or (extra == 'extra-20-correlation-analysis-cpu' and extra == 'extra-20-correlation-analysis-cu124') or (extra != 'extra-20-correlation-analysis-cpu' and extra != 'extra-20-correlation-analysis-cu124')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/86/17/d9a5cf4fcf46291856d1e90762e36cbabd2a56c7265da0d1d9508c8e3943/triton-3.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0f34f6e7885d1bf0eaaf7ba875a5f0ce6f3c13ba98f9503651c1e6dc6757ed5c", size = 209506424 },
@@ -1700,17 +1714,34 @@ wheels = [
 
 [[package]]
 name = "xgboost"
-version = "1.7.3"
+version = "2.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "nvidia-nccl-cu12", marker = "platform_machine != 'aarch64' and sys_platform == 'linux'" },
+    { name = "scipy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c1/57/3d73029d72be166b3334121560bc72ea7d96dd2c6839a3bcad6be2cd6774/xgboost-2.1.0.tar.gz", hash = "sha256:7144980923e76ce741c7b03a14d3bd7514db6de5c7cabe96ba95b229d274f5ca", size = 1086920 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b1/7a/b32a0301632f8c4691d30358628a4ecc12c1f34b7b9b16f02548b1ce5fc6/xgboost-2.1.0-py3-none-macosx_10_15_x86_64.macosx_11_0_x86_64.macosx_12_0_x86_64.whl", hash = "sha256:19d145eb847b070c32342b1bf2d7331c102783e07a484f8b13b7d759d707c6b0", size = 2126422 },
+    { url = "https://files.pythonhosted.org/packages/53/7d/dc4fda290282be0fb45efd4e9ee5bdc225b5690d0f53048a94ec028b6a3b/xgboost-2.1.0-py3-none-macosx_12_0_arm64.whl", hash = "sha256:840a0c6e2119d8c8f260a5dace996ea064a267f62b301a25d7d452488a7ac860", size = 1916074 },
+    { url = "https://files.pythonhosted.org/packages/ed/81/7585f6e4ccf95c14ae18d8d7aeff317c48775a7576ea05c7441e0360a5ab/xgboost-2.1.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:73673c9bb85927db7fe2e3aed6df6d35dba708cfd6767cc63d4ea11dda2dede5", size = 4413252 },
+    { url = "https://files.pythonhosted.org/packages/5e/30/b4b1c071964acefeda3faade5b86e1bf2f428c5713404b212941942e835d/xgboost-2.1.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:43b16205689249d7509daf7a6ab00ad0e6c570b3a9c263cb32b26e39d9477bb3", size = 4498822 },
+    { url = "https://files.pythonhosted.org/packages/78/75/1d207fccc15e7b0deb7b28a5c7acaa7c4e1308821eff8fe9adab95cbb9bc/xgboost-2.1.0-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:cedc2e386e686795735448fd4597533acacc5ba6fb47dd910c204c468b80bb96", size = 4180817 },
+    { url = "https://files.pythonhosted.org/packages/5b/c2/ffab644d6dabb5903a3754bac87a76f3c99828ebe62261975f53472d3035/xgboost-2.1.0-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:b2a456eb0f3d3e8fd8ab37e44ac288292bf8ea8744c294be9fd88713d27af810", size = 153860902 },
+    { url = "https://files.pythonhosted.org/packages/a2/48/d5da8591891327b0faf08179d420fba3893c6134bdd449497c5329e4cb01/xgboost-2.1.0-py3-none-win_amd64.whl", hash = "sha256:74904b91c42524a6c32147fe5718569e78fb65911ff4499b053f81d0964514d4", size = 124896253 },
+]
+
+[[package]]
+name = "xgboost-cpu"
+version = "2.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "scipy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e0/90/59ae0c5969c3ad9aefaa92e5d0806b677763fc45342372de6472c235708f/xgboost-1.7.3.tar.gz", hash = "sha256:d1ee270b67e8fc5b90002e17493d1c910ae6abe856e6d0d86c619c0002e7c7d1", size = 848232 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/83/81/e107883779b1a6cc7d7e14cc4b9d359514a7032f995e192dcca3eb2d1869/xgboost-1.7.3-py3-none-macosx_10_15_x86_64.macosx_11_0_x86_64.macosx_12_0_x86_64.whl", hash = "sha256:4a8985b2a874bd65b31869c325bb80051a2c28cedc16805928e2dcfb55fa25ce", size = 1817182 },
-    { url = "https://files.pythonhosted.org/packages/c4/73/3dd0356bb7f41727639417b4acdb68f6cd60d3c6a5e51a972d5969cfdd3f/xgboost-1.7.3-py3-none-macosx_12_0_arm64.whl", hash = "sha256:86dfc7d7da6fae751dc5c316e862f3395d9eddef5d10622a43d47deceb3257df", size = 1618448 },
-    { url = "https://files.pythonhosted.org/packages/c1/09/cbb2e2bbd40be1e75c5fb0488d79640e5eb1d94a73fb6ebdf88fe0663fd3/xgboost-1.7.3-py3-none-manylinux2014_aarch64.whl", hash = "sha256:457fa32b39b8bfa8a94eea6b932cb4d945c7a41fcd26e69a1f1dd843179eaccc", size = 2642500 },
-    { url = "https://files.pythonhosted.org/packages/62/c9/479450f314a76925dfeac1bf23c53f06bd0f1a2a7185621a5ad1979dd139/xgboost-1.7.3-py3-none-manylinux2014_x86_64.whl", hash = "sha256:fab7aeb508f0dbbd4dc7a4569a80ed07632bca3bd91b5490d043d4a33b138a39", size = 193556167 },
-    { url = "https://files.pythonhosted.org/packages/f7/59/0bcfd5ca413fe4a567adffdca626c2a57add450e180a7c84b493e04c0705/xgboost-1.7.3-py3-none-win_amd64.whl", hash = "sha256:719e13ac9246b297fb93dd4ee772947f6ec693c46f1adb8cdeb3d3e98e5c08fb", size = 89139807 },
+    { url = "https://files.pythonhosted.org/packages/f1/96/3598a70c759b67f0c4b39964edcf06b736599e74060491df46fca60f2287/xgboost_cpu-2.1.3-py3-none-manylinux2014_aarch64.whl", hash = "sha256:5e90c250f4fbfe823b905ff54404705a7109905e14168c2ed4f0f68e728886ac", size = 4441207 },
+    { url = "https://files.pythonhosted.org/packages/bd/b2/eda08a5da7d63f8af53eb51e9c674948c525cd27a7c948aaab372381831e/xgboost_cpu-2.1.3-py3-none-manylinux2014_x86_64.whl", hash = "sha256:a2b4d88b520c042db477099a4587f1d15b3a56940dff34794d222ac50a4890ab", size = 4532321 },
+    { url = "https://files.pythonhosted.org/packages/30/c1/0d59051d023112a9da3e32fc29de4a6fd9059c0ada72fd485a39292504a5/xgboost_cpu-2.1.3-py3-none-win_amd64.whl", hash = "sha256:a29ea9370889534ab60fb4e7f4f0a3947de02608af5666c93c89e1ee22eba4b7", size = 1858758 },
 ]
