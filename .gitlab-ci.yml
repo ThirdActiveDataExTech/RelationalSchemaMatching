@@ -155,6 +155,9 @@ ruff-lint:
         VARIANT: *variants
 
 pyright-lint:
+  before_script:
+    - uv sync --group lint --extra ${VARIANT}
+    - source .venv/bin/activate
   parallel:
     matrix:
       - VARIANT: *variants
@@ -168,6 +171,9 @@ pytest-310:
     - when: never
 
 pytest-311:
+  before_script:
+    - uv sync --group test --extra ${VARIANT}
+    - source .venv/bin/activate
   extends: .unit-test
   parallel:
     matrix:
@@ -192,13 +198,12 @@ app-build-and-push:
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $IMAGE_TAG_DEPS || true  # Pull the deps image for caching
-    - docker pull $IMAGE_TAG_LATEST || true  # Pull the last full image for caching
     - >
       docker build
       --build-arg BUILDKIT_INLINE_CACHE=1
       --build-arg IMAGE=$IMAGE
       --build-arg VARIANT=$VARIANT
-      --cache-from $IMAGE_TAG_LATEST
+      --cache-from $IMAGE_TAG_DEPS
       -t $IMAGE_TAG
       -t $IMAGE_TAG_LATEST .
     - docker push $IMAGE_TAG
