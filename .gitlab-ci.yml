@@ -86,7 +86,7 @@ build-and-push-deps:
     - docker push $IMAGE_TAG_LATEST
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"' # main 브랜치일 때만 실행
-    - changes:
+      changes:
         - uv.lock
         - pyproject.toml
         - uv.Dockerfile
