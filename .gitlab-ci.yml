@@ -74,7 +74,7 @@ build-and-push-deps:
   script: # docker image cache를 사용하여 이미지 빌드, 컨테이너 레지스트리 푸시 진행
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $IMAGE_TAG_LATEST || true # 마지막 이미지 가져오기
-    - |
+    - >
       docker build 
       --build-arg BUILDKIT_INLINE_CACHE=1
       --build-arg VARIANT=$VARIANT
@@ -103,7 +103,7 @@ build-and-push-app:
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $IMAGE_TAG_DEPS || true # Pull the deps image for caching
-    - |
+    - >
       docker build
       --build-arg BUILDKIT_INLINE_CACHE=1
       --build-arg IMAGE=$IMAGE
