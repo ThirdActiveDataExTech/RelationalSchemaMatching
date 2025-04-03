@@ -17,6 +17,7 @@ from loguru import logger
 from pydantic import ValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.cors import CORSMiddleware
+from starlette.routing import BaseRoute, Mount
 from starlette.types import HTTPExceptionHandler
 
 from app import handlers
@@ -46,6 +47,19 @@ async def lifespan(lifespan_app: FastAPI):
     logging.info(f"Shut down {settings.SERVICE_NAME} Service")
 
 
+def routes() -> typing.List[BaseRoute]:
+    """Provide a list of static routes to add when initializing app
+
+    Returns: list of routes
+
+    """
+
+    static = Mount(
+        path="/static",
+        app=StaticFiles(directory=settings.STATIC_DIRECTORY, html=True), name="static")
+    return [static]
+
+
 app = FastAPI(
     lifespan=lifespan,
     title=f"{settings.SERVICE_NAME}",
@@ -55,9 +69,9 @@ app = FastAPI(
     license_info=LICENSE_INFO,
     servers=settings.servers,
     root_path_in_servers=settings.root_path_in_servers,
-    docs_url=None, redoc_url=None  # Serve the static files
+    docs_url=None, redoc_url=None,  # Serve the static files
+    routes=routes()
 )
-app.mount("/static", StaticFiles(directory="static"), name="static")
 app.logger = setup_logging()  # type: ignore
 
 app.include_router(api_router, dependencies=[Depends(get_token_header)])
@@ -82,6 +96,7 @@ async def get_request_id(request: Request):
     """요청 ID 생성
 
     클라이언트가 헤더로 요청한 request id가 따로 있을 경우, 해당 값을 사용하고 없을 경우, uuid 생성
+
     Args:
         request:
 
@@ -113,7 +128,7 @@ def index():
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
     return get_swagger_ui_html(
-        openapi_url=app.openapi_url,  # pyright: ignore
+        openapi_url=app.openapi_url,  # type: ignore
         title=app.title + " - Swagger UI",
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_js_url="/static/swagger-ui-bundle.js",
@@ -129,7 +144,7 @@ async def swagger_ui_redirect():
 @app.get("/redoc", include_in_schema=False)
 async def redoc_html():
     return get_redoc_html(
-        openapi_url=app.openapi_url,  # pyright: ignore
+        openapi_url=app.openapi_url,  # type: ignore
         title=app.title + " - ReDoc",
         redoc_js_url="/static/redoc.standalone.js",
     )
@@ -145,7 +160,7 @@ def health():
 
 @app.get("/info")
 async def info():
-    version: str = VERSION  # type: ignore
+    version: str = VERSION
     if 'Unknown' in version:
         version = version.split('.')[0]
     return {

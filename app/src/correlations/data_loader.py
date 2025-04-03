@@ -10,7 +10,7 @@ def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
     """
 
     Args:
-        path: MUST be a path to a csv, json, jsonl file
+        path: MUST be a path to a csv, json, jsonl, parquet file
         save_as_csv: save the table as a csv file
     Return:
         pd.DataFrame
@@ -22,8 +22,10 @@ def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
         df = csv_from_json(path)
     elif path.endswith(".jsonl"):
         df = csv_from_jsonl(path)
+    elif path.endswith(".parquet"):
+        df = pd.read_parquet(path)
     else:
-        raise Exception(f"[Path: {path}] must end with .csv or .json or .jsonl")
+        raise Exception(f"[Path: {path}] must end with .csv or .json or .jsonl or .parquet")
 
     if save_as_csv:
         save_pth = re.sub(r'\.jsonl?', '.csv', path)

@@ -42,24 +42,25 @@ include:
 ruff-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: ["py311"]
+      - PYTHON_VERSION: [ "py311" ]
         VARIANT: *variants
 
 pyright-lint:
   parallel:
     matrix:
-      - PYTHON_VERSION: ["3.11"]
+      - PYTHON_VERSION: [ "3.11" ]
         VARIANT: *variants
 
 # override tests
 pytest:
   before_script:
     - echo "Running before_script tasks for $CI_JOB_NAME";
-    - uv sync --group test
+    - uv sync --group test --extra ${VARIANT}
     - source .venv/bin/activate
   parallel:
     matrix:
-      - VARIANT: *variants
+      - PYTHON_VERSION: [ "3.11" ]
+        VARIANT: *variants
 
 # override dependency build
 build-and-push-deps:
@@ -80,8 +81,7 @@ build-and-push-deps:
       --build-arg VARIANT=$VARIANT
       --cache-from $IMAGE_TAG_CACHE 
       -t $IMAGE_TAG 
-      -t $IMAGE_TAG_LATEST 
-      -f uv.Dockerfile .
+      -t $IMAGE_TAG_LATEST .
     - docker push $IMAGE_TAG
     - docker push $IMAGE_TAG_LATEST
   rules:

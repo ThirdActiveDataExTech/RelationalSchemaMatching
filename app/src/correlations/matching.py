@@ -17,7 +17,8 @@ from app.src.util import time_logger
 
 @time_logger
 def schema_matching(
-    l_table_path: str, r_table_path: str, model: MatchingModel, strategy: Strategy, threshold: Optional[float] = None
+        l_table_path: str, r_table_path: str, model: MatchingModel, strategy: Strategy,
+        threshold: Optional[float] = None
 ):
     """
 
@@ -63,7 +64,7 @@ def preprocess_table(table_path: str) -> pd.DataFrame:
 
 
 def predict_inference(
-    features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
+        features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
 ) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
     """
     load model and predict on features using GPU if available
@@ -124,11 +125,11 @@ def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: Li
 
 
 def get_pred_labels(
-    table1_df: pd.DataFrame,
-    table2_df: pd.DataFrame,
-    preds_matrix: pd.DataFrame,
-    pred_labels_list: List[NDArray[Any]],
-    strategy: Strategy = Strategy.MANY_TO_MANY,
+        table1_df: pd.DataFrame,
+        table2_df: pd.DataFrame,
+        preds_matrix: pd.DataFrame,
+        pred_labels_list: List[NDArray[Any]],
+        strategy: Strategy = Strategy.MANY_TO_MANY,
 ):
     # do flatten and get mean
     pred_labels = np.mean(np.array(pred_labels_list), axis=0)
