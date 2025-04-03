@@ -15,6 +15,21 @@ from app.schemas.response import APIResponseModel
 from app.version import VERSION
 
 
+class ExternalSchemaMatchingRequestModel(BaseModel):
+    l_table: str = Field(description="ltable path")
+    r_table: str = Field(description="rtable path")
+    result_path: str = Field(description="result path")
+    truth_json: Optional[str] = Field(description="truth json", default=None)
+    model: str = Field(description="model path", default="initial")
+    strategy: str = Field(description="strategy", default="many_to_many")
+    threshold: Optional[float] = Field(description="threshold", default=None)
+    endpoint_url: Optional[str] = Field(description="MinIO endpoint url", default=None)
+    access_key: Optional[str] = Field(description="access key", default=None)
+    secret_key: Optional[str] = Field(description="secret key", default=None)
+    region_name: Optional[str] = Field(description="region name", default=None)
+    bucket: str = Field(description="bucket name")
+
+
 class SchemaMatchingRequestModel(BaseModel):
     l_table: str = Field(description="ltable path")
     r_table: str = Field(description="rtable path")

@@ -11,7 +11,7 @@ maintainers = [
 ]
 description = "Column to Column Correlation Analysis"
 readme = "README.md"
-keywords = ["python", "fastapi", "pytest", "ruff", "pyright", "docker", "gunicorn", "poetry"]
+keywords = ["python", "fastapi", "pytest", "ruff", "pyright", "docker", "gunicorn", "uv"]
 license = { text = "LICENSE" }
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -30,7 +30,7 @@ excludes = [".gitlab-ci.yml"]
 
 requires-python = "<3.13,>=3.11"
 dependencies = [
-    "fastapi[standard]<1.0.0,>=0.114.1",
+    "fastapi[standard]<=0.115.0",
     "loguru<1.0.0,>=0.7.2",
     "pyyaml<7.0.0,>=6.0.2",
     "pydantic-settings<3.0.0,>=2.5.2",
@@ -43,6 +43,8 @@ dependencies = [
     "validators<1.0.0,>=0.34.0",
     "pandas-stubs<3.0.0.0,>=2.2.3.241126",
     "sentence-transformers==3.2.1",
+    "boto3>=1.37.24",
+    "pyarrow>=19.0.1",
 ]
 
 [project.optional-dependencies]
