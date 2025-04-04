@@ -115,5 +115,5 @@ class S3Connector:
             logging.info(f"File '{object_name}' successfully downloaded from {bucket_name} to {file_path}")
             return True
         except Exception as e:
-            logging.error(f"Error downloading file: {e}")
+            logging.error(f"{__name__}: Error downloading file: {e}")
             return False

@@ -12,38 +12,35 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 from app.schemas.response import APIResponseModel
+from app.src.correlations.enums import Strategy
 from app.version import VERSION
 
 
-class ExternalSchemaMatchingRequestModel(BaseModel):
-    l_table: str = Field(description="ltable path")
-    r_table: str = Field(description="rtable path")
-    result_path: str = Field(description="result path")
-    truth_json: Optional[str] = Field(description="truth json", default=None)
+class SchemaMatchingRequestModel(BaseModel):
+    # 사용할 데이터
+    l_table: str = Field(..., description="`s3://{BUCKET}/{KEY}` 또는 로컬 파일 경로")
+    r_table: str = Field(..., description="`s3://{BUCKET}/{KEY}` 또는 로컬 파일 경로")
+
+    # 결과 반환 관련 파라미터
+    truth_json: Optional[str] = Field(description="l_table, r_table에 대한 Groun Truth. `s3://{BUCKET}/{KEY}` 또는 로컬 파일 경로",
+                                      default=None)
+
+    # 하이퍼파라미터
     model: str = Field(description="model path", default="initial")
-    strategy: str = Field(description="strategy", default="many_to_many")
+    strategy: str = Field(description="strategy", default=str(Strategy.MANY_TO_MANY))
     threshold: Optional[float] = Field(description="threshold", default=None)
-    endpoint_url: Optional[str] = Field(description="MinIO endpoint url", default=None)
+
+    # S3/MinIO 관련 파라미터 (모두 Optional로 설정)
+    endpoint_url: Optional[str] = Field(description="S3/MinIO endpoint url", default=None)
     access_key: Optional[str] = Field(description="access key", default=None)
     secret_key: Optional[str] = Field(description="secret key", default=None)
     region_name: Optional[str] = Field(description="region name", default=None)
-    bucket: str = Field(description="bucket name")
-
-
-class SchemaMatchingRequestModel(BaseModel):
-    l_table: str = Field(description="ltable path")
-    r_table: str = Field(description="rtable path")
-    result_path: str = Field(description="result path")
-    truth_json: Optional[str] = Field(description="truth json")
-    model: str = Field(description="model path", default="initial")
-    strategy: str = Field(description="strategy", default="many_to_many")
-    threshold: Optional[float] = Field(description="threshold", default=None)
 
 
 class DatasetMatchingRequestModel(BaseModel):
     dataset: str = Field(description="dataset path")
     model: str = Field(description="model path", default="initial")
-    strategy: str = Field(description="strategy", default="many_to_many")
+    strategy: str = Field(description="strategy", default=str(Strategy.MANY_TO_MANY))
     threshold: Optional[float] = Field(description="threshold", default=None)
 
 
