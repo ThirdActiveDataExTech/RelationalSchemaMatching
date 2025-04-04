@@ -59,9 +59,9 @@ cu124 = [
 
 [dependency-groups]
 lint = [
-    "ruff<1.0.0,>=0.6.4",
-    "pyright<2.0.0,>=1.1.380",
-    "pre-commit<5.0.0,>=4.0.1",
+    "ruff>=0.6.4,<1.0.0",
+    "pyright>=1.1.397",
+    "pre-commit>=4.0.1,<5.0.0",
 ]
 test = [
     "pytest<9.0.0,>=8.3.3",
@@ -137,12 +137,14 @@ exclude = [
     '.pytest_cache',
     'docs',
     'venv',
+    '.venv',
     'tests',
     'build',
     'dist',
     'pypi',
     'logs',
-    'gunicorn.conf.py'
+    'gunicorn.conf.py',
+    '.cache'
 ]
 
 [tool.coverage.run]

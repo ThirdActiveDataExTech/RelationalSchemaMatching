@@ -1,9 +1,15 @@
 import json
+import logging
+import os
 import re
 from collections import defaultdict
-from typing import Any
+from typing import Any, Optional
+from urllib.parse import urlparse
 
 import pandas as pd
+
+from app.src.correlations.data_cleaner import drop_na_columns
+from app.src.fetcher.s3 import S3Connector
 
 
 def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
@@ -85,3 +91,39 @@ def find_all_keys_values(json_data: Any, parent_key: str) -> defaultdict[Any, li
             key_values[full_key].append(value)
 
     return key_values
+
+
+def check_from_s3(data_path: str) -> bool:
+    # 경로 검증 정규식 (AWS S3 명명 규칙 반영)
+    s3_path_regex = r"^s3://(?P<bucket>[a-z0-9.-]{3,63})/(?P<key>.+)$"
+
+    return False if re.match(s3_path_regex, data_path) is None else True
+
+
+def load_from_s3(s3_uri: str, req_path: str, endpoint_url: Optional[str] = None, access_key: Optional[str] = None,
+                 secret_key: Optional[str] = None, region_name: Optional[str] = None):
+    parsed = urlparse(s3_uri)
+
+    bucket_name = parsed.netloc
+    object_key = parsed.path.lstrip("/")
+
+    local_file = os.path.basename(object_key)
+    local_path = os.path.join(req_path, local_file)
+
+    try:
+        s3_connector = S3Connector(endpoint_url=endpoint_url, access_key=access_key, secret_key=secret_key,
+                                   region_name=region_name)
+
+        if not s3_connector.download_file(bucket_name=bucket_name, object_name=object_key, file_path=local_path):
+            raise Exception("l_table download failed")
+
+        return local_path
+    except Exception as e:
+        raise Exception(f"{__name__}: `{s3_uri=}` download failed, {e=}")
+
+
+def preprocess_table(table_path: str) -> pd.DataFrame:
+    logging.debug(f"trying to read {table_path}")
+    df = read_table(table_path)
+    df = drop_na_columns(df)
+    return df

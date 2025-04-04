@@ -1,15 +1,12 @@
-import logging
 import os
 from typing import Any, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-import xgboost as xgb
+import xgboost as xgb  # type: ignore
 from numpy.typing import NDArray
-from pandas._typing import Scalar
+from pandas._typing import Scalar  # type: ignore
 
-from app.src.correlations.data_cleaner import drop_na_columns
-from app.src.correlations.data_loader import read_table
 from app.src.correlations.enums import MatchingModel, Strategy
 from app.src.correlations.relation_features import create_feature_matrix_inference
 from app.src.util import time_logger
@@ -17,14 +14,14 @@ from app.src.util import time_logger
 
 @time_logger
 def schema_matching(
-        l_table_path: str, r_table_path: str, model: MatchingModel, strategy: Strategy,
+        l_table: pd.DataFrame, r_table: pd.DataFrame, model: MatchingModel, strategy: Strategy,
         threshold: Optional[float] = None
 ):
-    """
+    """두 테이블로 스키마 매칭을 수행합니다.
 
     Args:
-        l_table_path: path to l_table
-        r_table_path: path to r_table
+        l_table: l_table DataFrame
+        r_table: r_table DataFrame
         model: Schema Matching XGBoost Model
         strategy: matching strategy. Check app.src.correlations.enums.Strategy.
         threshold: correlation value threshold.
@@ -33,34 +30,23 @@ def schema_matching(
         schema matching result
     """
 
-    # read tables.
-    l_df = preprocess_table(l_table_path)
-    r_df = preprocess_table(r_table_path)
-
     # make 2 features.
     # 1. self features for each tables
     # 2. relational features
     # TODO: separate 2 step?
-    features = create_feature_matrix_inference(l_df, r_df)
+    features = create_feature_matrix_inference(l_table, r_table)
 
     # exact predict w XGBoost model
     preds, pred_labels_list = predict_inference(features, model, threshold)
 
     # post process
-    df_pred = postprocess_pred(l_df, r_df, preds)
+    df_pred = postprocess_pred(l_table, r_table, preds)
 
     # calculate metrics
-    df_pred_labels = get_pred_labels(l_df, r_df, df_pred, pred_labels_list, strategy)
+    df_pred_labels = get_pred_labels(l_table, r_table, df_pred, pred_labels_list, strategy)
     predicted_tuples = get_predicted_tuples(df_pred, df_pred_labels)
 
     return df_pred, df_pred_labels, predicted_tuples
-
-
-def preprocess_table(table_path: str) -> pd.DataFrame:
-    logging.debug(f"trying to read {table_path}")
-    df = read_table(table_path)
-    df = drop_na_columns(df)
-    return df
 
 
 def predict_inference(
@@ -108,6 +94,8 @@ def predict_inference(
 
 
 def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: List[NDArray[Any]]) -> pd.DataFrame:
+    """원본 데이터셋과 매칭 결과를 결합해 반환합니다."""
+
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
 

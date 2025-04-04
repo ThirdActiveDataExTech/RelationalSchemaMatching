@@ -50,7 +50,7 @@ $ poetry shell
 1. 테스트 데이터 분석 요청
 
     ```bash
-    curl -X 'GET' \
+    curl -X 'POST' \
       'http://localhost:8000/correlations/dataset' \
       -H 'accept: application/json' \
       -H 'x-token: wisenut' \
@@ -89,7 +89,7 @@ $ poetry shell
     Precision: 0.26666666666666666
     Recall: 1.0
     F1 Score: 0.4210526315789474
-    24-11-29 14:17:27.868 | INFO     | uvicorn.protocols.http.httptools_impl:send:468 - 19348 31232  127.0.0.1:45133 - "GET /correlations/dataset HTTP/1.1" 200
+    24-11-29 14:17:27.868 | INFO     | uvicorn.protocols.http.httptools_impl:send:468 - 19348 31232  127.0.0.1:45133 - "POST /correlations/dataset HTTP/1.1" 200
     ```
 
 
@@ -99,7 +99,7 @@ $ poetry shell
 1. 전체 확률 테이블
 
     ```shell
-    curl -X 'GET' \
+    curl -X 'POST' \
       'http://localhost:8000/correlations/dataset' \
       -H 'accept: application/json' \
       -H 'x-token: wisenut' \
@@ -112,7 +112,7 @@ $ poetry shell
 2. 왼쪽 테이블 특정 컬럼 확률 테이블
 
     ```shell
-    curl -X 'GET' \
+    curl -X 'POST' \
       'http://localhost:8000/correlations/dataset?l_column=Cast' \
       -H 'accept: application/json' \
       -H 'x-token: wisenut' \
@@ -125,7 +125,7 @@ $ poetry shell
 3. 오른쪽 테이블 특정 컬럼 확률 테이블
 
     ```shell
-    curl -X 'GET' \
+    curl -X 'POST' \
       'http://localhost:8000/correlations/dataset?r_column=Country' \
       -H 'accept: application/json' \
       -H 'x-token: wisenut' \
@@ -138,7 +138,7 @@ $ poetry shell
 4. 양 테이블 특정 컬럼 확률
 
     ```shell
-    curl -X 'GET' \
+    curl -X 'POST' \
       'http://localhost:8000/correlations/dataset?l_column=RatingCount&r_column=RatingValue' \
       -H 'accept: application/json' \
       -H 'x-token: wisenut' \
