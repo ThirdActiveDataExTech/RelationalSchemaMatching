@@ -29,7 +29,6 @@ def schema_matching(
     Returns:
         schema matching result
     """
-
     # make 2 features.
     # 1. self features for each tables
     # 2. relational features
@@ -52,8 +51,7 @@ def schema_matching(
 def predict_inference(
         features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
 ) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
-    """
-    load model and predict on features using GPU if available
+    """Load model and predict on features using GPU if available
     """
     preds = []
     pred_labels_list = []
@@ -95,7 +93,6 @@ def predict_inference(
 
 def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: List[NDArray[Any]]) -> pd.DataFrame:
     """원본 데이터셋과 매칭 결과를 결합해 반환합니다."""
-
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
 

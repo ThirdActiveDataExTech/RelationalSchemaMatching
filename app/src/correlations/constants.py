@@ -1,6 +1,5 @@
 class Constants:
-    """
-    패키지 내에서 공통으로 사용되는 상수
+    """패키지 내에서 공통으로 사용되는 상수
     """
 
     # TEXT CONSTANTS

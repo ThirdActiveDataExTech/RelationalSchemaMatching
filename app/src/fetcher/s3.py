@@ -7,8 +7,7 @@ from botocore.client import Config, BaseClient
 
 
 class S3Connector:
-    """
-    AWS S3 및 MinIO와 같은 S3 호환 스토리지 서비스에 대한 연결을 처리하는 클래스입니다.
+    """AWS S3 및 MinIO와 같은 S3 호환 스토리지 서비스에 대한 연결을 처리하는 클래스입니다.
     파일 업로드 및 다운로드와 같은 일반적인 작업을 위한 메서드를 제공합니다.
     """
 
@@ -20,8 +19,7 @@ class S3Connector:
             region_name: Optional[str] = None,
             signature_version: str = 's3v4'
     ):
-        """
-        연결 매개변수를 사용하여 커넥터를 초기화합니다.
+        """연결 매개변수를 사용하여 커넥터를 초기화합니다.
 
         Args:
             endpoint_url: S3 호환 서비스의 URL (MinIO의 경우 필수, AWS S3의 경우 선택 사항)
@@ -61,8 +59,7 @@ class S3Connector:
         return s3_client, s3_resource
 
     def upload_file(self, file_path: str, bucket_name: str, object_name: Optional[str] = None, replace: bool = False):
-        """
-        S3 호환 스토리지에 파일을 업로드합니다.
+        """S3 호환 스토리지에 파일을 업로드합니다.
 
         Args:
             file_path: 업로드할 로컬 파일 경로
@@ -99,8 +96,7 @@ class S3Connector:
             return False
 
     def download_file(self, bucket_name: str, object_name: str, file_path: str):
-        """
-        S3 호환 스토리지에서 파일을 다운로드합니다.
+        """S3 호환 스토리지에서 파일을 다운로드합니다.
 
         Args:
             bucket_name: 소스 버킷 이름
