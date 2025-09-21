@@ -34,3 +34,6 @@ database.db
 *~
 .*.sw?
 .cache
+
+# correlation output
+tmp/
