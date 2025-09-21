@@ -7,9 +7,7 @@ from botocore.client import Config, BaseClient
 
 
 class S3Connector:
-    """AWS S3 및 MinIO와 같은 S3 호환 스토리지 서비스에 대한 연결을 처리하는 클래스입니다.
-    파일 업로드 및 다운로드와 같은 일반적인 작업을 위한 메서드를 제공합니다.
-    """
+    """AWS S3 및 MinIO와 같은 S3 호환 스토리지 서비스에 대한 연결을 처리하는 클래스입니다. 파일 업로드 및 다운로드와 같은 일반적인 작업을 위한 메서드를 제공합니다."""
 
     def __init__(
             self,

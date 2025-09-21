@@ -110,11 +110,10 @@ def get_output_feature_from_row(
 
 def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> NDArray[Any]:
     """Create feature matrix for inference.
-
+    
     Notes:
         Read data from 2 table dataframe, mapping file path and make relational features and labels as a matrix.
     """
-
     l_table_features = make_self_features_from(l_df)
     # np.savetxt("l_table_features.csv", l_table_features, fmt="%s", delimiter=",")
 
