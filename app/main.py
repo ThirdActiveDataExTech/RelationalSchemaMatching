@@ -35,11 +35,6 @@ print(json.dumps(
      "HOME_PATH": os.getcwd(), "COMMAND": ' '.join(sys.argv),
      "Usage": "uvicorn app.main:app --host 0.0.0.0 --port <port number>"}, ensure_ascii=False))
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)-8s | %(module)s:%(funcName)s:%(lineno)d | %(message)s",
-    datefmt="%y-%m-%d %H:%M:%S.%f"
-)
 
 @asynccontextmanager
 async def lifespan(lifespan_app: FastAPI):
