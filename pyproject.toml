@@ -59,7 +59,7 @@ cu124 = [
 
 [dependency-groups]
 lint = [
-    "ruff>=0.6.4,<1.0.0",
+    "ruff>=0.11.6",
     "pyright>=1.1.397",
     "pre-commit>=4.0.1,<5.0.0",
 ]
@@ -116,8 +116,20 @@ exclude = [
     'gunicorn.conf.py'
 ]
 target-version = "py311"
+
 [tool.ruff.lint]
-ignore = ['W']
+select = [
+    "D",    # pydocstyle <https://docs.astral.sh/ruff/rules/#pydocstyle-d>
+    "FAST"  # FastAPI <https://docs.astral.sh/ruff/rules/#fastapi-fast>
+]
+ignore = ['W', "D100", "D104", "D414", "D415", "D417"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.extend-per-file-ignores]
+"!app/src/**.py" = ["D"]    # apply `D` rules only in app/src directory
+
 [tool.ruff.lint.mccabe]
 max-complexity = 10
 
