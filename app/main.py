@@ -137,7 +137,7 @@ def index():
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
     return get_swagger_ui_html(
-        openapi_url=app.openapi_url,
+        openapi_url=app.openapi_url,  # pyright: ignore
         title=app.title + " - Swagger UI",
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_js_url="/static/swagger-ui-bundle.js",
@@ -145,7 +145,7 @@ async def custom_swagger_ui_html():
     )
 
 
-@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
+@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # pyright: ignore
 async def swagger_ui_redirect():
     return get_swagger_ui_oauth2_redirect_html()
 
@@ -153,7 +153,7 @@ async def swagger_ui_redirect():
 @app.get("/redoc", include_in_schema=False)
 async def redoc_html():
     return get_redoc_html(
-        openapi_url=app.openapi_url,
+        openapi_url=app.openapi_url,  # pyright: ignore
         title=app.title + " - ReDoc",
         redoc_js_url="/static/redoc.standalone.js",
     )
