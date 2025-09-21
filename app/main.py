@@ -10,7 +10,7 @@ from uuid import uuid4
 import uvicorn
 from fastapi import Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.openapi.docs import get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html, get_redoc_html
+from fastapi.openapi.docs import get_redoc_html, get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from loguru import logger
@@ -23,11 +23,11 @@ from starlette.types import HTTPExceptionHandler
 from app import handlers
 from app.api.api_router import api_router
 from app.config import settings
-from app.constants import DESCRIPTION, SUMMARY, LICENSE_INFO
+from app.constants import DESCRIPTION, LICENSE_INFO, SUMMARY
 from app.dependencies import get_token_header
 from app.exceptions.base import ApplicationError
 from app.log import setup_logging
-from app.version import GIT_REVISION, GIT_BRANCH, BUILD_DATE, GIT_SHORT_REVISION, VERSION, get_current_datetime
+from app.version import BUILD_DATE, GIT_BRANCH, GIT_REVISION, GIT_SHORT_REVISION, VERSION, get_current_datetime
 
 # 앱 구동 성공 여부와 상관없이 앱 정보 출력
 print(json.dumps(
@@ -74,6 +74,15 @@ app = FastAPI(
 )
 app.logger = setup_logging()  # type: ignore
 
+# 전역 예외 처리를 위한 최상위 미들웨어 추가 (가장 먼저 등록)
+@app.middleware("http")
+async def catch_unhandled_exceptions(request: Request, call_next):
+    try:
+        return await call_next(request)
+    except Exception as exc:
+        # 처리되지 않은 예외를 global_exception_handler로 전달
+        return await handlers.global_exception_handler(request, exc)
+
 app.include_router(api_router, dependencies=[Depends(get_token_header)])
 
 app.add_exception_handler(StarletteHTTPException, typing.cast(HTTPExceptionHandler, handlers.http_exception_handler))
@@ -95,13 +104,11 @@ async def add_process_time_header(request: Request, call_next):
 async def get_request_id(request: Request):
     """요청 ID 생성
 
-    클라이언트가 헤더로 요청한 request id가 따로 있을 경우, 해당 값을 사용하고 없을 경우, uuid 생성
-
-    Args:
-        request:
+    X-Request-ID 헤더 우선, 없으면 UUID 생성.
+    로그 추적 및 디버깅용.
 
     Returns:
-
+        str: 요청 ID (클라이언트 제공 또는 UUID)
     """
     x_request_id = request.headers.get('X-Request-ID')
     request_id = x_request_id if x_request_id else uuid4().hex
@@ -110,13 +117,15 @@ async def get_request_id(request: Request):
 
 @app.middleware("http")
 async def add_request_id(request: Request, call_next):
+    """요청 ID 미들웨어
+
+    고유 ID 부여 및 로그 컨텍스트 추가.
+    응답 헤더로 반환하여 클라이언트 추적 지원.
+    """
     request_id = await get_request_id(request)
     with logger.contextualize(request_id=request_id):
-        # extra[request_id]가 uuid 로 부여됨
-        # logging.debug(f"Start Request")   # 요청 로직 시작: 필요할 경우 사용
-        response = await call_next(request)  # 응답까지 로그에 생성
-        response.headers['X-Request-ID'] = request_id  # response.header 에 추가 --> client 가 로그 추적 가능
-        # logging.debug(f"End Request") # 요청 로직 종료: 필요할 경우 사용
+        response = await call_next(request)
+        response.headers['X-Request-ID'] = request_id
     return response
 
 
@@ -128,7 +137,7 @@ def index():
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
     return get_swagger_ui_html(
-        openapi_url=app.openapi_url,  # type: ignore
+        openapi_url=app.openapi_url,  # pyright: ignore
         title=app.title + " - Swagger UI",
         oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
         swagger_js_url="/static/swagger-ui-bundle.js",
@@ -136,7 +145,7 @@ async def custom_swagger_ui_html():
     )
 
 
-@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # type: ignore
+@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)  # pyright: ignore
 async def swagger_ui_redirect():
     return get_swagger_ui_oauth2_redirect_html()
 
@@ -144,7 +153,7 @@ async def swagger_ui_redirect():
 @app.get("/redoc", include_in_schema=False)
 async def redoc_html():
     return get_redoc_html(
-        openapi_url=app.openapi_url,  # type: ignore
+        openapi_url=app.openapi_url,  # pyright: ignore
         title=app.title + " - ReDoc",
         redoc_js_url="/static/redoc.standalone.js",
     )

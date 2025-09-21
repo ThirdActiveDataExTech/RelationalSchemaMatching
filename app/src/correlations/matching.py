@@ -29,7 +29,6 @@ def schema_matching(
     Returns:
         schema matching result
     """
-
     # make 2 features.
     # 1. self features for each tables
     # 2. relational features
@@ -52,9 +51,7 @@ def schema_matching(
 def predict_inference(
         features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
 ) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
-    """
-    load model and predict on features using GPU if available
-    """
+    """Load model and predict on features using GPU if available."""
     preds = []
     pred_labels_list = []
     model_files = os.listdir(model.path)
@@ -95,7 +92,6 @@ def predict_inference(
 
 def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: List[NDArray[Any]]) -> pd.DataFrame:
     """원본 데이터셋과 매칭 결과를 결합해 반환합니다."""
-
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
 
@@ -119,6 +115,18 @@ def get_pred_labels(
         pred_labels_list: List[NDArray[Any]],
         strategy: Strategy = Strategy.MANY_TO_MANY,
 ):
+    """Get prediction labels based on strategy.
+
+    Args:
+        table1_df: Left table DataFrame.
+        table2_df: Right table DataFrame.
+        preds_matrix: Prediction matrix.
+        pred_labels_list: List of prediction labels.
+        strategy: Matching strategy.
+
+    Returns:
+        pd.DataFrame: Prediction labels matrix.
+    """
     # do flatten and get mean
     pred_labels = np.mean(np.array(pred_labels_list), axis=0)
 
@@ -159,6 +167,15 @@ def get_pred_labels(
 
 
 def get_predicted_tuples(preds_matrix: pd.DataFrame, pred_labels_matrix: pd.DataFrame) -> List[Tuple[str, str, Scalar]]:
+    """Get predicted tuples from prediction matrices.
+
+    Args:
+        preds_matrix: Prediction values matrix.
+        pred_labels_matrix: Prediction labels matrix.
+
+    Returns:
+        List[Tuple[str, str, Scalar]]: List of predicted column matches.
+    """
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
         (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])

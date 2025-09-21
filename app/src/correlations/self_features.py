@@ -25,7 +25,7 @@ EPSILON = 1e-12
 
 
 def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
-    """
+    """Extract features from table columns.
 
     Returns:
          np.ndarray: Extracts features from the given table path and returns a feature table.
@@ -54,14 +54,14 @@ def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
 
 # REMINDER: use ONLY data_list as Column
 def extract_features(data_list: List[Any]) -> NDArray[Any]:
-    """
+    """Extract features from the given data.
 
     Args:
         data_list (List[Any]): data can be column or list.
+
     Returns:
         np.array: Extract features from the given data.
     """
-
     # Drop outlier columns
     data_list = [d for d in data_list if d == d and d != "--"]
 
@@ -84,7 +84,7 @@ def extract_features(data_list: List[Any]) -> NDArray[Any]:
 
 
 def extract_numeric(data_list: List[Any]) -> List[float]:
-    """
+    """Extract Numeric from the given data.
 
     Notes:
         unit 간 우선순위가 존재하지 않아, "3亿5万" 같은 케이스에서 亿 대신 万가 사용되어 원본 값과 크게 차이 날 수 있음.
@@ -135,12 +135,12 @@ def extract_numeric(data_list: List[Any]) -> List[float]:
 
 
 def calculate_numeric_features(data_list: List[float]) -> NDArray[Any]:
-    """
+    """Calculate numeric features from given data.
 
     Returns:
-        np.array: Extracts numeric features from the given data.
+    np.array: Extracts numeric features from the given data.
 
-        Including Mean, Min, Max, Variance, Standard Deviation, and the number of unique values.
+    Including Mean, Min, Max, Variance, Standard Deviation, and the number of unique values.
     """
     mean = np.mean(data_list)
     min = np.min(data_list)
@@ -152,10 +152,10 @@ def calculate_numeric_features(data_list: List[float]) -> NDArray[Any]:
 
 
 def calculate_character_features(data_list: List[Any]) -> NDArray[Any]:
-    """
+    """Calculate character features from given data.
 
     Returns:
-         np.array: Extracts character features from the given data.
+    np.array: Extracts character features from the given data.
     """
     whitespace_ratios = []  # Ratio of whitespace to length
     punctuation_ratios = []  # Ratio of punctuation to length
@@ -198,7 +198,7 @@ def calculate_character_features(data_list: List[Any]) -> NDArray[Any]:
 
 
 def deep_embedding(data_list: List[Any]) -> NDArray[Any]:
-    """
+    """Get deep embedding from given data.
 
     Notes:
         Deep Embedding Feature 는 data 를 SentenceTransformer 로 encoding 후 값들의 mean 을 취함.
@@ -222,11 +222,11 @@ def deep_embedding(data_list: List[Any]) -> NDArray[Any]:
 
 
 def get_datatype_feature(data_type: DataTypes) -> NDArray[Any]:
-    """
+    """데이터 유형 피쳐 생성.
 
-    Returns:  Make data type feature one hot encoding
+    Returns:
+    Make data type feature one hot encoding
     """
-
     # TODO: rely on enum len. when datatypes changes make XGBoost Length err.
     data_type_feature = np.zeros(len(DataTypes) - 1)
     data_type_feature[data_type.value] = 1
@@ -235,12 +235,11 @@ def get_datatype_feature(data_type: DataTypes) -> NDArray[Any]:
 
 
 def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
-    """
+    """Numeric feature 생성.
 
     Returns:
-        np.ndarray: Get numeric features if the data MAINLY_NUMERIC or STRICT_NUMERIC, else invalid values matrix.
+    np.ndarray: Get numeric features if the data MAINLY_NUMERIC or STRICT_NUMERIC, else invalid values matrix.
     """
-
     if data_type == DataTypes.MAINLY_NUMERIC or data_type == DataTypes.STRICT_NUMERIC:
         data_numeric = extract_numeric(data_list)
         numeric_features = calculate_numeric_features(data_numeric)
@@ -252,10 +251,10 @@ def get_data_numeric_feature(data_list: List[Any], data_type: DataTypes) -> NDAr
 
 
 def get_character_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
-    """
+    """Character feature 생성.
 
     Returns:
-        np.ndarray: Give character features if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
+    np.ndarray: Give character features if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
     """
     if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
         character_feature = calculate_character_features(data_list)
@@ -266,12 +265,11 @@ def get_character_feature(data_list: List[Any], data_type: DataTypes) -> NDArray
 
 
 def get_deep_embedding_feature(data_list: List[Any], data_type: DataTypes) -> NDArray[Any]:
-    """
+    """Deep Embedding feature 생성.
 
     Returns:
-        np.ndarray: Give deep embeddings if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
+    np.ndarray: Give deep embeddings if the data is STRING or MAINLY_NUMERIC, else invalid values matrix.
     """
-
     if data_type == DataTypes.STRING or data_type == DataTypes.MAINLY_NUMERIC:
         deep_embedding_feature = deep_embedding(data_list)
     else:

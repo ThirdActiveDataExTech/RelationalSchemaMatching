@@ -5,8 +5,7 @@ import pandas as pd
 
 
 def drop_na_columns(table_df: pd.DataFrame) -> pd.DataFrame:
-    """Drop columns that have zero instances or all columns are "--".
-    """
+    """Drop columns that have zero instances or all columns are "--"."""
     original_columns = table_df.columns
     for column in original_columns:
         column_data = table_df[column].replace("--", pd.NA).dropna()

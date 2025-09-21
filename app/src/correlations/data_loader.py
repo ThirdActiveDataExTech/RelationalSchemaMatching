@@ -13,7 +13,7 @@ from app.src.fetcher.s3 import S3Connector
 
 
 def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
-    """
+    """Read table from various file formats.
 
     Args:
         path: MUST be a path to a csv, json, jsonl, parquet file
@@ -41,6 +41,14 @@ def read_table(path: str, save_as_csv: bool = False) -> pd.DataFrame:
 
 
 def csv_from_json(json_path: str) -> pd.DataFrame:
+    """Convert JSON file to DataFrame.
+
+    Args:
+        json_path: Path to JSON file.
+
+    Returns:
+        pd.DataFrame: Converted DataFrame.
+    """
     with open(json_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
@@ -52,6 +60,14 @@ def csv_from_json(json_path: str) -> pd.DataFrame:
 
 
 def csv_from_jsonl(jsonl_path: str) -> pd.DataFrame:
+    """Convert JSONL file to DataFrame.
+
+    Args:
+        jsonl_path: Path to JSONL file.
+
+    Returns:
+        pd.DataFrame: Converted DataFrame.
+    """
     data = [json.loads(line) for line in open(jsonl_path)]
 
     # need parent key, use TOPLEVEL
@@ -67,8 +83,7 @@ def csv_from_jsonl(jsonl_path: str) -> pd.DataFrame:
 
 
 def find_all_keys_values(json_data: Any, parent_key: str) -> defaultdict[Any, list]:
-    """
-    모든 key, value recursive 하게 순회
+    """모든 key, value recursive 하게 순회
 
     Find all keys that don't have list or dictionary values and their values.
     Key should be saved with its parent key like "parent-key.key".
@@ -94,6 +109,14 @@ def find_all_keys_values(json_data: Any, parent_key: str) -> defaultdict[Any, li
 
 
 def check_from_s3(data_path: str) -> bool:
+    """Check if the path is a valid S3 URI.
+
+    Args:
+        data_path: Path to check.
+
+    Returns:
+        bool: True if valid S3 URI, False otherwise.
+    """
     # 경로 검증 정규식 (AWS S3 명명 규칙 반영)
     s3_path_regex = r"^s3://(?P<bucket>[a-z0-9.-]{3,63})/(?P<key>.+)$"
 
@@ -102,6 +125,19 @@ def check_from_s3(data_path: str) -> bool:
 
 def load_from_s3(s3_uri: str, req_path: str, endpoint_url: Optional[str] = None, access_key: Optional[str] = None,
                  secret_key: Optional[str] = None, region_name: Optional[str] = None):
+    """Download file from S3 to local path.
+
+    Args:
+        s3_uri: S3 URI of the file.
+        req_path: Local directory to save the file.
+        endpoint_url: S3 endpoint URL.
+        access_key: AWS access key.
+        secret_key: AWS secret key.
+        region_name: AWS region name.
+
+    Returns:
+        str: Local file path.
+    """
     parsed = urlparse(s3_uri)
 
     bucket_name = parsed.netloc
@@ -123,6 +159,14 @@ def load_from_s3(s3_uri: str, req_path: str, endpoint_url: Optional[str] = None,
 
 
 def preprocess_table(table_path: str) -> pd.DataFrame:
+    """Preprocess table by reading and cleaning.
+
+    Args:
+        table_path: Path to the table file.
+
+    Returns:
+        pd.DataFrame: Preprocessed DataFrame.
+    """
     logging.debug(f"trying to read {table_path}")
     df = read_table(table_path)
     df = drop_na_columns(df)
