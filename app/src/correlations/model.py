@@ -7,6 +7,7 @@ from app.config import settings
 
 
 class SentenceTransformer:
+    """Singleton wrapper for SentenceTransformer model."""
     _instance = None
 
     @classmethod
@@ -23,6 +24,11 @@ class SentenceTransformer:
 
     @classmethod
     def get(cls) -> ST:
+        """Get the SentenceTransformer instance.
+
+        Returns:
+            ST: The SentenceTransformer instance.
+        """
         if cls._instance is None:
             cls._load()
             assert cls._instance is not None

@@ -18,6 +18,7 @@ MAINLY_NUMERIC_RATIO = 0.9
 
 
 class DataTypes(Enum):
+    """Data types for column classification."""
     URL = 0,
     MAINLY_NUMERIC = 1,
     DATE = 2,
@@ -26,10 +27,19 @@ class DataTypes(Enum):
     STRICT_NUMERIC = 1
 
     def __len__(self):
+        """Return the number of enum members."""
         return len(self.__class__.__members__)
 
 
 def classify_data_type(data_list: list[Any]) -> DataTypes:
+    """Classify the data type of a column based on its values.
+
+    Args:
+        data_list: List of column values to classify.
+
+    Returns:
+        DataTypes: The classified data type.
+    """
     data_type = DataTypes.STRING
     if is_url(data_list):
         data_type = DataTypes.URL
@@ -44,7 +54,7 @@ def classify_data_type(data_list: list[Any]) -> DataTypes:
 
 
 def is_url(data_list: list[Any]) -> bool:
-    """
+    """Check if data contains URL strings above the threshold.
 
     Returns:
         bool: True if data_list contains url strings than URL_RATIO
@@ -60,7 +70,7 @@ def is_url(data_list: list[Any]) -> bool:
 
 
 def is_date(data_list: list[Any]) -> bool:
-    """
+    """Check if data contains date strings above the threshold.
 
     Notes:
         단순히 문자열 내 DATE_DICT 가 있다면 체크됨.
@@ -92,7 +102,7 @@ def is_date(data_list: list[Any]) -> bool:
 
 
 def is_strict_numeric(data_list: list[Any], verbose: bool = False) -> bool:
-    """
+    """Check if data contains strictly numeric values above the threshold.
 
     Args:
         data_list: 확인할 데이터
@@ -100,7 +110,6 @@ def is_strict_numeric(data_list: list[Any], verbose: bool = False) -> bool:
 
     Returns:
         bool: data_list 내의 numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
-
     """
     cnt = 0
     for x in data_list:
@@ -116,11 +125,10 @@ def is_strict_numeric(data_list: list[Any], verbose: bool = False) -> bool:
 
 
 def is_mainly_numeric(data_list: list[Any]) -> bool:
-    """data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
+    """Data 내 numeric part 가 정해진 비율 이상일 경우 mainly_numeric 으로 판단함
 
     Returns:
         bool: data_list 내의 mainly_numeric 비율이 STRICT_NUMERIC_RATIO 이상일 경우 True
-
     """
     cnt = 0
     for data in data_list:

@@ -24,6 +24,23 @@ def run(
         secret_key: Optional[str] = None,
         region_name: Optional[str] = None,
 ) -> Any:
+    """Run schema matching between two tables.
+
+    Args:
+        l_table_path: Path to the left table.
+        r_table_path: Path to the right table.
+        truth_json: Path to truth JSON file for evaluation.
+        model: Matching model to use.
+        strategy: Matching strategy.
+        threshold: Threshold for matching.
+        endpoint_url: S3 endpoint URL.
+        access_key: AWS access key.
+        secret_key: AWS secret key.
+        region_name: AWS region name.
+
+    Returns:
+        Any: Matching metrics and results.
+    """
     req_id = str(uuid.uuid4())  # TODO: actual uuid
     req_dir = f"tmp/{req_id}"
     os.makedirs(req_dir, exist_ok=True)

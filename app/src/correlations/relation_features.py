@@ -33,7 +33,7 @@ def get_col_names_features(
         l_col_name_embedding: NDArray[Any],
         r_col_name_embedding: NDArray[Any],
 ) -> NDArray[Any]:
-    """
+    """Get features from column names.
 
     Returns:
          NDArray[Any]:
@@ -58,7 +58,7 @@ def get_col_names_features(
 
 
 def calculate_embedding_cosine_similarity(embeddings1: NDArray[Any], embeddings2: NDArray[Any]) -> NDArray[Any]:
-    """
+    """Calculate cosine similarity between embeddings.
 
     Returns:
          NDArray[Any]: cosine similarity between two sentences embeddings.
@@ -75,6 +75,19 @@ def get_output_feature_from_row(
         r_feature: NDArray[Any],
         r_col_name_embedding: NDArray[Any]
 ) -> NDArray[Any]:
+    """Get output features for a pair of columns.
+
+    Args:
+        l_col_name: Left column name.
+        l_feature: Left column features.
+        l_col_name_embedding: Left column name embedding.
+        r_col_name: Right column name.
+        r_feature: Right column features.
+        r_col_name_embedding: Right column name embedding.
+
+    Returns:
+        NDArray[Any]: Combined feature vector.
+    """
     l_non_embed_feature, l_embed_feature = np.split(l_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
     r_non_embed_feature, r_embed_feature = np.split(r_feature, [-constants.DEEP_EMBEDDING_FEATURES_DIMENSION])
 
@@ -96,7 +109,7 @@ def get_output_feature_from_row(
 
 
 def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> NDArray[Any]:
-    """
+    """Create feature matrix for inference.
 
     Notes:
         Read data from 2 table dataframe, mapping file path and make relational features and labels as a matrix.

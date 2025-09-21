@@ -8,6 +8,13 @@ from sklearn.metrics import precision_score, recall_score, f1_score
 
 
 def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels: pd.DataFrame):
+    """Export prediction metrics as CSV files.
+
+    Args:
+        result_path: Directory path to save CSV files.
+        df_pred: Prediction values DataFrame.
+        df_pred_labels: Prediction labels DataFrame.
+    """
     pred_path = os.path.join(result_path, "similarity_matrix_value.csv")
     df_pred.to_csv(pred_path, index=True)
     logging.info(f"value.csv saved to {pred_path}")
@@ -19,6 +26,15 @@ def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels
 
 # TODO: specify type predicted_tuples
 def get_metric(predicted_tuples: List[Tuple[str, str, Any]], truth_json: Optional[str] = None) -> Dict[str, Any]:
+    """Calculate evaluation metrics for predicted tuples.
+
+    Args:
+        predicted_tuples: List of predicted column matches.
+        truth_json: Path to ground truth JSON file.
+
+    Returns:
+        Dict[str, Any]: Evaluation metrics and results.
+    """
     deserialized_predicted_tuples = [(l_col, r_col, float(pred)) for l_col, r_col, pred in predicted_tuples]
 
     metrics: Dict[str, Any] = {"predicted_pairs": deserialized_predicted_tuples}
