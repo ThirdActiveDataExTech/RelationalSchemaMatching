@@ -92,6 +92,16 @@ async def application_error_handler(request: Request, exc: ApplicationError):
         code=exc.code, result=exc.result, message=exc.message).to_dict())
 
 
+def get_exception_message(exc: Exception) -> str:
+    """안전한 예외 메시지 추출"""
+    try:
+        return ''.join(traceback.format_exception_only(type(exc), exc)).strip()
+    except Exception:
+        if hasattr(exc, 'args') and exc.args:
+            return str(exc.args[0])
+        return repr(exc)
+
+
 async def global_exception_handler(request: Request, exc: Exception):
     """전역 예외 처리기
 
@@ -108,16 +118,7 @@ async def global_exception_handler(request: Request, exc: Exception):
     """
     exception_class = exc.__class__.__name__
 
-    try:
-        exception_message = ''.join(traceback.format_exception_only(type(exc), exc)).strip()
-    except Exception:
-        try:
-            if hasattr(exc, 'args') and exc.args:
-                exception_message = str(exc.args[0])
-            else:
-                exception_message = repr(exc)
-        except Exception:
-            exception_message = f"Unable to get exception message for {exception_class}"
+    exception_message = get_exception_message(exc) or f"Unable to get exception message for {exception_class}"
 
     client_info = get_client_info(request)
     logging.error(f"{client_info} {request.method} {request.url} → {exception_class}: {exception_message}")
