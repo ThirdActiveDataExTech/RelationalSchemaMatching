@@ -57,7 +57,7 @@ def run(
 
     export_metric_as_csv(req_dir, df_pred, df_pred_labels)
 
-    metrics = get_metric(predicted_tuples, truth_json)
+    metrics = get_metric(predicted_tuples, l_table_path, r_table_path, truth_json)
 
     return metrics
 

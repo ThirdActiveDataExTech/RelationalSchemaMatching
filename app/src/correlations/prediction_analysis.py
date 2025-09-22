@@ -25,19 +25,34 @@ def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels
 
 
 # TODO: specify type predicted_tuples
-def get_metric(predicted_tuples: List[Tuple[str, str, Any]], truth_json: Optional[str] = None) -> Dict[str, Any]:
+def get_metric(predicted_tuples: List[Tuple[str, str, Any]], source_table_path: str, target_table_path: str,
+               truth_json: Optional[str] = None) -> Dict[str, Any]:
     """Calculate evaluation metrics for predicted tuples.
 
     Args:
         predicted_tuples: List of predicted column matches.
+        source_table_path: Path to source table file.
+        target_table_path: Path to target table file.
         truth_json: Path to ground truth JSON file.
 
     Returns:
         Dict[str, Any]: Evaluation metrics and results.
     """
-    deserialized_predicted_tuples = [(l_col, r_col, float(pred)) for l_col, r_col, pred in predicted_tuples]
+    # Get table names for table.column format
+    source_name = os.path.splitext(os.path.basename(source_table_path))[0]
+    target_name = os.path.splitext(os.path.basename(target_table_path))[0]
 
-    metrics: Dict[str, Any] = {"predicted_pairs": deserialized_predicted_tuples}
+    # structured object format with table.column naming
+    matches = [
+        {
+            "source_column": f"{source_name}.{l_col}",
+            "target_column": f"{target_name}.{r_col}",
+            "correlation_coefficient": float(pred)
+        }
+        for l_col, r_col, pred in predicted_tuples
+    ]
+
+    metrics: Dict[str, Any] = {"matches": matches}
 
     if truth_json and os.path.exists(truth_json):
         with open(truth_json) as f:
