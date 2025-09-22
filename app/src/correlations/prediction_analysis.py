@@ -2,27 +2,9 @@ import json
 import logging
 import os
 from typing import List, Any, Optional, Dict, Tuple
-from urllib.parse import urlparse
 
 import pandas as pd
 from sklearn.metrics import precision_score, recall_score, f1_score
-
-
-def _format_table_uri(table_path: str) -> str:
-    """Convert table path to appropriate URI format.
-
-    Args:
-        table_path: File path (local, s3://, etc.)
-
-    Returns:
-        str: Formatted URI (s3:// for S3, file: for local/upload files)
-    """
-    if table_path.startswith('s3://'):
-        return table_path
-    else:
-        # For local files and uploaded files, use file: scheme with just filename
-        filename = os.path.basename(table_path)
-        return f"file:{filename}"
 
 
 def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels: pd.DataFrame):
@@ -43,29 +25,22 @@ def export_metric_as_csv(result_path: str, df_pred: pd.DataFrame, df_pred_labels
 
 
 # TODO: specify type predicted_tuples
-def get_metric(predicted_tuples: List[Tuple[str, str, Any]], truth_json: Optional[str] = None,
-               source_table: Optional[str] = None, target_table: Optional[str] = None) -> Dict[str, Any]:
+def get_metric(predicted_tuples: List[Tuple[str, str, Any]], truth_json: Optional[str] = None) -> Dict[str, Any]:
     """Calculate evaluation metrics for predicted tuples.
 
     Args:
         predicted_tuples: List of predicted column matches.
         truth_json: Path to ground truth JSON file.
-        source_table: Source table path.
-        target_table: Target table path.
 
     Returns:
         Dict[str, Any]: Evaluation metrics and results.
     """
-    # Format table URIs
-    source_uri = _format_table_uri(source_table) if source_table else "unknown"
-    target_uri = _format_table_uri(target_table) if target_table else "unknown"
-
-    # 새로운 URI#column 형식의 matches 필드
+    # 새로운 구조화된 matches 필드
     metrics: Dict[str, Any] = {
         "matches": [
             {
-                "source": f"{source_uri}#{l_col}",
-                "target": f"{target_uri}#{r_col}",
+                "source_column": l_col,
+                "target_column": r_col,
                 "correlation_coefficient": float(pred)
             }
             for l_col, r_col, pred in predicted_tuples
