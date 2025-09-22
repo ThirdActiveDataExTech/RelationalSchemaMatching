@@ -35,9 +35,17 @@ def get_metric(predicted_tuples: List[Tuple[str, str, Any]], truth_json: Optiona
     Returns:
         Dict[str, Any]: Evaluation metrics and results.
     """
-    deserialized_predicted_tuples = [(l_col, r_col, float(pred)) for l_col, r_col, pred in predicted_tuples]
-
-    metrics: Dict[str, Any] = {"predicted_pairs": deserialized_predicted_tuples}
+    # 새로운 구조화된 matches 필드
+    metrics: Dict[str, Any] = {
+        "matches": [
+            {
+                "source_column": l_col,
+                "target_column": r_col,
+                "correlation_coefficient": float(pred)
+            }
+            for l_col, r_col, pred in predicted_tuples
+        ]
+    }
 
     if truth_json and os.path.exists(truth_json):
         with open(truth_json) as f:
