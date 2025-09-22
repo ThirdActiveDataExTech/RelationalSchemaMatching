@@ -1,5 +1,5 @@
 import os
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional, Tuple, Dict
 
 import numpy as np
 import pandas as pd
@@ -16,7 +16,7 @@ from app.src.util import time_logger
 def schema_matching(
         l_table: pd.DataFrame, r_table: pd.DataFrame, model: MatchingModel, strategy: Strategy,
         threshold: Optional[float] = None
-):
+) -> Tuple[pd.DataFrame, pd.DataFrame, List[Tuple[str, str, Scalar]], Dict[str, str], Dict[str, str]]:
     """두 테이블로 스키마 매칭을 수행합니다.
 
     Args:
@@ -27,13 +27,18 @@ def schema_matching(
         threshold: correlation value threshold.
 
     Returns:
-        schema matching result
+        Tuple containing:
+        - df_pred: prediction values DataFrame
+        - df_pred_labels: prediction labels DataFrame
+        - predicted_tuples: list of (l_col, r_col, prediction) tuples
+        - l_column_types: source table column classifications
+        - r_column_types: target table column classifications
     """
     # make 2 features.
     # 1. self features for each tables
     # 2. relational features
     # TODO: separate 2 step?
-    features = create_feature_matrix_inference(l_table, r_table)
+    features, l_column_types, r_column_types = create_feature_matrix_inference(l_table, r_table)
 
     # exact predict w XGBoost model
     preds, pred_labels_list = predict_inference(features, model, threshold)
@@ -45,7 +50,7 @@ def schema_matching(
     df_pred_labels = get_pred_labels(l_table, r_table, df_pred, pred_labels_list, strategy)
     predicted_tuples = get_predicted_tuples(df_pred, df_pred_labels)
 
-    return df_pred, df_pred_labels, predicted_tuples
+    return df_pred, df_pred_labels, predicted_tuples, l_column_types, r_column_types
 
 
 def predict_inference(

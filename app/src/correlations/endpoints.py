@@ -1,14 +1,40 @@
 import logging
 import os
 import uuid
-from typing import Optional, Any
+from typing import Optional, Any, List, Tuple, Dict
 
 from app.src.correlations.data_loader import preprocess_table, check_from_s3, load_from_s3
 from app.src.correlations.enums import Strategy, MatchingModel
 from app.src.correlations.matching import schema_matching
-from app.src.correlations.prediction_analysis import export_metric_as_csv, get_metric
+from app.src.correlations.prediction_analysis import export_metric_as_csv, calculate_evaluation_metrics
 
 logger = logging.getLogger(__name__)
+
+
+def build_matches_response(predicted_tuples: List[Tuple[str, str, Any]], source_name: str, target_name: str) -> List[Dict[str, Any]]:
+    """Build matches response structure."""
+    return [
+        {
+            "source_column": f"{source_name}.{l_col}",
+            "target_column": f"{target_name}.{r_col}",
+            "correlation_coefficient": float(pred)
+        }
+        for l_col, r_col, pred in predicted_tuples
+    ]
+
+
+def build_column_classifications_response(l_column_types: Dict[str, str], r_column_types: Dict[str, str],
+                                        source_name: str, target_name: str) -> Dict[str, Dict[str, str]]:
+    """Build column classifications response structure."""
+    source_classifications = {f"{source_name}.{column}": data_type
+                            for column, data_type in l_column_types.items()}
+    target_classifications = {f"{target_name}.{column}": data_type
+                            for column, data_type in r_column_types.items()}
+
+    return {
+        "source": source_classifications,
+        "target": target_classifications
+    }
 
 
 # TODO: 이름 구체적으로
@@ -53,13 +79,31 @@ def run(
         r_table_path = load_from_s3(r_table_path, req_dir, endpoint_url, access_key, secret_key, region_name)
     r_table = preprocess_table(r_table_path)
 
-    df_pred, df_pred_labels, predicted_tuples = schema_matching(l_table, r_table, model, strategy, threshold)
+    df_pred, df_pred_labels, predicted_tuples, l_column_types, r_column_types = schema_matching(l_table, r_table, model, strategy, threshold)
 
     export_metric_as_csv(req_dir, df_pred, df_pred_labels)
 
-    metrics = get_metric(predicted_tuples, l_table_path, r_table_path, truth_json)
+    # Get table names for table.column format
+    source_name = os.path.splitext(os.path.basename(l_table_path))[0]
+    target_name = os.path.splitext(os.path.basename(r_table_path))[0]
 
-    return metrics
+    # Build response
+    result: Dict[str, Any] = {
+        "matches": build_matches_response(predicted_tuples, source_name, target_name)
+    }
+
+    # Add column classifications
+    result["column_classifications"] = build_column_classifications_response(
+        l_column_types, r_column_types, source_name, target_name
+    )
+
+    # Add evaluation metrics if truth data exists
+    if truth_json and os.path.exists(truth_json):
+        true_pairs, evaluation_metrics = calculate_evaluation_metrics(predicted_tuples, truth_json)
+        result["true_pairs"] = true_pairs
+        result["evaluation_metrics"] = evaluation_metrics
+
+    return result
 
 
 def match_from_test_dataset(dataset_path: str) -> Any:

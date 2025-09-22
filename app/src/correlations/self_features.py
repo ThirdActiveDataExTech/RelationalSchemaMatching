@@ -1,7 +1,7 @@
 import logging
 import random
 import re
-from typing import Any, List
+from typing import Any, List, Tuple, Dict
 
 import numpy as np
 import pandas as pd
@@ -24,20 +24,23 @@ DEFAULT_SAMPLING_SIZE = 20
 EPSILON = 1e-12
 
 
-def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
+def make_self_features_from(table_df: pd.DataFrame) -> Tuple[NDArray[Any], Dict[str, str]]:
     """Extract features from table columns.
 
     Returns:
-         np.ndarray: Extracts features from the given table path and returns a feature table.
+         Tuple[np.ndarray, Dict[str, str]]: Features and column classifications.
     """
     feature_array = []
+    column_types = {}
+
     for column in table_df.columns:
         # TODO: why use "Unnamed:"
         if "Unnamed:" in column:
             continue
 
-        feature = extract_features(table_df[column].tolist()).reshape(1, -1)
-        feature_array.append(feature)
+        feature, data_type = extract_features(table_df[column].tolist())
+        feature_array.append(feature.reshape(1, -1))
+        column_types[column] = data_type.name
 
     if len(feature_array) == 0:
         raise ValueError(f"No features extracted. Check your table: {table_df}.")
@@ -49,18 +52,18 @@ def make_self_features_from(table_df: pd.DataFrame) -> NDArray[Any]:
 
     logging.debug(f"{__name__}: {features.shape}")
 
-    return features
+    return features, column_types
 
 
 # REMINDER: use ONLY data_list as Column
-def extract_features(data_list: List[Any]) -> NDArray[Any]:
+def extract_features(data_list: List[Any]) -> Tuple[NDArray[Any], DataTypes]:
     """Extract features from the given data.
 
     Args:
         data_list (List[Any]): data can be column or list.
 
     Returns:
-        np.array: Extract features from the given data.
+        Tuple[np.array, DataTypes]: Extract features and data type from the given data.
     """
     # Drop outlier columns
     data_list = [d for d in data_list if d == d and d != "--"]
@@ -80,7 +83,7 @@ def extract_features(data_list: List[Any]) -> NDArray[Any]:
         get_deep_embedding_feature(data_list, data_type)  # 768 cols
     ))
 
-    return output_features
+    return output_features, data_type
 
 
 def extract_numeric(data_list: List[Any]) -> List[float]:
