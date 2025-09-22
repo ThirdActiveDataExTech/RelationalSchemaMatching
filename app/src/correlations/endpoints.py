@@ -57,16 +57,9 @@ def run(
 
     export_metric_as_csv(req_dir, df_pred, df_pred_labels)
 
-    metrics = get_metric(predicted_tuples, truth_json)
+    metrics = get_metric(predicted_tuples, truth_json, l_table_path, r_table_path)
 
-    # 최종 응답에 테이블 정보 추가
-    final_result = {
-        "source_table": l_table_path,
-        "target_table": r_table_path,
-        **metrics
-    }
-
-    return final_result
+    return metrics
 
 
 def match_from_test_dataset(dataset_path: str) -> Any:
@@ -106,10 +99,4 @@ def match_from_test_dataset(dataset_path: str) -> Any:
     else:
         truth_json = None
 
-    result = run(l_table_path=l_table, r_table_path=r_table, truth_json=truth_json)
-
-    # dataset 엔드포인트의 경우 테이블 경로를 dataset 기반으로 설정
-    result["source_table"] = l_table
-    result["target_table"] = r_table
-
-    return result
+    return run(l_table_path=l_table, r_table_path=r_table, truth_json=truth_json)
