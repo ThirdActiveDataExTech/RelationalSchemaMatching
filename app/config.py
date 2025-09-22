@@ -23,10 +23,11 @@ class Settings(BaseSettings):
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
 
     PORT: int = 8000
-    SERVICE_NAME: str = "Python FastAPI Template"
+    SERVICE_NAME: str = "Correlation Analysis Service"
     SERVICE_CODE: int = 100
     MAJOR_VERSION: str = "v1"
     STATUS: str = "dev"
+    STATIC_DIRECTORY: str = "./static"
 
     # Request Server URL
     SERVER_URL: str = ""  # FastAPI SERVER URL 설정이 필요할 경우, 해당 변수로 설정
@@ -93,4 +94,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()  # type: ignore
-print(settings.json())
+print(settings.model_dump_json())

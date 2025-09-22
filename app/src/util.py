@@ -4,13 +4,14 @@ from functools import wraps
 
 
 def time_logger(func):
+    """Function 의 시간을 로깅하는 decorator"""
     @wraps(func)
     def wrapper(*args, **kwargs):
         start_time = time.time()
         result = func(*args, **kwargs)
         end_time = time.time()
         duration = end_time - start_time
-        logging.info(f"TIME_LOGGER: '{func.__name__}': {duration:.4f} seconds")
+        logging.info(f"TIME_LOGGER: '{func.__name__}': {duration:.4f} seconds.")
         return result
 
     return wrapper

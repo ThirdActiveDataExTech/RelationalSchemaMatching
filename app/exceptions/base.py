@@ -15,7 +15,12 @@ class ApplicationError(Exception):
             "message": self.message,
             "result": self.result
         }
-        return json.dumps(exception_data, indent=4, ensure_ascii=False)
+        try:
+            return json.dumps(exception_data, indent=4, ensure_ascii=False)
+        except (TypeError, ValueError):
+            # fallback: 직렬화 실패시 repr 사용
+            return f"ApplicationError(code={self.code}, message={self.message!r}, result={self.result!r})"
+
 
     def to_dict(self):
         return {

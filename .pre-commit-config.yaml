@@ -15,3 +15,8 @@ repos:
     rev: v1.1.387
     hooks:
       - id: pyright
+        name: pyright
+        entry: poetry run pyright
+        language: system
+        types: [ python ]
+        pass_filenames: false

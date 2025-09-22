@@ -1,30 +1,27 @@
-import logging
 import os
-from typing import Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
-import xgboost as xgb
+import xgboost as xgb  # type: ignore
+from numpy.typing import NDArray
+from pandas._typing import Scalar  # type: ignore
 
-from app.src.correlations.data_preprocessor import read_table, drop_na_columns
-from app.src.correlations.enums import Strategy, MatchingModel
+from app.src.correlations.enums import MatchingModel, Strategy
 from app.src.correlations.relation_features import create_feature_matrix_inference
-from app.src.correlations.util import time_logger
+from app.src.util import time_logger
 
 
 @time_logger
 def schema_matching(
-        l_table_path: str,
-        r_table_path: str,
-        model: MatchingModel,
-        strategy: Strategy,
+        l_table: pd.DataFrame, r_table: pd.DataFrame, model: MatchingModel, strategy: Strategy,
         threshold: Optional[float] = None
 ):
-    """
+    """두 테이블로 스키마 매칭을 수행합니다.
 
     Args:
-        l_table_path: path to l_table
-        r_table_path: path to r_table
+        l_table: l_table DataFrame
+        r_table: r_table DataFrame
         model: Schema Matching XGBoost Model
         strategy: matching strategy. Check app.src.correlations.enums.Strategy.
         threshold: correlation value threshold.
@@ -32,54 +29,42 @@ def schema_matching(
     Returns:
         schema matching result
     """
-
-    # read tables.
-    l_df = preprocess_table(l_table_path)
-    r_df = preprocess_table(r_table_path)
-
     # make 2 features.
     # 1. self features for each tables
     # 2. relational features
     # TODO: separate 2 step?
-    features = create_feature_matrix_inference(l_df, r_df)
+    features = create_feature_matrix_inference(l_table, r_table)
 
     # exact predict w XGBoost model
     preds, pred_labels_list = predict_inference(features, model, threshold)
 
     # post process
-    df_pred = postprocess_pred(l_df, r_df, preds)
+    df_pred = postprocess_pred(l_table, r_table, preds)
 
     # calculate metrics
-    df_pred_labels = get_pred_labels(l_df, r_df, df_pred, pred_labels_list, strategy)
+    df_pred_labels = get_pred_labels(l_table, r_table, df_pred, pred_labels_list, strategy)
     predicted_tuples = get_predicted_tuples(df_pred, df_pred_labels)
 
     return df_pred, df_pred_labels, predicted_tuples
 
 
-def preprocess_table(table_path: str) -> pd.DataFrame:
-    logging.debug(f"trying to read {table_path}")
-    df = read_table(table_path)
-    df = drop_na_columns(df)
-    return df
-
-
 def predict_inference(
-        features: np.ndarray,
-        model: MatchingModel,
-        threshold: Optional[float] = None
-) -> Tuple[list[np.ndarray], list[np.ndarray]]:
-    """
-    load model and predict on features
-    """
+        features: NDArray[Any], model: MatchingModel, threshold: Optional[float] = None
+) -> Tuple[List[NDArray[Any]], List[NDArray[Any]]]:
+    """Load model and predict on features using GPU if available."""
     preds = []
     pred_labels_list = []
-
     model_files = os.listdir(model.path)
     model_cnt = len(model_files) // 2
+
+    # Check if GPU is available
+    device = "cuda" if xgb.build_info().get("USE_CUDA", False) else "cpu"
+
     for i in range(model_cnt):
-        bst = xgb.Booster({'nthread': 4})  # init model
+        bst = xgb.Booster({"nthread": 4})  # Init model
         model_file = os.path.join(model.path, f"{i}.model")
         bst.load_model(model_file)
+        bst.set_param({"device": device})
 
         # use specified threshold or model best threshold
         if threshold is not None:
@@ -89,28 +74,24 @@ def predict_inference(
             with open(threshold_file, "r") as f:
                 best_threshold = float(f.read())
 
-        # TODO: UNCHECKED CODE
+        # Create DMatrix with GPU support if available
         labels = np.ones(len(features))
         dtest = xgb.DMatrix(features, label=labels)
-        pred = bst.predict(dtest)
 
+        # Predict using GPU if available
+        pred = bst.predict(dtest)
         pred_labels = np.where(pred > best_threshold, 1, 0)
-        # UNCHECKED CODE
 
         # Booster 가 결합된 feature 로 predict, 현재 분리 불가
         preds.append(pred)
-
         pred_labels_list.append(pred_labels)
         del bst
 
     return preds, pred_labels_list
 
 
-def postprocess_pred(
-        table1_df: pd.DataFrame,
-        table2_df: pd.DataFrame,
-        preds: list[np.ndarray]
-) -> pd.DataFrame:
+def postprocess_pred(table1_df: pd.DataFrame, table2_df: pd.DataFrame, preds: List[NDArray[Any]]) -> pd.DataFrame:
+    """원본 데이터셋과 매칭 결과를 결합해 반환합니다."""
     # do flatten and get mean
     preds = np.mean(np.array(preds), axis=0)
 
@@ -131,9 +112,21 @@ def get_pred_labels(
         table1_df: pd.DataFrame,
         table2_df: pd.DataFrame,
         preds_matrix: pd.DataFrame,
-        pred_labels_list: list[np.ndarray],
-        strategy: Strategy = Strategy.MANY_TO_MANY
+        pred_labels_list: List[NDArray[Any]],
+        strategy: Strategy = Strategy.MANY_TO_MANY,
 ):
+    """Get prediction labels based on strategy.
+
+    Args:
+        table1_df: Left table DataFrame.
+        table2_df: Right table DataFrame.
+        preds_matrix: Prediction matrix.
+        pred_labels_list: List of prediction labels.
+        strategy: Matching strategy.
+
+    Returns:
+        pd.DataFrame: Prediction labels matrix.
+    """
     # do flatten and get mean
     pred_labels = np.mean(np.array(pred_labels_list), axis=0)
 
@@ -157,8 +150,8 @@ def get_pred_labels(
 
         # pred_labels 가 1인 index 만 순회
         for i, j in np.argwhere(pred_labels == 1):
-            max_row = max(preds_matrix[i, :])
-            max_col = max(preds_matrix[:, j])
+            max_row = max(preds_matrix[i, :].to_list())
+            max_col = max(preds_matrix[:, j].to_list())
 
             if max_row != preds_matrix[i, j]:
                 continue
@@ -173,13 +166,19 @@ def get_pred_labels(
     return df_pred_labels
 
 
-def get_predicted_tuples(
-        preds_matrix: pd.DataFrame,
-        pred_labels_matrix: pd.DataFrame
-) -> list[tuple[str, str, float | int]]:
+def get_predicted_tuples(preds_matrix: pd.DataFrame, pred_labels_matrix: pd.DataFrame) -> List[Tuple[str, str, Scalar]]:
+    """Get predicted tuples from prediction matrices.
+
+    Args:
+        preds_matrix: Prediction values matrix.
+        pred_labels_matrix: Prediction labels matrix.
+
+    Returns:
+        List[Tuple[str, str, Scalar]]: List of predicted column matches.
+    """
     # tuple l_col_name, r_col_name, predict_value
     predicted_tuples = [
-        (pred_labels_matrix.index[i], pred_labels_matrix.columns[j], preds_matrix.iloc[i, j])
+        (str(pred_labels_matrix.index[i]), str(pred_labels_matrix.columns[j]), preds_matrix.iloc[i, j])
         for i, j in zip(*np.where(pred_labels_matrix == 1))
     ]
     return predicted_tuples

@@ -1,0 +1,115 @@
+# 해당 파이프라인은 GitLab CI Template 프로젝트에서 가져와서 설정하기 때문에 프로젝트 접근 권한이 있어야합니다.
+# 만약 접근 권한이 없을 경우, 해당 CI 파일을 직접 가져와서 로컬에서 사용해도 됩니다.
+# 또한 GitLab CI 파이프라인은 overriding이 가능하기때문에 템플릿을 가져와서 커스텀을 할 수도 있습니다.
+# 참고: https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
+# Global Config
+default:
+  tags:
+    - saas-linux-medium-amd64 # 16GB Memory, 50GB storage
+
+.variants:
+  variants: &variants
+    - cpu
+    - cu124
+
+stages:
+  - secret_detection
+  - build-and-push-deps
+  - lint
+  - test
+  - build-and-push-app
+  - container_test
+
+include:
+  - project: wisenut-research/starter/templates/gitlab-ci-template
+    ref: main
+    file:
+      - templates/Security/Secret-Detection.gitlab-ci.yml
+      - templates/Python/Build-and-Push-App.gitlab-ci.yml
+      - templates/Python/Dependency-Management.gitlab-ci.yml
+      - templates/Python/Lint/Uv-Lint.gitlab-ci.yml
+      - templates/Python/Test/Uv-Test.gitlab-ci.yml
+      - templates/Security/Container-Scanning.gitlab-ci.yml
+
+# override lints
+.uv-lint:
+  before_script:
+    - echo "Running before_script tasks for $CI_JOB_NAME";
+    - uv sync --group lint --extra ${VARIANT}
+    - source .venv/bin/activate
+
+ruff-lint:
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "py311" ]
+        VARIANT: *variants
+
+pyright-lint:
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "3.11" ]
+        VARIANT: *variants
+
+# override tests
+pytest:
+  before_script:
+    - echo "Running before_script tasks for $CI_JOB_NAME";
+    - uv sync --group test --extra ${VARIANT}
+    - source .venv/bin/activate
+  parallel:
+    matrix:
+      - PYTHON_VERSION: [ "3.11" ]
+        VARIANT: *variants
+
+# override dependency build
+build-and-push-deps:
+  stage: build-and-push-deps
+  extends: build-and-push-app
+  parallel:
+    matrix:
+      - VARIANT: *variants
+  variables:
+    IMAGE_TAG_CACHE: "$CI_REGISTRY_IMAGE:deps-${VARIANT}"
+    IMAGE_TAG_LATEST: "$CI_REGISTRY_IMAGE:deps-${VARIANT}"
+  script: # docker image cache를 사용하여 이미지 빌드, 컨테이너 레지스트리 푸시 진행
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $IMAGE_TAG_LATEST || true # 마지막 이미지 가져오기
+    - >
+      docker build 
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --build-arg VARIANT=$VARIANT
+      --cache-from $IMAGE_TAG_CACHE 
+      -t $IMAGE_TAG 
+      -t $IMAGE_TAG_LATEST .
+    - docker push $IMAGE_TAG
+    - docker push $IMAGE_TAG_LATEST
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"' # main 브랜치일 때만 실행
+      changes:
+        - uv.lock
+        - pyproject.toml
+        - uv.Dockerfile
+
+# override app build
+build-and-push-app:
+  parallel:
+    matrix:
+      - VARIANT: *variants
+  variables:
+    IMAGE: "$CI_REGISTRY_IMAGE"
+    IMAGE_TAG_DEPS: "$IMAGE:deps-$VARIANT"
+    IMAGE_TAG_LATEST: "$IMAGE:app-$VARIANT"
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $IMAGE_TAG_DEPS || true # Pull the deps image for caching
+    - >
+      docker build
+      --build-arg BUILDKIT_INLINE_CACHE=1
+      --build-arg IMAGE=$IMAGE
+      --build-arg VARIANT=$VARIANT
+      --cache-from $IMAGE_TAG_DEPS
+      -t $IMAGE_TAG
+      -t $IMAGE_TAG_LATEST .
+    - docker push $IMAGE_TAG
+    - docker push $IMAGE_TAG_LATEST
