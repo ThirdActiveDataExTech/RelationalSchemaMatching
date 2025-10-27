@@ -36,6 +36,7 @@ include:
 .uv-lint:
   before_script:
     - echo "Running before_script tasks for $CI_JOB_NAME";
+    - apt-get update && apt-get install -y libatomic1  # Node >= 25.0.0 의존성
     - uv sync --group lint --extra ${VARIANT}
     - source .venv/bin/activate
 
