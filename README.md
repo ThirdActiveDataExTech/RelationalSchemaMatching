@@ -34,7 +34,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 #### 의존성 설치
 
-다음 중 하나를 선택하여 설치하세요:
+다음 중 하나를 선택하여 설치:
 
 ```bash
 # CUDA 의존성 (권장, amd64/arm64 호환)
@@ -46,13 +46,15 @@ $ uv sync --extra cpu
 
 ### 2. Run app (HTTP API Server)
 
+다음 중 하나를 선택하여 실행:
+
 ```bash
-# [방법 1] 가상환경 활성화 없이 실행
+# uv를 통한 직접 실행 (권장)
 $ uv run uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
 
 ```bash
-# [방법 2] 가상환경 활성화 후 실행
+# 가상환경 수동 활성화 후 실행
 $ source ./.venv/bin/activate
 (correlation-analysis) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
