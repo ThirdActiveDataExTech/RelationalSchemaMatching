@@ -19,25 +19,42 @@
 ### 1. Install Requirements
 
 - [Python](https://www.python.org/) `3.11`
-- [Poetry](https://python-poetry.org/) `>= 1.4`
+- [uv](https://docs.astral.sh/uv/) `>= 0.9`
 - [FastAPI Web Framework](https://fastapi.tiangolo.com/ko/)
 
+#### uv 설치
+
 ```bash
-$ pip3 isntall -U poetry
-$ poetry install --no-root
+# macOS 및 Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+#### 의존성 설치
+
+다음 중 하나를 선택하여 설치하세요:
+
+```bash
+# CUDA 의존성 (권장, amd64/arm64 호환)
+$ uv sync --extra cu124
+
+# CPU 의존성만 (amd64 호환)
+$ uv sync --extra cpu
 ```
 
 ### 2. Run app (HTTP API Server)
 
 ```bash
-# [방법 1] 가상환경 사용 구동
-$ poetry run uvicorn app.main:app --host 0.0.0.0 --port <port number>
+# [방법 1] 가상환경 활성화 없이 실행
+$ uv run uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
 
 ```bash
-# [방법 2] 가상환경 활성화 & 구동
-$ poetry shell
-(python-fastapi-template-py3.11) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
+# [방법 2] 가상환경 활성화 후 실행
+$ source ./.venv/bin/activate
+(correlation-analysis) $ uvicorn app.main:app --host 0.0.0.0 --port <port number>
 ```
 
 ### 3. Run Analysis
@@ -117,7 +134,7 @@ curl -X 'POST' \
 
 1. 전체 확률 테이블
 
-```shell
+```bash
 curl -X 'POST' \
   'http://localhost:8000/correlations/dataset' \
   -H 'accept: application/json' \
@@ -130,7 +147,7 @@ curl -X 'POST' \
 
 2. 왼쪽 테이블 특정 컬럼 확률 테이블
 
-```shell
+```bash
 curl -X 'POST' \
   'http://localhost:8000/correlations/dataset?l_column=Cast' \
   -H 'accept: application/json' \
@@ -143,7 +160,7 @@ curl -X 'POST' \
 
 3. 오른쪽 테이블 특정 컬럼 확률 테이블
 
-```shell
+```bash
 curl -X 'POST' \
   'http://localhost:8000/correlations/dataset?r_column=Country' \
   -H 'accept: application/json' \
@@ -156,7 +173,7 @@ curl -X 'POST' \
 
 4. 양 테이블 특정 컬럼 확률
 
-```shell
+```bash
 curl -X 'POST' \
   'http://localhost:8000/correlations/dataset?l_column=RatingCount&r_column=RatingValue' \
   -H 'accept: application/json' \
