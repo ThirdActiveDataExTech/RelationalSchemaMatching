@@ -64,7 +64,7 @@ $ source ./.venv/bin/activate
 > api-docs 확인 : [swagger-ui](http://localhost:8000/docs), [redoc](http://localhost:8000/redoc), 
 
 
-#### 1. 성능지표 테스트 "4. 관계형 데이터 유사 속성 탐지율" 
+## 1. 성능지표 테스트 "4. 관계형 데이터 유사 속성 탐지율" 
 
 1. 테스트 데이터 분석 요청
 
@@ -73,10 +73,8 @@ curl -X 'POST' \
   'http://localhost:8000/correlations/dataset' \
   -H 'accept: application/json' \
   -H 'x-token: wisenut' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "dataset": "./test_data/movies1/"
-}'
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'dataset=.%2Ftest_data%2Fmovies1%2F&model=initial&strategy=many-to-many'
 ```
 
 2. 유사 속성 탐지율 매트릭 출력 결과 확인
@@ -131,59 +129,4 @@ curl -X 'POST' \
   },
   "description": "스키마 매칭 성공"
 }
-```
-
-
-#### 2. 상호 연관성 분석 모듈 프로토타입 기능 사용
-
-1. 전체 확률 테이블
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/correlations/dataset' \
-  -H 'accept: application/json' \
-  -H 'x-token: wisenut' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "dataset": "./test_data/movies1/"
-}'
-```
-
-2. 왼쪽 테이블 특정 컬럼 확률 테이블
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/correlations/dataset?l_column=Cast' \
-  -H 'accept: application/json' \
-  -H 'x-token: wisenut' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "dataset": "./test_data/movies1/"
-}'
-```
-
-3. 오른쪽 테이블 특정 컬럼 확률 테이블
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/correlations/dataset?r_column=Country' \
-  -H 'accept: application/json' \
-  -H 'x-token: wisenut' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "dataset": "./test_data/movies1/"
-}'
-```
-
-4. 양 테이블 특정 컬럼 확률
-
-```bash
-curl -X 'POST' \
-  'http://localhost:8000/correlations/dataset?l_column=RatingCount&r_column=RatingValue' \
-  -H 'accept: application/json' \
-  -H 'x-token: wisenut' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "dataset": "./test_data/movies1/"
-}'
 ```
