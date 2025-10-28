@@ -108,23 +108,25 @@ curl -X 'POST' \
         "Table2.YearRange": "MAINLY_NUMERIC",
       }
     },
-    "true_pairs": [
-      [
-        "Name",
-        "Name"
+    "evaluation": {
+      "ground_truth_pairs": [
+        [
+          "Name",
+          "Name"
+        ],
+        [
+          "Year",
+          "YearRange"
+        ]
       ],
-      [
-        "Year",
-        "YearRange"
-      ]
-    ],
-    "evaluation_metrics": {
-      "precision": 0.2857142857142857,
-      "recall": 1,
-      "f1": 0.4444444444444444,
-      "total_pairs": 14,
-      "true_positive_count": 4,
-      "false_positive_count": 10
+      "metrics": {
+        "precision": 0.2857142857142857,
+        "recall": 1,
+        "f1": 0.4444444444444444,
+        "total_pairs": 14,
+        "true_positive_count": 4,
+        "false_positive_count": 10
+      }
     }
   },
   "description": "스키마 매칭 성공"
