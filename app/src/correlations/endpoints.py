@@ -99,9 +99,7 @@ def run(
 
     # Add evaluation metrics if truth data exists
     if truth_json and os.path.exists(truth_json):
-        true_pairs, evaluation_metrics = calculate_evaluation_metrics(predicted_tuples, truth_json)
-        result["true_pairs"] = true_pairs
-        result["evaluation_metrics"] = evaluation_metrics
+        result["evaluation"] = calculate_evaluation_metrics(predicted_tuples, truth_json)
 
     return result
 

@@ -21,6 +21,48 @@
       "source_column": "streetAddress",
       "target_table": "yellow_pages",
       "target_column": "streetAddress"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "city",
+      "target_table": "yellow_pages",
+      "target_column": "city"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "state",
+      "target_table": "yellow_pages",
+      "target_column": "state"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "zipCode",
+      "target_table": "yellow_pages",
+      "target_column": "zipCode"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "website",
+      "target_table": "yellow_pages",
+      "target_column": "website"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "telephone",
+      "target_table": "yellow_pages",
+      "target_column": "phone"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "priceRange",
+      "target_table": "yellow_pages",
+      "target_column": "priceRange"
+    },
+    {
+      "source_table": "yelp",
+      "source_column": "category",
+      "target_table": "yellow_pages",
+      "target_column": "categories"
     }
   ]
 }
