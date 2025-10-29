@@ -20,7 +20,7 @@
 
 - [Python](https://www.python.org/) `3.11`
 - [uv](https://docs.astral.sh/uv/) `>= 0.9`
-- [FastAPI Web Framework](https://fastapi.tiangolo.com/ko/)
+
 
 #### uv 설치
 
@@ -61,7 +61,7 @@ $ source ./.venv/bin/activate
 
 ### 3. Run Analysis
 
-> api-docs 확인 : [swagger-ui](http://localhost:8000/docs), [redoc](http://localhost:8000/redoc), 
+> api-docs 확인 : [swagger-ui](http://localhost:8000/docs), [redoc](http://localhost:8000/redoc)
 
 
 ## 1. 성능지표 테스트 "4. 관계형 데이터 유사 속성 탐지율" 
