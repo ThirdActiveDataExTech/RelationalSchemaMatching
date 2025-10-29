@@ -12,7 +12,7 @@
     },
     {
       "source_table": "imdb",
-      "source_column": "title",
+      "source_column": "name",
       "target_table": "tmd",
       "target_column": "title"
     },
@@ -21,6 +21,18 @@
       "source_column": "year",
       "target_table": "tmd",
       "target_column": "year"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "writers",
+      "target_table": "tmd",
+      "target_column": "writer(s)"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "actors",
+      "target_table": "tmd",
+      "target_column": "actor(s)"
     }
   ]
 }

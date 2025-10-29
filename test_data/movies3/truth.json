@@ -27,6 +27,36 @@
       "source_column": "Year",
       "target_table": "rotten_tomatoes",
       "target_column": "Year"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Creators",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Creators"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Cast",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Cast"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Genre",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Genre"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Duration",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Duration"
+    },
+    {
+      "source_table": "imdb",
+      "source_column": "Summary",
+      "target_table": "rotten_tomatoes",
+      "target_column": "Summary"
     }
   ]
 }
