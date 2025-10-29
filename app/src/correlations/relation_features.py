@@ -1,6 +1,6 @@
 import random
 from itertools import product
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 import numpy as np
 import pandas as pd
@@ -108,16 +108,19 @@ def get_output_feature_from_row(
     return output_feature
 
 
-def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> NDArray[Any]:
+def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> Tuple[NDArray[Any], Dict[str, str], Dict[str, str]]:
     """Create feature matrix for inference.
-    
+
     Notes:
         Read data from 2 table dataframe, mapping file path and make relational features and labels as a matrix.
+
+    Returns:
+        Tuple[NDArray[Any], Dict[str, str], Dict[str, str]]: Feature matrix and column classifications.
     """
-    l_table_features = make_self_features_from(l_df)
+    l_table_features, l_column_types = make_self_features_from(l_df)
     # np.savetxt("l_table_features.csv", l_table_features, fmt="%s", delimiter=",")
 
-    r_table_features = make_self_features_from(r_df)
+    r_table_features, r_column_types = make_self_features_from(r_df)
     # np.savetxt("r_table_features.csv", r_table_features, fmt="%s", delimiter=",")
 
     l_columns = [normalize_and_flatten_text(c) for c in l_df.columns.to_list()]
@@ -157,4 +160,4 @@ def create_feature_matrix_inference(l_df: pd.DataFrame, r_df: pd.DataFrame) -> N
             column_name_embeddings[r_col_name]
         )
 
-    return output_feature_table
+    return output_feature_table, l_column_types, r_column_types

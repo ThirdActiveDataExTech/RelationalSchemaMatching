@@ -3,6 +3,7 @@ from enum import Enum
 
 class Strategy(str, Enum):
     """Matching strategy options."""
+
     ONE_TO_ONE = "one-to-one"
     ONE_TO_MANY = "one-to-many"
     MANY_TO_MANY = "many-to-many"
@@ -10,7 +11,8 @@ class Strategy(str, Enum):
 
 class MatchingModel(str, Enum):
     """Matching model enumeration with file paths."""
-    __slots__ = ('path',)
+
+    __slots__ = ("path",)
 
     def __new__(cls, value: str, path: str):
         """Create new MatchingModel instance.
@@ -36,3 +38,14 @@ class MatchingModel(str, Enum):
         self.path = path
 
     INITIAL = ("initial", "model/initial_model")
+
+
+class TestDataset(str, Enum):
+    """Test dataset enumeration with dataset names and paths."""
+
+    CITATIONS = "./test_data/citations/"
+    MOVIES1 = "./test_data/movies1/"
+    MOVIES2 = "./test_data/movies2/"
+    MOVIES3 = "./test_data/movies3/"
+    RESTAURANTS3 = "./test_data/restaurants3/"
+    RESTAURANTS4 = "./test_data/restaurants4/"
