@@ -54,12 +54,6 @@
     },
     {
       "source_table": "yelp",
-      "source_column": "website",
-      "target_table": "yellow_pages",
-      "target_column": "website"
-    },
-    {
-      "source_table": "yelp",
       "source_column": "priceRange",
       "target_table": "yellow_pages",
       "target_column": "priceRange"
